@@ -1,0 +1,26 @@
+{
+  "authors": {
+    "jt-penulis-a": { "slug": "jt-penulis-a", "name": "Penulis A", "bio": "Bio A", "avatar": { "file": "media/sample.jpg", "url": "https://example.test/avatar-a.jpg" } }
+  },
+  "posts": [
+    {
+      "slug": "jt-post-satu", "title": "Post Satu & Dua", "excerpt": "Ringkasan satu.", "date": "2026-10-04 07:33:10",
+      "category": "nasional", "tags": ["Harlah", "Jatman"], "author": "jt-penulis-a",
+      "content": "<!-- wp:paragraph -->\n<p>Isi dengan <em>miring</em> dan garis miring \\\\ ganda.</p>\n<!-- /wp:paragraph -->\n\n<!-- wp:image {\"sizeSlug\":\"large\"} -->\n<figure class=\"wp-block-image size-large\"><img src=\"https://example.test/isi.jpg\" alt=\"\"/></figure>\n<!-- /wp:image -->",
+      "inline_images": [ { "url": "https://example.test/isi.jpg", "file": "media/sample.jpg" } ],
+      "image": { "file": "media/sample.jpg", "url": "https://example.test/utama.jpg", "alt": "Alt utama", "caption": "Keterangan foto" },
+      "flags": ["sticky", "pilihan"], "source_url": "https://example.test/jt-post-satu"
+    },
+    {
+      "slug": "jt-post-dua", "title": "Post Dua", "excerpt": "", "date": "2026-09-01 10:00:00",
+      "category": "dawuh", "tags": [], "author": "jt-penulis-a",
+      "content": "<!-- wp:paragraph -->\n<p>Dua.</p>\n<!-- /wp:paragraph -->",
+      "inline_images": [], "image": null, "flags": [], "source_url": "https://example.test/jt-post-dua"
+    },
+    {
+      "slug": "jt-post-rusak", "title": "Kategori salah", "excerpt": "", "date": "2026-09-01 10:00:00",
+      "category": "tidak-ada", "tags": [], "author": "jt-penulis-a", "content": "",
+      "inline_images": [], "image": null, "flags": [], "source_url": "https://example.test/rusak"
+    }
+  ]
+}
