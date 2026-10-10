@@ -61,7 +61,7 @@ Pembagian tanggung jawab: **tema** hanya mengurus tampilan. **mu-plugin** mengur
 - **Rubrik teduh** = `dawuh`, `hikmah`, `pustaka-tasawuf`. Daftarnya disimpan di satu konstanta di mu-plugin dan dipakai untuk varian tampilan.
 - **Penulis** = user WP. `user_nicename` = slug profil lama (`/profile/syahril-mubarok`), dengan display name dan bio. Foto disimpan di media lokal lewat user meta `jatman_avatar_id`, lalu dipakai filter `get_avatar_url` (tidak bergantung Gravatar).
 - **Field post:** judul, isi (block), ringkasan → `post_excerpt`, gambar utama + caption, tanggal terbit asli, tag.
-- **Pilihan Redaksi:** post meta `jatman_pilihan` (boolean, `show_in_rest`). Ada checkbox di sidebar editor (satu panel `PluginDocumentSettingPanel`). Query Loop dapat variasi "Pilihan Redaksi" yang memfilter meta ini lewat filter `query_loop_block_query_vars` / `rest_post_query`.
+- **Pilihan Redaksi:** post meta `jatman_pilihan` (boolean, `show_in_rest`). Ada checkbox di sidebar editor (satu panel `PluginDocumentSettingPanel`). Bagian-bagian beranda dirender oleh block dinamis `jatman/post-list` (kategori ditentukan lewat slug, bukan ID, jadi tetap aman setelah migrasi). Pilihan Redaksi adalah atribut `pilihan: true` di block itu. Menu navigasi ditulis langsung di template part header, bukan dibuat oleh importer.
 - **Hero:** post yang di-sticky. Kalau tidak ada, berita terbaru.
 - **URL:**
   - Permalink `/%postname%/` → artikel tetap `jatman.or.id/<slug>`.
@@ -89,7 +89,7 @@ Emas tidak dipakai untuk teks isi. Setiap pasangan teks/latar harus lolos WCAG A
 ### Tipografi (self-hosted `woff2` lewat `fontFace` di theme.json, lisensi OFL)
 - **Plus Jakarta Sans** (400/600/700/800): judul, navigasi, UI.
 - **Source Serif 4** (400/600 + italic): isi artikel, kutipan.
-- **Amiri** (400/700): teks Arab. Diberi `lang="ar" dir="rtl"`, ukuran ~1.4× teks sekitarnya, line-height lega.
+- **Uthman Taha (versi -ID)**: teks Arab. Sumbernya `UthmanTN1-ID Ver10.ttf` (400) dan `UthmanTN1B-ID Ver10.ttf` (700) dari repo lokal `../uthman-taha` (KFGQPC Uthman Taha Naskh yang sudah ditambal dengan tanda Quran), lalu dikonversi ke woff2. `unicode-range` dibatasi ke huruf Arab dan font ini diletakkan paling depan di setiap font stack, jadi huruf Arab di mana pun otomatis memakai Uthman Taha, sedangkan Latin jatuh ke font berikutnya. Paragraf yang sebagian besar berisi teks Arab diberi `lang="ar" dir="rtl"` dan ukuran ~1.4× teks sekitarnya, dengan line-height lega.
 - Skala fluid (`clamp`). Lebar baris isi ±68ch. Font utama di-preload, `font-display: swap`.
 
 ### Dark mode
@@ -169,7 +169,7 @@ Format baris: `<slug-kategori-wp> <url>`. Kategori ditetapkan di file ini (bukan
 1. Pastikan permalink, base penulis, dan pohon kategori ada (buat kalau belum).
 2. Upsert penulis berdasarkan `user_nicename` (role `author`, password acak), set bio, unggah foto → `jatman_avatar_id`.
 3. Upsert post berdasarkan `post_name`: `post_date` asli, status `publish`, excerpt, isi, kategori, tag. Gambar utama diunggah sekali (dicocokkan lewat meta `jatman_source_url`).
-4. Set `jatman_pilihan` pada 5 post, sticky pada 1 post (berita Nasional terbaru), buat halaman Tentang + placeholder, buat menu navigasi.
+4. Set `jatman_pilihan` pada 5 post, sticky pada 1 post (berita Nasional terbaru), buat halaman Tentang + placeholder.
 5. Cetak ringkasan jumlah (dibuat / diperbarui / gagal).
 - Idempotent: menjalankan dua kali tidak membuat duplikat, dan jumlahnya tetap sama.
 
@@ -189,4 +189,5 @@ Format baris: `<slug-kategori-wp> <url>`. Kategori ditetapkan di file ini (bukan
 - **Markup Varient tidak konsisten** antar artikel lama → konversi ke block bisa meleset. Mitigasi: fallback `core/html` dan cek visual per artikel sample.
 - **Rewrite kategori tanpa base** bisa bentrok dengan slug post/halaman. Mitigasi: post/halaman yang menang, bentrok dicatat, dan diuji di §8.2.
 - **Status "Pustaka Tasawuf"** belum pasti kategori atau bukan (lihat §4). Diselesaikan di spec migrasi.
+- **Lisensi font Arab:** KFGQPC Uthman Taha Naskh bukan OFL, dan versi -ID adalah turunan yang dimodifikasi. Izin untuk menyematkan versi modifikasi ini di web publik perlu dipastikan sebelum produksi. Untuk review lokal, aman.
 - **Hak gambar:** gambar sample diambil dari jatman.or.id sendiri dan hanya untuk review lokal (`data/` di-gitignore).
