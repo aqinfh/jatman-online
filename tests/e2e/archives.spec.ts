@@ -70,3 +70,15 @@ test('halaman rubrik seperti Indeks: satu artikel besar, daftar, dan sidebar', a
   expect(sizes[0]).toBeGreaterThan(sizes[1] * 1.4);
   await expect(page.locator('aside.jm-aside .jm-section__title')).toHaveText(['Terpopuler', 'Pilihan Redaksi']);
 });
+
+test('hasil pencarian hanya artikel, berupa daftar seragam', async ({ page }) => {
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await page.goto('/?s=jatman');
+  const hrefs = await page.locator('.jm-feed .jm-card__title a').evaluateAll((as) => as.map((a) => new URL((a as HTMLAnchorElement).href).pathname));
+  expect(hrefs.length).toBeGreaterThan(1);
+  for (const p of ['/tentang/', '/indeks/', '/redaksi/', '/kontak/', '/kirim-tulisan/']) expect(hrefs).not.toContain(p);
+  const sizes = await page.locator('.jm-feed > li .jm-card__title').evaluateAll((els) => els.slice(0, 2).map((e) => getComputedStyle(e).fontSize));
+  expect(sizes[0]).toBe(sizes[1]);
+  const media = await page.locator('.jm-feed > li .jm-card__media').evaluateAll((els) => els.slice(0, 2).map((e) => Math.round(e.getBoundingClientRect().width)));
+  expect(media[0]).toBe(media[1]);
+});

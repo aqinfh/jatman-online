@@ -192,13 +192,13 @@ p.jm-arab { font-size: 1.45em; line-height: 2.1; text-align: right; }
 .jm-label--qa { background: var(--wp--preset--color--night); color: var(--wp--preset--color--on-night); }
 .jm-meta { display: flex; flex-wrap: wrap; gap: .25rem .5rem; margin: 0; font-size: .8125rem; color: var(--wp--preset--color--muted); }
 .jm-meta__author { font-weight: 600; color: var(--wp--preset--color--ink); }
-.jm-meta time::before { content: "·"; margin-right: .5rem; }
+.jm-meta__author:not(:empty) + time::before { content: "·"; margin-right: .5rem; }
 
 .jm-card { display: grid; gap: .875rem; align-content: start; }
 /* Rasio gambar: 16:9 untuk semua lanskap (satu aturan), 4:5 hanya untuk foto Tokoh. */
 .jm-card__media { display: block; overflow: hidden; border-radius: var(--jm-radius-sm); background: var(--wp--preset--color--cream); aspect-ratio: 16 / 9; }
 /* Gambar utama besar lebih lebar (2:1) supaya tidak menghabiskan layar. */
-.jm-card--hero-main .jm-card__media, .jm-feed > li:first-child .jm-card__media { border-radius: var(--jm-radius); aspect-ratio: 2 / 1; }
+.jm-card--hero-main .jm-card__media, .jm-feed:not(.jm-feed--uniform) > li:first-child .jm-card__media { border-radius: var(--jm-radius); aspect-ratio: 2 / 1; }
 .jm-card__media img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .5s var(--jm-ease); }
 .jm-card:hover .jm-card__media img { transform: scale(1.03); }
 .jm-card__body { display: grid; gap: .5rem; align-content: start; justify-items: start; }
@@ -480,10 +480,10 @@ p.jm-arab { font-size: 1.45em; line-height: 2.1; text-align: right; }
 /* Indeks: artikel teratas besar, sisanya daftar, sidebar seperti halaman artikel. */
 .jm-feed { list-style: none; margin: 0; padding: 0; display: grid; }
 .jm-feed > li { margin: 0; }
-.jm-feed > li:first-child .jm-card--list { grid-template-columns: 1fr; gap: 1.25rem; padding-bottom: 2rem; }
+.jm-feed:not(.jm-feed--uniform) > li:first-child .jm-card--list { grid-template-columns: 1fr; gap: 1.25rem; padding-bottom: 2rem; }
 
-.jm-feed > li:first-child .jm-card__title { font-size: clamp(1.375rem, 1.1rem + 1vw, 1.75rem); font-weight: 800; line-height: 1.2; letter-spacing: -.02em; }
-.jm-feed > li:first-child .jm-card__excerpt { display: block; font-size: 1.0625rem; }
+.jm-feed:not(.jm-feed--uniform) > li:first-child .jm-card__title { font-size: clamp(1.375rem, 1.1rem + 1vw, 1.75rem); font-weight: 800; line-height: 1.2; letter-spacing: -.02em; }
+.jm-feed:not(.jm-feed--uniform) > li:first-child .jm-card__excerpt { display: block; font-size: 1.0625rem; }
 
 .jm-loadmore { display: grid; justify-items: center; gap: .75rem; margin-top: 3rem; }
 .jm-loadmore__button {
@@ -507,14 +507,20 @@ p.jm-arab { font-size: 1.45em; line-height: 2.1; text-align: right; }
 	.jm-header .wp-block-search__button, .jm-theme-toggle,
 	.jm-nav .wp-block-navigation__responsive-container-open { width: 38px; height: 38px; }
 }
-/* Pencarian di HP/tablet: terbuka sebagai panel selebar header, bukan melebar di dalam baris. */
+/* Pencarian header di semua ukuran: terbuka sebagai panel di bawah header, tidak mendesak menu. */
+.jm-header .wp-block-search:not(.wp-block-search__searchfield-hidden) .wp-block-search__input {
+	position: absolute; right: 0; top: calc(100% + .5rem); z-index: 60;
+	width: min(100%, 36rem) !important; height: 3rem; padding: 0 1.25rem; margin: 0;
+	border: 1px solid var(--wp--preset--color--line); border-radius: 999px;
+	background: var(--wp--preset--color--base); box-shadow: var(--jm-shadow); transition: none !important;
+}
 @media (max-width: 1199px) {
-	.jm-header .wp-block-search:not(.wp-block-search__searchfield-hidden) .wp-block-search__input {
-		position: absolute; left: 0; right: 0; top: calc(100% + .5rem); z-index: 60;
-		width: auto !important; height: 3rem; padding: 0 1.1rem; margin: 0;
-		background: var(--wp--preset--color--base); box-shadow: var(--jm-shadow);
-	}
-	.jm-header .wp-block-search__input:focus-visible { outline: 2px solid var(--wp--preset--color--brand); outline-offset: 0; }
+	.jm-header .wp-block-search:not(.wp-block-search__searchfield-hidden) .wp-block-search__input { left: 0; width: auto !important; }
+}
+/* Cincin fokus kolom isian mengikuti bentuk pill (bukan outline kotak emas). */
+.wp-block-search__input:focus-visible {
+	outline: none; border-color: var(--wp--preset--color--brand) !important;
+	box-shadow: 0 0 0 3px color-mix(in srgb, var(--wp--preset--color--brand) 25%, transparent), var(--jm-shadow);
 }
 /* Laci menu: rata kiri, berstruktur; sub-rubrik Berita sebagai chip. */
 .jm-nav .wp-block-navigation__responsive-container.is-menu-open .wp-block-navigation__responsive-container-content { align-items: stretch !important; padding-top: 3.5rem; }

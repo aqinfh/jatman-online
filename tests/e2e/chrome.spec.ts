@@ -150,3 +150,18 @@ test.describe('hamburger HP', () => {
     for (let k = 1; k < sameRow.length; k++) expect(sameRow[k].x - sameRow[k - 1].r).toBeGreaterThanOrEqual(8);
   });
 });
+
+test('desktop: kolom pencarian terbuka di bawah header tanpa menggeser menu', async ({ page }) => {
+  await page.setViewportSize({ width: 1280, height: 800 });
+  await page.goto('/');
+  const before = await page.locator('.jm-nav').getByRole('link', { name: 'Hikmah', exact: true }).boundingBox();
+  await page.locator('.jm-header .wp-block-search__button').click();
+  const input = page.locator('.jm-header .wp-block-search__input');
+  await expect(input).toBeVisible();
+  const after = await page.locator('.jm-nav').getByRole('link', { name: 'Hikmah', exact: true }).boundingBox();
+  expect(Math.round(after!.x)).toBe(Math.round(before!.x));
+  const header = await page.locator('.jm-header').boundingBox();
+  const box = await input.boundingBox();
+  expect(box!.y).toBeGreaterThanOrEqual(header!.y + header!.height);
+  expect(box!.width).toBeGreaterThanOrEqual(400);
+});
