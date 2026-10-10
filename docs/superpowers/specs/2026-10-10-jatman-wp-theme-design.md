@@ -75,14 +75,19 @@ Pembagian tanggung jawab: **tema** hanya mengurus tampilan. **mu-plugin** mengur
 
 | Token | Terang | Gelap | Pemakaian |
 |---|---|---|---|
-| `brand` (Hijau Thariqah) | `#00712D` | `#4FBF7F` | brand, link, tombol |
-| `night` (Hijau malam) | `#063D27` | `#0A2A1C` | top bar, pita rubrik, footer |
-| `gold` (Emas) | `#B8913A` | `#D9B65C` | aksen saja: kutipan Dawuh, garis halus, label rubrik teduh |
-| `base` (Latar) | `#FFFFFF` | `#0E1512` | halaman |
-| `cream` (Krem) | `#F7F3EA` | `#16201B` | latar rubrik teduh |
-| `ink` (Teks) | `#15201A` | `#E6ECE8` | isi |
-| `muted` | `#5B6B62` | `#9DB0A5` | meta, caption |
-| `line` | `#E3E8E4` | `#24312A` | garis, border |
+| `brand` (Hijau JATMAN, warna logo) | `#00712D` | `#C8A774` (aksen emas cokelat) | brand, link, label, tombol |
+| `on-brand` | `#FFFFFF` | `#111111` | teks di atas `brand` |
+| `night` (Hijau malam) | `#08321F` | `#0B2A1C` | top bar, pita, footer |
+| `on-night` | `#F5F2EC` | `#F2F0EB` | teks di atas `night` |
+| `gold` (Emas cokelat) | `#9A7B4F` | `#C8A774` | aksen di latar terang: ornamen, fokus |
+| `gold-soft` (Emas cokelat lembut) | `#C8A774` | `#C8A774` | aksen di latar gelap: motif, nomor Terpopuler, garis label |
+| `base` (Putih/Hitam) | `#FFFFFF` | `#0F0F0F` | halaman |
+| `cream` (Ivory) | `#F5F2EC` | `#1A1A1A` | pita Dawuh, latar thumbnail cadangan |
+| `ink` (Hitam tegas) | `#111111` | `#EDEDED` | teks |
+| `muted` | `#5E5E5E` | `#A6A6A6` | meta, caption |
+| `line` | `#E5E5E5` | `#2A2A2A` | garis |
+
+Palet finishing (keputusan pengguna 2026-10-10): hijau gelap elegan, emas cokelat, putih bersih, hitam tegas — tanpa kuning/mint/abu kehijauan. Di mode gelap aksen berpindah ke emas cokelat; hijau tua tetap di permukaan.
 
 Emas tidak dipakai untuk teks isi. Setiap pasangan teks/latar harus lolos WCAG AA (≥ 4.5:1 untuk teks normal) di kedua mode. Nilai di atas boleh digeser sedikit kalau ada pasangan yang gagal.
 

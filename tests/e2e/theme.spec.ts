@@ -16,7 +16,7 @@ test('mode gelap tersimpan dipasang sebelum body dirender', async ({ page }) => 
   await themeAtFirstPaint(page);
   await page.goto('/');
   expect(await page.evaluate(() => (window as any).__themeAtBody)).toBe('dark');
-  expect(await page.evaluate(() => getComputedStyle(document.body).backgroundColor)).toBe('rgb(14, 21, 18)');
+  expect(await page.evaluate(() => getComputedStyle(document.body).backgroundColor)).toBe('rgb(15, 15, 15)');
 });
 
 test('default terang dengan latar putih', async ({ page }) => {
@@ -109,4 +109,28 @@ test('localStorage diblokir: toggle tetap berfungsi tanpa error', async ({ page 
   await page.getByRole('button', { name: 'Mode gelap' }).click();
   await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
   expect(errors).toEqual([]);
+});
+
+const PALETTE = {
+  light: { brand: '#00712D', 'on-brand': '#FFFFFF', night: '#08321F', 'on-night': '#F5F2EC', gold: '#9A7B4F', 'gold-soft': '#C8A774', base: '#FFFFFF', cream: '#F5F2EC', ink: '#111111', muted: '#5E5E5E', line: '#E5E5E5' },
+  dark: { brand: '#C8A774', 'on-brand': '#111111', night: '#0B2A1C', 'on-night': '#F2F0EB', gold: '#C8A774', 'gold-soft': '#C8A774', base: '#0F0F0F', cream: '#1A1A1A', ink: '#EDEDED', muted: '#A6A6A6', line: '#2A2A2A' },
+};
+
+for (const mode of ['light', 'dark'] as const) {
+  test(`palet JATMAN (${mode}): hijau tua, emas cokelat, putih bersih, hitam tegas`, async ({ page }) => {
+    await page.addInitScript((m) => localStorage.setItem('jatman-theme', m), mode);
+    await page.goto('/');
+    const actual = await page.evaluate((keys) => {
+      const cs = getComputedStyle(document.body);
+      return Object.fromEntries(keys.map((k) => [k, cs.getPropertyValue(`--wp--preset--color--${k}`).trim().toUpperCase()]));
+    }, Object.keys(PALETTE[mode]));
+    expect(actual).toEqual(PALETTE[mode]);
+  });
+}
+
+test('tidak ada warna kuning/emas terang tersisa di CSS tema', async ({ request }) => {
+  const css = await (await request.get('/wp-content/themes/jatman/assets/css/main.css')).text();
+  for (const old of ['#E8C76E', '#D9B65C', '#B8913A', '#4FBF7F', '#1D1606', '#0E1512', '#15201A', '#5B6B62']) {
+    expect(css.toUpperCase(), old).not.toContain(old);
+  }
 });

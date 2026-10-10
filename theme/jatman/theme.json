@@ -17,53 +17,58 @@
       "palette": [
         {
           "slug": "brand",
-          "name": "Hijau Thariqah",
+          "name": "Hijau JATMAN",
           "color": "#00712D"
         },
         {
           "slug": "on-brand",
-          "name": "Teks di Hijau Thariqah",
+          "name": "Teks di Hijau JATMAN",
           "color": "#FFFFFF"
         },
         {
           "slug": "night",
           "name": "Hijau Malam",
-          "color": "#063D27"
+          "color": "#08321F"
         },
         {
           "slug": "on-night",
           "name": "Teks di Hijau Malam",
-          "color": "#F7F3EA"
+          "color": "#F5F2EC"
         },
         {
           "slug": "gold",
-          "name": "Emas",
-          "color": "#B8913A"
+          "name": "Emas Cokelat",
+          "color": "#9A7B4F"
+        },
+        {
+          "slug": "gold-soft",
+          "name": "Emas Cokelat Lembut (di latar gelap)",
+          "color": "#C8A774"
         },
         {
           "slug": "base",
-          "name": "Latar",
+          "name": "Putih",
           "color": "#FFFFFF"
         },
         {
           "slug": "cream",
-          "name": "Krem",
-          "color": "#F7F3EA"
+          "name": "Ivory",
+          "color": "#F5F2EC"
         },
         {
           "slug": "ink",
-          "name": "Teks",
-          "color": "#15201A"
+          "name": "Hitam",
+          "color": "#111111"
         },
         {
           "slug": "muted",
-          "name": "Teks Redup",
-          "color": "#5B6B62"
+          "name": "Abu",
+          "color": "#5E5E5E"
         },
         {
           "slug": "line",
           "name": "Garis",
-          "color": "#E3E8E4"
+          "color": "#E5E5E5"
         }
       ]
     },
