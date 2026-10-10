@@ -1,0 +1,58 @@
+/* ==========================================================================
+   JATMAN Online — main.css
+   Token warna/tipografi dari theme.json (--wp--preset--*). Dark mode menimpa
+   token yang sama lewat :root[data-theme="dark"].
+   ========================================================================== */
+
+/* == 1. Token & dasar ======================================================= */
+:root {
+	--jm-gutter: clamp(1rem, 4vw, 2rem);
+	--jm-wide: 1240px;
+	--jm-radius: 14px;
+	--jm-radius-sm: 8px;
+	--jm-shadow: 0 1px 2px rgb(6 61 39 / .06), 0 12px 32px -16px rgb(6 61 39 / .22);
+	--jm-ease: cubic-bezier(.2, .7, .2, 1);
+	color-scheme: light;
+}
+
+:root[data-theme="dark"],
+:root[data-theme="dark"] body {
+	color-scheme: dark;
+	--wp--preset--color--brand: #4FBF7F;
+	--wp--preset--color--on-brand: #0E1512;
+	--wp--preset--color--night: #0A2A1C;
+	--wp--preset--color--on-night: #E6ECE8;
+	--wp--preset--color--gold: #D9B65C;
+	--wp--preset--color--base: #0E1512;
+	--wp--preset--color--cream: #16201B;
+	--wp--preset--color--ink: #E6ECE8;
+	--wp--preset--color--muted: #9DB0A5;
+	--wp--preset--color--line: #24312A;
+	--jm-shadow: 0 1px 2px rgb(0 0 0 / .4), 0 12px 32px -16px rgb(0 0 0 / .6);
+}
+
+html { scroll-padding-top: 6rem; }
+body { -webkit-font-smoothing: antialiased; }
+.wp-site-blocks { padding: 0; }
+.wp-site-blocks > * { margin-block: 0; }
+img { height: auto; }
+a { text-underline-offset: .18em; text-decoration-thickness: 1px; }
+:where(a, button, input, summary):focus-visible {
+	outline: 3px solid var(--wp--preset--color--gold);
+	outline-offset: 2px;
+	border-radius: 4px;
+}
+.screen-reader-text {
+	border: 0; clip-path: inset(50%); height: 1px; margin: -1px; overflow: hidden;
+	padding: 0; position: absolute; width: 1px; word-wrap: normal !important;
+}
+.jm-wrap { width: min(100% - 2 * var(--jm-gutter), var(--jm-wide)); margin-inline: auto; }
+
+/* Teks Arab: Uthman Taha sudah di depan font stack (unicode-range Arab); ini mengatur ukuran & arah. */
+[lang="ar"] { font-family: var(--wp--preset--font-family--arabic); font-size: 1.25em; line-height: 1.9; }
+[lang="ar"] [lang="ar"] { font-size: inherit; }
+p.jm-arab { font-size: 1.45em; line-height: 2.1; text-align: right; }
+
+@media (prefers-reduced-motion: reduce) {
+	*, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; scroll-behavior: auto !important; }
+}

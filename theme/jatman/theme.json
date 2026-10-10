@@ -1,5 +1,312 @@
 {
   "$schema": "https://schemas.wp.org/trunk/theme.json",
   "version": 3,
-  "settings": { "appearanceTools": true }
+  "settings": {
+    "appearanceTools": true,
+    "layout": {
+      "contentSize": "720px",
+      "wideSize": "1240px"
+    },
+    "color": {
+      "custom": false,
+      "customDuotone": false,
+      "customGradient": false,
+      "defaultDuotone": false,
+      "defaultGradients": false,
+      "defaultPalette": false,
+      "palette": [
+        {
+          "slug": "brand",
+          "name": "Hijau Thariqah",
+          "color": "#00712D"
+        },
+        {
+          "slug": "on-brand",
+          "name": "Teks di Hijau Thariqah",
+          "color": "#FFFFFF"
+        },
+        {
+          "slug": "night",
+          "name": "Hijau Malam",
+          "color": "#063D27"
+        },
+        {
+          "slug": "on-night",
+          "name": "Teks di Hijau Malam",
+          "color": "#F7F3EA"
+        },
+        {
+          "slug": "gold",
+          "name": "Emas",
+          "color": "#B8913A"
+        },
+        {
+          "slug": "base",
+          "name": "Latar",
+          "color": "#FFFFFF"
+        },
+        {
+          "slug": "cream",
+          "name": "Krem",
+          "color": "#F7F3EA"
+        },
+        {
+          "slug": "ink",
+          "name": "Teks",
+          "color": "#15201A"
+        },
+        {
+          "slug": "muted",
+          "name": "Teks Redup",
+          "color": "#5B6B62"
+        },
+        {
+          "slug": "line",
+          "name": "Garis",
+          "color": "#E3E8E4"
+        }
+      ]
+    },
+    "typography": {
+      "customFontSize": false,
+      "defaultFontSizes": false,
+      "dropCap": false,
+      "fluid": true,
+      "fontFamilies": [
+        {
+          "slug": "sans",
+          "name": "Plus Jakarta Sans",
+          "fontFamily": "\"Plus Jakarta Sans\", \"Uthman Taha\", system-ui, sans-serif",
+          "fontFace": [
+            {
+              "fontFamily": "Plus Jakarta Sans",
+              "fontStyle": "normal",
+              "fontWeight": "200 800",
+              "fontDisplay": "swap",
+              "src": [
+                "file:./assets/fonts/plus-jakarta-sans-latin-wght-normal.woff2"
+              ],
+              "unicodeRange": "U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD"
+            },
+            {
+              "fontFamily": "Plus Jakarta Sans",
+              "fontStyle": "normal",
+              "fontWeight": "200 800",
+              "fontDisplay": "swap",
+              "src": [
+                "file:./assets/fonts/plus-jakarta-sans-latin-ext-wght-normal.woff2"
+              ],
+              "unicodeRange": "U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF"
+            }
+          ]
+        },
+        {
+          "slug": "serif",
+          "name": "Source Serif 4",
+          "fontFamily": "\"Source Serif 4\", \"Uthman Taha\", Georgia, serif",
+          "fontFace": [
+            {
+              "fontFamily": "Source Serif 4",
+              "fontStyle": "normal",
+              "fontWeight": "200 900",
+              "fontDisplay": "swap",
+              "src": [
+                "file:./assets/fonts/source-serif-4-latin-wght-normal.woff2"
+              ],
+              "unicodeRange": "U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD"
+            },
+            {
+              "fontFamily": "Source Serif 4",
+              "fontStyle": "normal",
+              "fontWeight": "200 900",
+              "fontDisplay": "swap",
+              "src": [
+                "file:./assets/fonts/source-serif-4-latin-ext-wght-normal.woff2"
+              ],
+              "unicodeRange": "U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF"
+            },
+            {
+              "fontFamily": "Source Serif 4",
+              "fontStyle": "italic",
+              "fontWeight": "200 900",
+              "fontDisplay": "swap",
+              "src": [
+                "file:./assets/fonts/source-serif-4-latin-wght-italic.woff2"
+              ],
+              "unicodeRange": "U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD"
+            },
+            {
+              "fontFamily": "Source Serif 4",
+              "fontStyle": "italic",
+              "fontWeight": "200 900",
+              "fontDisplay": "swap",
+              "src": [
+                "file:./assets/fonts/source-serif-4-latin-ext-wght-italic.woff2"
+              ],
+              "unicodeRange": "U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF"
+            }
+          ]
+        },
+        {
+          "slug": "arabic",
+          "name": "Uthman Taha",
+          "fontFamily": "\"Uthman Taha\", serif",
+          "fontFace": [
+            {
+              "fontFamily": "Uthman Taha",
+              "fontStyle": "normal",
+              "fontWeight": "400",
+              "fontDisplay": "swap",
+              "src": [
+                "file:./assets/fonts/uthman-taha-id-400.woff2"
+              ],
+              "unicodeRange": "U+0600-06FF, U+0750-077F, U+0870-089F, U+08A0-08FF, U+FB50-FDFF, U+FE70-FEFF, U+200C-200F, U+25CC"
+            },
+            {
+              "fontFamily": "Uthman Taha",
+              "fontStyle": "normal",
+              "fontWeight": "700",
+              "fontDisplay": "swap",
+              "src": [
+                "file:./assets/fonts/uthman-taha-id-700.woff2"
+              ],
+              "unicodeRange": "U+0600-06FF, U+0750-077F, U+0870-089F, U+08A0-08FF, U+FB50-FDFF, U+FE70-FEFF, U+200C-200F, U+25CC"
+            }
+          ]
+        }
+      ],
+      "fontSizes": [
+        {
+          "slug": "small",
+          "name": "Kecil",
+          "size": "0.875rem",
+          "fluid": false
+        },
+        {
+          "slug": "medium",
+          "name": "Sedang",
+          "size": "1rem",
+          "fluid": false
+        },
+        {
+          "slug": "content",
+          "name": "Isi artikel",
+          "size": "1.1875rem",
+          "fluid": {
+            "min": "1.0625rem",
+            "max": "1.1875rem"
+          }
+        },
+        {
+          "slug": "large",
+          "name": "Besar",
+          "size": "1.25rem",
+          "fluid": {
+            "min": "1.125rem",
+            "max": "1.25rem"
+          }
+        },
+        {
+          "slug": "x-large",
+          "name": "Sangat besar",
+          "size": "1.625rem",
+          "fluid": {
+            "min": "1.375rem",
+            "max": "1.625rem"
+          }
+        },
+        {
+          "slug": "xx-large",
+          "name": "Judul",
+          "size": "2.5rem",
+          "fluid": {
+            "min": "1.875rem",
+            "max": "2.5rem"
+          }
+        }
+      ]
+    },
+    "spacing": {
+      "units": [
+        "px",
+        "rem",
+        "%",
+        "vw",
+        "vh"
+      ]
+    },
+    "shadow": {
+      "defaultPresets": false
+    }
+  },
+  "styles": {
+    "color": {
+      "background": "var:preset|color|base",
+      "text": "var:preset|color|ink"
+    },
+    "typography": {
+      "fontFamily": "var:preset|font-family|sans",
+      "fontSize": "var:preset|font-size|medium",
+      "lineHeight": "1.6"
+    },
+    "spacing": {
+      "blockGap": "1.25rem"
+    },
+    "elements": {
+      "link": {
+        "color": {
+          "text": "var:preset|color|brand"
+        }
+      },
+      "heading": {
+        "color": {
+          "text": "var:preset|color|ink"
+        },
+        "typography": {
+          "fontFamily": "var:preset|font-family|sans",
+          "fontWeight": "800",
+          "lineHeight": "1.2",
+          "letterSpacing": "-0.01em"
+        }
+      },
+      "button": {
+        "color": {
+          "background": "var:preset|color|brand",
+          "text": "var:preset|color|on-brand"
+        },
+        "border": {
+          "radius": "999px"
+        },
+        "typography": {
+          "fontWeight": "700"
+        }
+      }
+    },
+    "blocks": {
+      "core/post-content": {
+        "typography": {
+          "fontFamily": "var:preset|font-family|serif",
+          "fontSize": "var:preset|font-size|content",
+          "lineHeight": "1.75"
+        }
+      }
+    }
+  },
+  "templateParts": [
+    {
+      "name": "topbar",
+      "title": "Top bar",
+      "area": "header"
+    },
+    {
+      "name": "header",
+      "title": "Header",
+      "area": "header"
+    },
+    {
+      "name": "footer",
+      "title": "Footer",
+      "area": "footer"
+    }
+  ]
 }
