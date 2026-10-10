@@ -16,7 +16,8 @@ add_action(
 				'single'        => true,
 				'default'       => false,
 				'show_in_rest'  => true,
-				'auth_callback' => static fn(): bool => current_user_can( 'edit_posts' ),
+				// Hanya editor/admin: penulis tidak bisa menjadikan tulisannya sendiri Pilihan Redaksi.
+				'auth_callback' => static fn( $allowed, $meta_key, $post_id, $user_id ): bool => user_can( $user_id, 'edit_others_posts' ),
 			]
 		);
 	}
@@ -26,7 +27,7 @@ add_action(
 	'enqueue_block_editor_assets',
 	static function (): void {
 		$screen = get_current_screen();
-		if ( ! $screen || 'post' !== $screen->post_type ) {
+		if ( ! $screen || 'post' !== $screen->post_type || ! current_user_can( 'edit_others_posts' ) ) {
 			return;
 		}
 		$file = __DIR__ . '/pilihan-panel.js';

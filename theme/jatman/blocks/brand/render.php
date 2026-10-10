@@ -1,4 +1,5 @@
 <?php
+defined( 'ABSPATH' ) || exit;
 /** Lockup JATMAN Online: knot (warna mengikuti tema) + wordmark teks. */
 ?>
 <a <?php echo get_block_wrapper_attributes( [ 'class' => 'jm-brand' ] ); ?> href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home">

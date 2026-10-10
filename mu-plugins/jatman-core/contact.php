@@ -30,13 +30,24 @@ function jatman_handle_contact( array $data, string $ip ): string {
 	}
 	set_transient( $key, 1, MINUTE_IN_SECONDS );
 
-	$sent = wp_mail(
+	// Nama di header tanpa karakter pemisah alamat, supaya tidak bisa menyisipkan penerima Reply-To lain.
+	$header_name = trim( preg_replace( '/[,;:<>"\\\\()\[\]]+/', ' ', $name ) );
+	$sent        = wp_mail(
 		JATMAN_CONTACT_EMAIL,
 		'[JATMAN Online] Pesan dari ' . $name,
 		$message . "\n\n—\n" . $name . ' <' . $email . '>',
-		[ 'Reply-To: ' . $name . ' <' . $email . '>' ]
+		[ 'Reply-To: ' . $header_name . ' <' . $email . '>' ]
 	);
 	return $sent ? 'terkirim' : 'gagal';
+}
+
+/**
+ * Isian POST mentah → string ter-unslash (sekali). Nilai non-string (array) dikosongkan.
+ *
+ * @return array<string, string>
+ */
+function jatman_contact_fields( array $raw ): array {
+	return array_map( static fn( $v ) => is_string( $v ) ? wp_unslash( $v ) : '', $raw );
 }
 
 add_action( 'admin_post_nopriv_jatman_kontak', 'jatman_contact_submit' );
@@ -48,7 +59,7 @@ function jatman_contact_submit(): void {
 		wp_safe_redirect( add_query_arg( 'kontak', 'invalid', $back ) . '#kontak' );
 		exit;
 	}
-	$data   = array_map( static fn( $v ) => is_string( $v ) ? wp_unslash( $v ) : '', wp_unslash( $_POST ) ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput -- disanitasi di jatman_handle_contact().
+	$data   = jatman_contact_fields( $_POST ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput -- disanitasi di jatman_handle_contact().
 	$status = jatman_handle_contact( $data, function_exists( 'jatman_client_ip' ) ? jatman_client_ip() : (string) ( $_SERVER['REMOTE_ADDR'] ?? '' ) );
 	wp_safe_redirect( add_query_arg( 'kontak', $status, remove_query_arg( 'kontak', $back ) ) . '#kontak' );
 	exit;

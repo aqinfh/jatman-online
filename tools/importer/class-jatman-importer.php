@@ -62,7 +62,8 @@ class Jatman_Importer {
 		} else {
 			$id = wp_insert_user(
 				[
-					'user_login'    => $a['slug'],
+					// Username login sengaja bukan slug profil publik, supaya tidak bisa ditebak dari URL /profile/<slug>/.
+					'user_login'    => 'jm-' . strtolower( wp_generate_password( 12, false ) ),
 					'user_nicename' => $a['slug'],
 					'user_email'    => $a['slug'] . '@jatman.invalid',
 					'user_pass'     => wp_generate_password( 32 ),

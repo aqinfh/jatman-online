@@ -6,6 +6,8 @@
  * Inserter: no
  */
 
+defined( 'ABSPATH' ) || exit;
+
 $jatman_img = static fn( string $file ): string => esc_url( get_theme_file_uri( 'assets/img/' . $file ) );
 ?>
 <!-- wp:group {"className":"jm-footer","layout":{"type":"default"}} -->

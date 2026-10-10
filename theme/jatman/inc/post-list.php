@@ -32,7 +32,7 @@ function jatman_query_posts( array $a, array $exclude = [] ): array {
 	$args = [
 		'post_type'           => 'post',
 		'post_status'         => 'publish',
-		'posts_per_page'      => max( 1, (int) $a['count'] ),
+		'posts_per_page'      => min( 20, max( 1, (int) $a['count'] ) ), // atribut block tidak boleh memicu query raksasa
 		'ignore_sticky_posts' => true,
 		'no_found_rows'       => true,
 		// Artikel yang sedang dibuka tidak pernah ikut tampil di daftar mana pun pada halamannya.

@@ -1,4 +1,5 @@
 <?php
+defined( 'ABSPATH' ) || exit;
 /** Pita tipis di atas header: penanda penerbit resmi + tanggal Masehi. */
 ?>
 <div <?php echo get_block_wrapper_attributes( [ 'class' => 'jm-topbar' ] ); ?>>

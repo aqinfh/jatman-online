@@ -1,4 +1,5 @@
 <?php
+defined( 'ABSPATH' ) || exit;
 /** Tombol toggle tema. aria-pressed disinkronkan oleh assets/js/theme.js. */
 ?>
 <button <?php echo get_block_wrapper_attributes( [ 'class' => 'jm-theme-toggle' ] ); ?> type="button" aria-pressed="false" aria-label="Mode gelap" data-jm-theme-toggle>

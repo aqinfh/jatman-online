@@ -4,6 +4,8 @@
  * Slug: jatman/lambang-tentang
  * Inserter: no
  */
+
+defined( 'ABSPATH' ) || exit;
 ?>
 <!-- wp:html -->
 <figure class="jm-page__lambang">

@@ -28,6 +28,8 @@ try {
 	jt_same( 'Keterangan foto', wp_get_attachment_caption( $thumb ), 'caption gambar utama' );
 	jt_same( 'Alt utama', get_post_meta( $thumb, '_wp_attachment_image_alt', true ), 'alt gambar utama' );
 	jt_assert( is_sticky( $post->ID ), 'flag sticky' );
+	$jt_imported_author = get_user_by( 'slug', 'jt-penulis-a' );
+	jt_assert( $jt_imported_author && 'jt-penulis-a' !== $jt_imported_author->user_login, 'username login penulis bukan slug profil publik' );
 	jt_same( '1', get_post_meta( $post->ID, 'jatman_pilihan', true ), 'flag pilihan' );
 	jt_same( 120, jatman_views( $post->ID ), 'jumlah pembaca dari sumber ikut diimpor' );
 

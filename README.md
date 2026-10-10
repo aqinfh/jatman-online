@@ -32,4 +32,16 @@ npm run screens          # screenshot semua halaman → tests/output/screens/
 npm run lighthouse       # performa mobile beranda & artikel (minimal 90)
 ```
 
+## Keamanan saat dipasang di hosting
+
+Sudah ditangani di kode (`mu-plugins/jatman-core/hardening.php` dan lainnya): versi WordPress tidak diumumkan, XML-RPC mati, daftar user lewat REST hanya untuk yang login, file PHP tema tidak bisa dibuka langsung, username login penulis hasil impor bukan slug profilnya, Pilihan Redaksi hanya bisa diatur editor/admin, dan formulir kontak memakai nonce, honeypot, serta batas 1 pesan per menit per IP.
+
+Yang harus diatur di server (di luar repo):
+
+- `wp-config.php`: `WP_DEBUG` dan `WP_DEBUG_LOG` **mati** (di lokal hidup; di produksi `wp-content/debug.log` bisa dibaca siapa saja), `DISALLOW_FILE_EDIT` `true`, dan salt/key unik.
+- Di balik Cloudflare/proxy: set `JATMAN_CLIENT_IP_HEADER` (mis. `'HTTP_CF_CONNECTING_IP'`). Jangan diset bila tidak ada proxy, karena header itu bisa dipalsukan pengunjung.
+- SMTP aktif supaya formulir Kontak terkirim. Bila memakai cache halaman penuh, kecualikan `/kontak/` (nonce formulir kedaluwarsa ±12–24 jam).
+- Akun admin: jangan pakai username `admin`, password kuat, dan aktifkan 2FA atau pembatas percobaan login.
+- Hapus `readme.html` dan `license.txt` bawaan WordPress, serta jangan unggah `tools/`, `tests/`, `docs/`, atau `node_modules/` ke server: yang dipasang hanya `theme/jatman` dan `mu-plugins/`.
+
 Spec: `docs/superpowers/specs/2026-10-10-jatman-wp-theme-design.md`
