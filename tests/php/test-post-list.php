@@ -43,7 +43,7 @@ try {
 
 	$cards = jatman_render_post_list( [ 'layout' => 'cards', 'category' => 'hikmah,dawuh', 'count' => 4, 'title' => 'Hikmah' ] );
 	jt_assert( str_contains( $cards, 'Hikmah Pagi' ) && str_contains( $cards, 'Dawuh Kiai' ), 'kategori dipisah koma = gabungan' );
-	jt_assert( ! str_contains( $cards, 'jm-card__media' ), 'post tanpa gambar utama tidak merender wadah gambar' );
+	jt_assert( str_contains( $cards, 'jm-card__media--empty' ) && ! str_contains( $cards, '<img' ), 'post tanpa gambar utama mendapat thumbnail cadangan (bukan img rusak)' );
 
 	$quote = jatman_render_post_list( [ 'layout' => 'quote', 'category' => 'dawuh', 'count' => 1, 'title' => 'Dawuh', 'band' => 'cream' ] );
 	jt_assert( str_contains( $quote, '>Dawuh Kiai</a>' ) && str_contains( $quote, 'jm-band--cream' ), 'pita Dawuh menampilkan judul artikel, di pita krem' );

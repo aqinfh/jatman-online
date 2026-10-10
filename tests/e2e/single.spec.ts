@@ -26,11 +26,11 @@ test('artikel berita: semua bagian lengkap', async ({ page }) => {
   await expect(page.locator('body')).not.toHaveClass(/is-teduh/);
 });
 
-test('artikel Dawuh memakai varian teduh', async ({ page }) => {
+test('artikel Dawuh tampil sama seperti artikel lain (tanpa varian khusus)', async ({ page }) => {
   await page.goto(`/${DAWUH}/`);
-  await expect(page.locator('body')).toHaveClass(/is-teduh/);
+  await expect(page.locator('body')).not.toHaveClass(/is-teduh/);
   const bg = await page.locator('.jm-single').evaluate((el) => getComputedStyle(el).backgroundColor);
-  expect(bg).toBe('rgb(247, 243, 234)');
+  expect(bg).toBe('rgba(0, 0, 0, 0)');
 });
 
 test('salin tautan memberi konfirmasi', async ({ page, context }) => {

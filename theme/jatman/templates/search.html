@@ -4,10 +4,10 @@
 <!-- wp:group {"tagName":"main","className":"jm-archive","layout":{"type":"default"}} -->
 <main class="wp-block-group jm-archive"><!-- wp:jatman/archive-header /-->
 
-<!-- wp:group {"className":"jm-archive__body","layout":{"type":"default"}} -->
-<div class="wp-block-group jm-archive__body"><!-- wp:query {"queryId":1,"query":{"inherit":true},"layout":{"type":"default"}} -->
-<div class="wp-block-query"><!-- wp:post-template {"className":"jm-grid"} -->
-<!-- wp:jatman/card /-->
+<!-- wp:group {"className":"jm-archive__body jm-single__layout","layout":{"type":"default"}} -->
+<div class="wp-block-group jm-archive__body jm-single__layout"><!-- wp:query {"queryId":1,"query":{"inherit":true},"layout":{"type":"default"}} -->
+<div class="wp-block-query"><!-- wp:post-template {"className":"jm-feed"} -->
+<!-- wp:jatman/card {"variant":"list"} /-->
 <!-- /wp:post-template -->
 
 <!-- wp:query-pagination {"className":"jm-pagination","layout":{"type":"flex","justifyContent":"center"}} -->
@@ -21,7 +21,13 @@
 <p>Tidak ada hasil. Coba kata kunci lain.</p>
 <!-- /wp:paragraph -->
 <!-- /wp:query-no-results --></div>
-<!-- /wp:query --></div>
+<!-- /wp:query -->
+
+<!-- wp:group {"tagName":"aside","className":"jm-aside","layout":{"type":"default"}} -->
+<aside class="wp-block-group jm-aside"><!-- wp:jatman/post-list {"layout":"compact","popular":true,"count":5,"title":"Terpopuler"} /-->
+
+<!-- wp:jatman/post-list {"layout":"compact","pilihan":true,"count":5,"title":"Pilihan Redaksi"} /--></aside>
+<!-- /wp:group --></div>
 <!-- /wp:group --></main>
 <!-- /wp:group -->
 

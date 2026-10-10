@@ -70,12 +70,5 @@ add_filter(
 	2
 );
 
-add_filter(
-	'body_class',
-	static function ( array $classes ): array {
-		if ( function_exists( 'jatman_is_teduh' ) && ( ( is_singular( 'post' ) && jatman_is_teduh( get_queried_object_id() ) ) || ( is_category() && jatman_is_teduh() ) ) ) {
-			$classes[] = 'is-teduh';
-		}
-		return $classes;
-	}
-);
+// Semua artikel & rubrik tampil sama (keputusan pengguna 2026-10-10). Penanda rubrik teduh tetap ada di
+// mu-plugin (jatman_is_teduh) bila kelak dibutuhkan varian tema khusus.

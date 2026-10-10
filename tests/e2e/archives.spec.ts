@@ -5,18 +5,18 @@ test('rubrik Berita: pita, sub-tab, grid kartu', async ({ page }) => {
   await expect(page.locator('.jm-archive-head h1')).toHaveText('Nasional');
   await expect(page.locator('.jm-tabs a')).toHaveText(['Semua', 'Nasional', 'Daerah', 'Internasional']);
   await expect(page.locator('.jm-tabs a[aria-current="page"]')).toHaveText('Nasional');
-  expect(await page.locator('.jm-grid .jm-card').count()).toBeGreaterThan(0);
+  expect(await page.locator('.jm-feed .jm-card').count()).toBeGreaterThan(0);
 });
 
 test('rubrik /berita/ memuat berita dari semua sub-rubrik', async ({ page }) => {
   await page.goto('/berita/');
   await expect(page.locator('.jm-tabs a[aria-current="page"]')).toHaveText('Semua');
-  expect(await page.locator('.jm-grid .jm-card').count()).toBeGreaterThanOrEqual(7);
+  expect(await page.locator('.jm-feed .jm-card').count()).toBeGreaterThanOrEqual(7);
 });
 
-test('rubrik teduh memakai pita krem', async ({ page }) => {
+test('rubrik Hikmah tampil sama seperti rubrik lain (tanpa varian khusus)', async ({ page }) => {
   await page.goto('/hikmah/');
-  await expect(page.locator('body')).toHaveClass(/is-teduh/);
+  await expect(page.locator('body')).not.toHaveClass(/is-teduh/);
   await expect(page.locator('.jm-archive-head h1')).toHaveText('Hikmah');
   await expect(page.locator('.jm-tabs')).toHaveCount(0);
 });
@@ -27,7 +27,7 @@ test('halaman penulis: foto, nama, jumlah tulisan, daftar tulisan', async ({ pag
   await expect(page.locator('.jm-archive-head__count')).toHaveText(/^\d+ tulisan$/);
   await expect(page.locator('.jm-archive-head__avatar')).toBeVisible();
   await expect(page.locator('.jm-archive-head__eyebrow')).toHaveCount(0);
-  expect(await page.locator('.jm-grid .jm-card').count()).toBeGreaterThan(0);
+  expect(await page.locator('.jm-feed .jm-card').count()).toBeGreaterThan(0);
 });
 
 test('halaman tag', async ({ page }) => {
@@ -63,9 +63,10 @@ test('halaman Tentang menampilkan lambang JATMAN', async ({ page }) => {
   await expect(page.locator('main h1')).toHaveText('Tentang JATMAN');
 });
 
-test('kartu sebaris di grid arsip rata atas', async ({ page }) => {
-  await page.setViewportSize({ width: 768, height: 900 });
-  await page.goto('/profile/syahril-mubarok/');
-  const tops = await page.locator('.jm-grid > li').evaluateAll((lis) => lis.slice(0, 2).map((li) => Math.round(li.getBoundingClientRect().top)));
-  expect(tops[0]).toBe(tops[1]);
+test('halaman rubrik seperti Indeks: satu artikel besar, daftar, dan sidebar', async ({ page }) => {
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await page.goto('/berita/');
+  const sizes = await page.locator('.jm-feed > li .jm-card__title').evaluateAll((els) => els.slice(0, 2).map((e) => parseFloat(getComputedStyle(e).fontSize)));
+  expect(sizes[0]).toBeGreaterThan(sizes[1] * 1.4);
+  await expect(page.locator('aside.jm-aside .jm-section__title')).toHaveText(['Terpopuler', 'Pilihan Redaksi']);
 });

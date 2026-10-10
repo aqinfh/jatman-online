@@ -44,7 +44,8 @@ function jatman_card_meta( WP_Post $post ): string {
 
 function jatman_card( WP_Post $post, string $variant ): string {
 	$url      = get_permalink( $post );
-	$with_img = in_array( $variant, [ 'hero-main', 'hero-side', 'list', 'feature', 'card', 'portrait' ], true ) && has_post_thumbnail( $post );
+	// Semua varian bergambar selalu punya wadah gambar; tanpa gambar utama dipakai thumbnail cadangan (knot).
+	$with_img = in_array( $variant, [ 'hero-main', 'hero-side', 'list', 'feature', 'title', 'card', 'portrait' ], true );
 	$size     = [ 'hero-main' => 'jatman-hero', 'portrait' => 'jatman-portrait' ][ $variant ] ?? 'jatman-card';
 	$heading  = match ( $variant ) {
 		'hero-main'        => 'h2',
@@ -58,7 +59,13 @@ function jatman_card( WP_Post $post, string $variant ): string {
 	$eager    = 'hero-main' === $variant;
 
 	$html = '<article class="jm-card jm-card--' . esc_attr( $variant ) . '">';
-	if ( $with_img ) {
+	if ( $with_img && ! has_post_thumbnail( $post ) ) {
+		$html .= sprintf(
+			'<a class="jm-card__media jm-card__media--empty" href="%s" tabindex="-1" aria-hidden="true">%s</a>',
+			esc_url( $url ),
+			jatman_inline_svg( 'knot.svg' )
+		);
+	} elseif ( $with_img ) {
 		$html .= sprintf(
 			'<a class="jm-card__media" href="%s" tabindex="-1" aria-hidden="true">%s</a>',
 			esc_url( $url ),

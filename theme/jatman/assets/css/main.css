@@ -271,7 +271,11 @@ p.jm-arab { font-size: 1.45em; line-height: 2.1; text-align: right; }
 .jm-region__list { list-style: none; margin: 1rem 0 0; padding: 0; }
 .jm-region__list li { padding-block: .875rem; border-top: 1px solid var(--wp--preset--color--line); }
 .jm-card--feature .jm-card__title { font-size: 1.1875rem; }
+.jm-card--title { grid-template-columns: 96px 1fr; gap: .75rem; align-items: start; }
 .jm-card--title .jm-card__title { font-size: 1rem; font-weight: 600; }
+.jm-card__media--empty { display: grid; place-items: center; color: color-mix(in srgb, var(--wp--preset--color--brand) 40%, transparent); }
+.jm-card__media--empty svg { width: 42%; height: auto; }
+.jm-card--portrait .jm-card__media--empty, .jm-band--night .jm-card__media--empty { background: color-mix(in srgb, var(--wp--preset--color--cream) 12%, transparent); color: color-mix(in srgb, var(--wp--preset--color--gold) 60%, transparent); }
 
 .jm-band { position: relative; isolation: isolate; }
 .jm-band--cream { background: var(--wp--preset--color--cream); }
@@ -286,7 +290,7 @@ p.jm-arab { font-size: 1.45em; line-height: 2.1; text-align: right; }
 .jm-band--night .jm-label { background: transparent; color: var(--wp--preset--color--on-night); box-shadow: inset 0 0 0 1px var(--wp--preset--color--gold); }
 
 /* Ornamen: knot JATMAN Online sebagai mask, warnanya dari token emas. */
-.jm-ornament, .is-teduh .jm-article__head::after {
+.jm-ornament {
 	content: ""; display: block; width: 3rem; aspect-ratio: 904 / 733; margin-inline: auto;
 	background: var(--wp--preset--color--gold);
 	-webkit-mask: url(../img/knot.svg) center / contain no-repeat; mask: url(../img/knot.svg) center / contain no-repeat;
@@ -342,7 +346,6 @@ p.jm-arab { font-size: 1.45em; line-height: 2.1; text-align: right; }
 .jm-article__body a { color: var(--wp--preset--color--brand); }
 .jm-article__body .wp-block-quote { margin-inline: 0; padding: 1.25rem 1.5rem; border: 0; border-radius: var(--jm-radius-sm); background: var(--wp--preset--color--cream); font-style: italic; }
 .jm-article__body .wp-block-quote > :last-child { margin-bottom: 0; }
-.is-teduh .jm-article__body .wp-block-quote { background: var(--wp--preset--color--base); }
 .jm-article__body .wp-block-image img { border-radius: var(--jm-radius-sm); }
 .jm-article__body figcaption { font-size: .8125rem; line-height: 1.5; color: var(--wp--preset--color--muted); }
 
@@ -368,14 +371,6 @@ p.jm-arab { font-size: 1.45em; line-height: 2.1; text-align: right; }
 .jm-authorbox .wp-block-post-author__bio { margin: .4rem 0 0; font-size: .9375rem; color: var(--wp--preset--color--muted); }
 .jm-section--related { border-top: 1px solid var(--wp--preset--color--line); margin-top: clamp(2rem, 5vw, 3rem); }
 
-/* Varian teduh: Dawuh, Hikmah, Pustaka Tasawuf */
-.is-teduh .jm-single { background: var(--wp--preset--color--cream); }
-.is-teduh .jm-article__head { text-align: center; justify-items: center; }
-.is-teduh .jm-breadcrumb ol { justify-content: center; }
-.is-teduh .jm-article__title { font-weight: 700; letter-spacing: -.015em; }
-.is-teduh .jm-article__head::after { width: 2.25rem; }
-.is-teduh .jm-byline { justify-content: center; border-color: color-mix(in srgb, var(--wp--preset--color--gold) 35%, transparent); }
-.is-teduh .jm-authorbox, .is-teduh .jm-tags a, .is-teduh .jm-share a, .is-teduh .jm-share button { background: var(--wp--preset--color--base); }
 
 /* == 5. Arsip, pencarian, halaman ========================================== */
 .jm-archive-head {
@@ -397,8 +392,6 @@ p.jm-arab { font-size: 1.45em; line-height: 2.1; text-align: right; }
 }
 .jm-tabs a:hover { border-color: currentColor; }
 .jm-tabs a[aria-current="page"] { background: var(--wp--preset--color--on-night); color: var(--wp--preset--color--night); border-color: transparent; }
-.is-teduh .jm-archive-head { background: var(--wp--preset--color--cream); color: var(--wp--preset--color--ink); }
-.is-teduh .jm-archive-head::before { opacity: .35; }
 
 .jm-archive__body { width: min(100% - 2 * var(--jm-gutter), var(--jm-wide)); margin: clamp(2rem, 5vw, 3rem) auto 0; }
 .jm-grid > li, .jm-cards > *, .jm-portraits > * { margin: 0; }
@@ -470,7 +463,6 @@ p.jm-arab { font-size: 1.45em; line-height: 2.1; text-align: right; }
 	.jm-single__layout .jm-article__foot { margin-inline: 0; }
 	.jm-aside { position: sticky; top: 5.5rem; align-self: start; }
 }
-.is-teduh .jm-aside .jm-qa > li, .is-teduh .jm-aside .jm-compact > li { background: transparent; }
 
 /* Indeks: artikel teratas besar, sisanya daftar, sidebar seperti halaman artikel. */
 .jm-feed { list-style: none; margin: 0; padding: 0; display: grid; }
@@ -552,10 +544,10 @@ p.jm-arab { font-size: 1.45em; line-height: 2.1; text-align: right; }
 }
 .jm-regions__tabs button[aria-selected="true"] { background: var(--wp--preset--color--brand); border-color: transparent; color: var(--wp--preset--color--on-brand); }
 .jm-regions.is-tabbed .jm-region__title,
-.jm-regions.is-tabbed .jm-card--feature .jm-card__media,
 .jm-regions.is-tabbed .jm-card--feature .jm-card__excerpt,
 .jm-regions.is-tabbed .jm-card--feature .jm-meta { display: none; }
-.jm-regions.is-tabbed .jm-card--feature { padding-block: .875rem; }
+/* Di tab HP, item pertama tampil seperti item lain: thumbnail kecil + judul. */
+.jm-regions.is-tabbed .jm-card--feature { grid-template-columns: 96px 1fr; gap: .75rem; align-items: start; padding-block: .875rem; }
 .jm-regions.is-tabbed .jm-card--feature .jm-card__title { font-size: 1rem; font-weight: 600; }
 .jm-regions.is-tabbed .jm-region__list { margin-top: 0; }
 /* Tokoh di HP: baris geser dengan kartu lebar; judul maksimal 3 baris. */
@@ -567,3 +559,4 @@ p.jm-arab { font-size: 1.45em; line-height: 2.1; text-align: right; }
 	.jm-portraits > * { scroll-snap-align: start; }
 }
 .jm-card--portrait .jm-card__title { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; overflow: hidden; }
+.jm-regions.is-tabbed { gap: .25rem; }

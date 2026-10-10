@@ -116,7 +116,11 @@ test.describe('Berita di HP sebagai tab', () => {
     await expect(tabs.first()).toHaveAttribute('aria-selected', 'true');
     const visiblePanels = () => page.locator('.jm-section--regions [role="tabpanel"]:visible');
     await expect(visiblePanels()).toHaveCount(1);
-    await expect(page.locator('.jm-section--regions [role="tabpanel"]:visible .jm-card__media:visible')).toHaveCount(0);
+    // Semua item di tab berupa daftar seragam dengan thumbnail kecil.
+    const items = page.locator('.jm-section--regions [role="tabpanel"]:visible .jm-card');
+    const widths = await items.evaluateAll((els) => els.map((e) => e.querySelector('.jm-card__media')?.getBoundingClientRect().width ?? 0));
+    expect(widths.length).toBeGreaterThan(1);
+    for (const w of widths) { expect(w).toBeGreaterThan(60); expect(w).toBeLessThanOrEqual(130); }
     await tabs.nth(1).click();
     await expect(tabs.nth(1)).toHaveAttribute('aria-selected', 'true');
     await expect(visiblePanels()).toHaveCount(1);
@@ -139,4 +143,12 @@ test('HP: kartu Tokoh cukup lebar dan judul tidak menutupi seluruh foto', async 
   expect(cardBox!.width).toBeGreaterThanOrEqual(220);
   const bodyBox = await card.locator('.jm-card__body').boundingBox();
   expect(bodyBox!.height / cardBox!.height).toBeLessThan(0.6);
+});
+
+test('desktop: daftar kecil di bagian Berita juga bergambar', async ({ page }) => {
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await page.goto('/');
+  const small = page.locator('.jm-region__list .jm-card');
+  expect(await small.count()).toBeGreaterThan(0);
+  expect(await small.locator('.jm-card__media').count()).toBe(await small.count());
 });
