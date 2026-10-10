@@ -87,8 +87,8 @@ Pembagian tanggung jawab: **tema** hanya mengurus tampilan. **mu-plugin** mengur
 Emas tidak dipakai untuk teks isi. Setiap pasangan teks/latar harus lolos WCAG AA (≥ 4.5:1 untuk teks normal) di kedua mode. Nilai di atas boleh digeser sedikit kalau ada pasangan yang gagal.
 
 ### Tipografi (self-hosted `woff2` lewat `fontFace` di theme.json, lisensi OFL)
-- **Plus Jakarta Sans** (400/600/700/800): judul, navigasi, UI.
-- **Source Serif 4** (400/600 + italic): isi artikel, kutipan.
+- **Heebo** (variable 100–900): judul, navigasi, UI. Dipilih pengguna (2026-10-10) menggantikan Plus Jakarta Sans karena lebih netral dan tahan zaman. Heebo tidak punya huruf transliterasi bertitik (ḥ ṣ ṭ ẓ ḍ ʿ ʾ), jadi huruf-huruf itu diisi **Source Sans 3** lewat face tambahan dengan `unicode-range` sempit (hanya diunduh kalau huruf itu muncul).
+- Isi artikel juga **Heebo** (sans), atas permintaan pengguna (2026-10-10): pembaca web lama sudah terbiasa sans. Source Serif 4 tidak dipakai.
 - **Uthman Taha (versi -ID)**: teks Arab. Sumbernya `UthmanTN1-ID Ver10.ttf` (400) dan `UthmanTN1B-ID Ver10.ttf` (700) dari repo lokal `../uthman-taha` (KFGQPC Uthman Taha Naskh yang sudah ditambal dengan tanda Quran), lalu dikonversi ke woff2. `unicode-range` dibatasi ke huruf Arab dan font ini diletakkan paling depan di setiap font stack, jadi huruf Arab di mana pun otomatis memakai Uthman Taha, sedangkan Latin jatuh ke font berikutnya. Paragraf yang sebagian besar berisi teks Arab diberi `lang="ar" dir="rtl"` dan ukuran ~1.4× teks sekitarnya, dengan line-height lega.
 - Skala fluid (`clamp`). Lebar baris isi ±68ch. Font utama di-preload, `font-display: swap`.
 

@@ -9,7 +9,7 @@ test('top bar: lambang, penerbit resmi, tanggal Masehi', async ({ page }) => {
   await page.goto('/');
   const bar = page.locator('.jm-topbar');
   await expect(bar).toContainText('Media resmi');
-  await expect(bar.locator('img')).toHaveAttribute('src', /lambang-jatman\.svg$/);
+  await expect(bar.locator('img')).toHaveAttribute('src', /lambang-jatman-48\.png$/);
   await expect(bar.locator('.jm-topbar__date')).toHaveText(/^(Senin|Selasa|Rabu|Kamis|Jumat|Sabtu|Minggu), \d{1,2} \S+ \d{4}$/);
 });
 

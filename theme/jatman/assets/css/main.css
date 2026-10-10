@@ -262,12 +262,14 @@ p.jm-arab { font-size: 1.45em; line-height: 2.1; text-align: right; }
 .jm-band--night .jm-label { background: transparent; color: var(--wp--preset--color--on-night); box-shadow: inset 0 0 0 1px var(--wp--preset--color--gold); }
 
 .jm-dawuh { margin: 0 auto; max-width: 46rem; text-align: center; }
-.jm-dawuh::before {
-	content: "۞"; display: block; margin-bottom: 1rem;
-	font-family: var(--wp--preset--font-family--arabic); font-size: 2.5rem; line-height: 1; color: var(--wp--preset--color--gold);
+.jm-ornament, .jm-dawuh::before, .is-teduh .jm-article__head::after {
+	content: ""; display: block; width: 2.25rem; height: 2.25rem; margin-inline: auto;
+	background: var(--wp--preset--color--gold);
+	-webkit-mask: url(../img/ornament.svg) center / contain no-repeat; mask: url(../img/ornament.svg) center / contain no-repeat;
 }
+.jm-dawuh::before { margin-bottom: 1.25rem; }
 .jm-dawuh__text { margin: 0; padding: 0; border: 0; }
-.jm-dawuh__text p { margin: 0; font-family: var(--wp--preset--font-family--serif); font-size: clamp(1.25rem, 1rem + 1.2vw, 1.75rem); line-height: 1.5; color: var(--wp--preset--color--ink); }
+.jm-dawuh__text p { margin: 0; font-size: clamp(1.25rem, 1rem + 1.2vw, 1.75rem); font-weight: 500; line-height: 1.5; letter-spacing: -.01em; color: var(--wp--preset--color--ink); }
 .jm-dawuh__cite { margin-top: 1.25rem; display: grid; gap: .25rem; font-size: .9375rem; }
 .jm-dawuh__cite a { font-weight: 700; color: var(--wp--preset--color--brand); text-decoration: none; }
 .jm-dawuh__cite a:hover { text-decoration: underline; }
@@ -312,11 +314,11 @@ p.jm-arab { font-size: 1.45em; line-height: 2.1; text-align: right; }
 .jm-figure figcaption { margin-top: .6rem; font-size: .8125rem; color: var(--wp--preset--color--muted); }
 
 .jm-article__body > * { margin-block: 0 1.25em; }
-.jm-article__body :where(h2, h3, h4) { font-family: var(--wp--preset--font-family--sans); margin-top: 2em; line-height: 1.3; }
+.jm-article__body :where(h2, h3, h4) { margin-top: 2em; line-height: 1.3; }
 .jm-article__body a { color: var(--wp--preset--color--brand); }
 .jm-article__body .wp-block-quote { border-left: 3px solid var(--wp--preset--color--gold); margin-inline: 0; padding-left: 1.25rem; font-style: italic; }
 .jm-article__body .wp-block-image img { border-radius: var(--jm-radius-sm); }
-.jm-article__body figcaption { font: .8125rem/1.5 var(--wp--preset--font-family--sans); color: var(--wp--preset--color--muted); }
+.jm-article__body figcaption { font-size: .8125rem; line-height: 1.5; color: var(--wp--preset--color--muted); }
 
 .jm-article__foot { display: grid; gap: 1.5rem; margin-top: 2.5rem; padding-top: 1.5rem; border-top: 1px solid var(--wp--preset--color--line); }
 .jm-tags { display: flex; flex-wrap: wrap; gap: .5rem; align-items: center; font-size: .875rem; }
@@ -344,10 +346,8 @@ p.jm-arab { font-size: 1.45em; line-height: 2.1; text-align: right; }
 .is-teduh .jm-single { background: var(--wp--preset--color--cream); }
 .is-teduh .jm-article__head { text-align: center; justify-items: center; }
 .is-teduh .jm-breadcrumb ol { justify-content: center; }
-.is-teduh .jm-article__title { font-family: var(--wp--preset--font-family--serif); font-weight: 700; letter-spacing: -.01em; }
-.is-teduh .jm-article__head::after {
-	content: "۞"; font-family: var(--wp--preset--font-family--arabic); font-size: 1.75rem; line-height: 1; color: var(--wp--preset--color--gold);
-}
+.is-teduh .jm-article__title { font-weight: 700; letter-spacing: -.015em; }
+.is-teduh .jm-article__head::after { width: 1.75rem; height: 1.75rem; }
 .is-teduh .jm-byline { justify-content: center; border-color: color-mix(in srgb, var(--wp--preset--color--gold) 35%, transparent); }
 .is-teduh .jm-authorbox, .is-teduh .jm-tags a, .is-teduh .jm-share a, .is-teduh .jm-share button { background: var(--wp--preset--color--base); }
 

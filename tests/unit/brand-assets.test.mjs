@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { readFileSync } from 'node:fs';
+import { readdirSync, readFileSync } from 'node:fs';
 
 const IMG = 'theme/jatman/assets/img';
 const FONTS = 'theme/jatman/assets/fonts';
@@ -26,15 +26,29 @@ test('lambang-jatman.svg teroptimasi dan punya viewBox', () => {
   assert.ok(svg.length < 200_000, `lambang ${svg.length} byte`);
 });
 
+test('lambang PNG ringan untuk top bar & footer', () => {
+  for (const px of [48, 144]) {
+    const png = readFileSync(`${IMG}/lambang-jatman-${px}.png`);
+    assert.equal(png.subarray(1, 4).toString('latin1'), 'PNG');
+    assert.ok(png.length < 30_000, `lambang-jatman-${px}.png ${png.length} byte`);
+  }
+});
+
+test('ornament.svg ada', () => {
+  assert.match(readFileSync(`${IMG}/ornament.svg`, 'utf8'), /viewBox="0 0 40 40"/);
+});
+
 test('pattern.svg ada', () => {
   assert.match(readFileSync(`${IMG}/pattern.svg`, 'utf8'), /<svg/);
 });
 
+test('tidak ada font serif tersisa (isi artikel memakai sans)', () => {
+  assert.deepEqual(readdirSync(FONTS).filter((f) => f.startsWith('source-serif')), []);
+});
+
 test('semua font berformat woff2', () => {
   const files = [
-    'plus-jakarta-sans-latin-wght-normal.woff2', 'plus-jakarta-sans-latin-ext-wght-normal.woff2',
-    'source-serif-4-latin-wght-normal.woff2', 'source-serif-4-latin-ext-wght-normal.woff2',
-    'source-serif-4-latin-wght-italic.woff2', 'source-serif-4-latin-ext-wght-italic.woff2',
+    'heebo-latin-wght-normal.woff2', 'heebo-latin-ext-wght-normal.woff2', 'source-sans-3-latin-ext-wght-normal.woff2',
     'uthman-taha-id-400.woff2', 'uthman-taha-id-700.woff2',
   ];
   for (const f of files) assert.equal(readFileSync(`${FONTS}/${f}`).subarray(0, 4).toString('latin1'), 'wOF2', f);

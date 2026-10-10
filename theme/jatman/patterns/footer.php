@@ -12,7 +12,7 @@ $jatman_img = static fn( string $file ): string => esc_url( get_theme_file_uri( 
 <div class="wp-block-group jm-footer"><!-- wp:html -->
 <div class="jm-footer__ids">
 	<section class="jm-footer__id" aria-labelledby="jm-footer-org">
-		<span class="jm-lambang jm-lambang--lg"><img src="<?php echo $jatman_img( 'lambang-jatman.svg' ); ?>" alt="Lambang JATMAN" width="72" height="72" loading="lazy"></span>
+		<span class="jm-lambang jm-lambang--lg"><img src="<?php echo $jatman_img( 'lambang-jatman-144.png' ); ?>" alt="Lambang JATMAN" width="72" height="72" loading="lazy"></span>
 		<div>
 			<h2 id="jm-footer-org" class="jm-footer__name">Jam’iyyah Ahlith Thariqah al-Mu’tabarah an-Nahdliyyah</h2>
 			<p>Badan otonom Nahdlatul Ulama, wadah para pengamal ajaran at-thariqah al-mu’tabarah.</p>

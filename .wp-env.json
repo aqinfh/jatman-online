@@ -14,5 +14,8 @@
     "WP_DEBUG_LOG": true,
     "WP_DEBUG_DISPLAY": false,
     "WP_DEVELOPMENT_MODE": "theme"
+  },
+  "lifecycleScripts": {
+    "afterStart": "npx wp-env run cli wp eval-file tools/setup.php"
   }
 }

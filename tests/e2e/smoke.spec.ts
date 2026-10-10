@@ -6,5 +6,5 @@ test('situs lokal hidup dengan tema jatman dan bahasa Indonesia', async ({ page 
   expect(res?.status()).toBe(200);
   await expect(page.locator('html')).toHaveAttribute('lang', /^id(-ID)?$/);
   expect(wp('option', 'get', 'stylesheet')).toContain('jatman');
-  expect(wp('option', 'get', 'permalink_structure')).toContain('/%postname%/');
+  expect(wp('option', 'get', 'permalink_structure')).toMatch(/^\/%postname%\/$/m);
 });

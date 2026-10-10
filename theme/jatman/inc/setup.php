@@ -11,6 +11,7 @@ add_action(
 		add_theme_support( 'editor-styles' );
 		add_editor_style( 'assets/css/main.css' );
 		add_image_size( 'jatman-hero', 1240, 700, true );
+		add_image_size( 'jatman-hero-sm', 640, 361, true ); // rasio sama dengan jatman-hero → masuk srcset di HP
 		add_image_size( 'jatman-card', 640, 400, true );
 		add_image_size( 'jatman-portrait', 480, 600, true );
 	}
@@ -41,7 +42,8 @@ add_action(
 add_action(
 	'wp_head',
 	static function (): void {
-		foreach ( [ 'plus-jakarta-sans-latin-wght-normal.woff2', 'source-serif-4-latin-wght-normal.woff2' ] as $font ) {
+		// Hanya Heebo latin yang di-preload; subset lain dimuat saat dibutuhkan (unicode-range).
+		foreach ( [ 'heebo-latin-wght-normal.woff2' ] as $font ) {
 			printf( '<link rel="preload" href="%s" as="font" type="font/woff2" crossorigin>' . "\n", esc_url( get_theme_file_uri( 'assets/fonts/' . $font ) ) );
 		}
 		if ( ! has_site_icon() ) {
