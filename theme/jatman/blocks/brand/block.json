@@ -1,0 +1,10 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "jatman/brand",
+  "title": "Logo JATMAN Online",
+  "category": "theme",
+  "description": "Lockup knot + wordmark JATMAN Online, tertaut ke beranda.",
+  "supports": { "html": false },
+  "render": "file:./render.php"
+}

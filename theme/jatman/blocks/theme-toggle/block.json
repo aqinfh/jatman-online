@@ -1,0 +1,10 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "jatman/theme-toggle",
+  "title": "Tombol mode gelap",
+  "category": "theme",
+  "description": "Tombol untuk beralih antara mode terang dan gelap.",
+  "supports": { "html": false },
+  "render": "file:./render.php"
+}

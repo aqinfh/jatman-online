@@ -1,0 +1,10 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "jatman/topbar",
+  "title": "Top bar penerbit",
+  "category": "theme",
+  "description": "Lambang JATMAN, keterangan media resmi, dan tanggal hari ini.",
+  "supports": { "html": false },
+  "render": "file:./render.php"
+}
