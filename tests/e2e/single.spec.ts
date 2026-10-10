@@ -48,3 +48,10 @@ test('setiap artikel sample punya gambar utama atau tetap rapi tanpa gambar', as
     if (figures) await expect(page.locator('.jm-figure img')).toHaveAttribute('src', /\/wp-content\/uploads\//);
   }
 });
+
+test('tautan panjang di isi artikel tidak membuat halaman bergeser ke samping di HP', async ({ page }) => {
+  await page.setViewportSize({ width: 375, height: 800 });
+  await page.goto(`/${NEWS}/`);
+  await expect(page.locator('.jm-article__body a[href*="drive.google.com"]')).toHaveCount(1);
+  expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(375);
+});

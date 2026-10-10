@@ -353,7 +353,7 @@ p.jm-arab { font-size: 1.45em; line-height: 2.1; text-align: right; }
 
 .jm-article__body > * { margin-block: 0 1.25em; }
 .jm-article__body :where(h2, h3, h4) { margin-top: 2em; line-height: 1.3; }
-.jm-article__body a { color: var(--wp--preset--color--brand); }
+.jm-article__body a { color: var(--wp--preset--color--brand); overflow-wrap: anywhere; }
 .jm-article__body .wp-block-quote { margin-inline: 0; padding: 1.25rem 1.5rem; border: 0; border-radius: var(--jm-radius-sm); background: var(--wp--preset--color--cream); font-style: italic; }
 .jm-article__body .wp-block-quote > :last-child { margin-bottom: 0; }
 .jm-article__body .wp-block-image img { border-radius: var(--jm-radius-sm); }
