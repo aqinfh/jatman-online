@@ -350,3 +350,58 @@ p.jm-arab { font-size: 1.45em; line-height: 2.1; text-align: right; }
 }
 .is-teduh .jm-byline { justify-content: center; border-color: color-mix(in srgb, var(--wp--preset--color--gold) 35%, transparent); }
 .is-teduh .jm-authorbox, .is-teduh .jm-tags a, .is-teduh .jm-share a, .is-teduh .jm-share button { background: var(--wp--preset--color--base); }
+
+/* == 5. Arsip, pencarian, halaman ========================================== */
+.jm-archive-head {
+	position: relative; isolation: isolate; padding-block: clamp(2rem, 6vw, 3.5rem);
+	background: var(--wp--preset--color--night); color: var(--wp--preset--color--on-night);
+}
+.jm-archive-head::before { content: ""; position: absolute; inset: 0; z-index: -1; background: url(../img/pattern.svg) repeat; background-size: 80px; opacity: .08; }
+.jm-archive-head__inner { width: min(100% - 2 * var(--jm-gutter), var(--jm-wide)); margin-inline: auto; display: grid; gap: .75rem; justify-items: start; }
+.jm-archive-head__eyebrow { margin: 0; font-size: .75rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; opacity: .85; }
+.jm-archive-head h1 { margin: 0; font-size: clamp(1.875rem, 1.2rem + 2.6vw, 3rem); font-weight: 800; letter-spacing: -.02em; color: inherit; overflow-wrap: anywhere; }
+.jm-archive-head__desc { max-width: 40rem; opacity: .88; }
+.jm-archive-head__desc p { margin: 0; }
+.jm-archive-head__avatar { border-radius: 50%; box-shadow: 0 0 0 3px var(--wp--preset--color--gold); }
+.jm-archive-head__count { margin: 0; font-weight: 600; opacity: .88; }
+.jm-archive-head .wp-block-search { width: min(100%, 32rem); }
+.jm-tabs ul { display: flex; flex-wrap: wrap; gap: .5rem; list-style: none; margin: .75rem 0 0; padding: 0; }
+.jm-tabs a {
+	display: inline-block; padding: .45rem 1rem; border-radius: 999px; border: 1px solid rgb(247 243 234 / .35);
+	color: inherit; text-decoration: none; font-weight: 600; font-size: .875rem;
+}
+.jm-tabs a:hover { border-color: currentColor; }
+.jm-tabs a[aria-current="page"] { background: var(--wp--preset--color--on-night); color: var(--wp--preset--color--night); border-color: transparent; }
+.is-teduh .jm-archive-head { background: var(--wp--preset--color--cream); color: var(--wp--preset--color--ink); }
+.is-teduh .jm-archive-head::before { filter: invert(1); opacity: .05; }
+
+.jm-archive__body { width: min(100% - 2 * var(--jm-gutter), var(--jm-wide)); margin: clamp(2rem, 5vw, 3rem) auto 0; }
+.jm-grid { list-style: none; margin: 0; padding: 0; display: grid; gap: 2rem 1.5rem; grid-template-columns: repeat(auto-fill, minmax(min(100%, 17rem), 1fr)); }
+@media (min-width: 1000px) {
+	body:not(.paged) .jm-grid > li:first-child { grid-column: span 2; grid-row: span 2; }
+	body:not(.paged) .jm-grid > li:first-child .jm-card__media { aspect-ratio: 16 / 10; }
+	body:not(.paged) .jm-grid > li:first-child .jm-card__title { font-size: 1.75rem; font-weight: 800; line-height: 1.2; }
+}
+.jm-pagination { margin-top: 3rem; gap: .5rem; font-weight: 600; }
+.jm-pagination .page-numbers, .jm-pagination > a {
+	display: inline-grid; place-items: center; min-width: 2.5rem; height: 2.5rem; padding-inline: .75rem; border-radius: 999px;
+	border: 1px solid var(--wp--preset--color--line); color: var(--wp--preset--color--ink); text-decoration: none;
+}
+.jm-pagination .page-numbers.current { background: var(--wp--preset--color--brand); border-color: transparent; color: var(--wp--preset--color--on-brand); }
+
+.wp-block-search__input {
+	border-radius: 999px; border: 1px solid var(--wp--preset--color--line); padding: .7rem 1.1rem;
+	background: var(--wp--preset--color--base); color: var(--wp--preset--color--ink);
+}
+.wp-block-search__button {
+	border-radius: 999px; border: 0; padding: .7rem 1.25rem; font-weight: 700;
+	background: var(--wp--preset--color--brand); color: var(--wp--preset--color--on-brand);
+}
+
+.jm-page { width: min(100% - 2 * var(--jm-gutter), 46rem); margin: clamp(2rem, 6vw, 4rem) auto 0; }
+.jm-page h1 { font-size: clamp(1.875rem, 1.2rem + 2.6vw, 3rem); font-weight: 800; letter-spacing: -.02em; margin: 0 0 1.5rem; }
+.jm-page .jm-article__body { width: auto; }
+.jm-page__lambang { display: grid; justify-items: center; gap: .75rem; margin: 0 0 2rem; text-align: center; font-size: .875rem; color: var(--wp--preset--color--muted); }
+.jm-page__lambang img { width: min(60vw, 220px); height: auto; }
+[data-theme="dark"] .jm-page__lambang img { background: #F7F3EA; border-radius: 50%; padding: 10px; }
+.jm-404 .jm-page { margin-bottom: 1rem; }

@@ -1,0 +1,10 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "jatman/archive-header",
+  "title": "Pita judul arsip",
+  "category": "theme",
+  "description": "Judul rubrik/tag/penulis/pencarian dengan pita bermotif.",
+  "supports": { "html": false },
+  "render": "file:./render.php"
+}

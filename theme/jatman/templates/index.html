@@ -1,12 +1,28 @@
 <!-- wp:template-part {"slug":"topbar","tagName":"div"} /-->
 <!-- wp:template-part {"slug":"header","tagName":"div","className":"jm-header-part"} /-->
 
-<!-- wp:group {"tagName":"main","className":"jm-wrap","layout":{"type":"default"}} -->
-<main class="wp-block-group jm-wrap"><!-- wp:query {"query":{"inherit":true}} -->
-<div class="wp-block-query"><!-- wp:post-template -->
-<!-- wp:post-title {"isLink":true} /-->
-<!-- /wp:post-template --></div>
-<!-- /wp:query --></main>
+<!-- wp:group {"tagName":"main","className":"jm-archive","layout":{"type":"default"}} -->
+<main class="wp-block-group jm-archive"><!-- wp:jatman/archive-header /-->
+
+<!-- wp:group {"className":"jm-archive__body","layout":{"type":"default"}} -->
+<div class="wp-block-group jm-archive__body"><!-- wp:query {"queryId":1,"query":{"inherit":true},"layout":{"type":"default"}} -->
+<div class="wp-block-query"><!-- wp:post-template {"className":"jm-grid"} -->
+<!-- wp:jatman/card /-->
+<!-- /wp:post-template -->
+
+<!-- wp:query-pagination {"className":"jm-pagination","layout":{"type":"flex","justifyContent":"center"}} -->
+<!-- wp:query-pagination-previous {"label":"Sebelumnya"} /-->
+<!-- wp:query-pagination-numbers /-->
+<!-- wp:query-pagination-next {"label":"Berikutnya"} /-->
+<!-- /wp:query-pagination -->
+
+<!-- wp:query-no-results -->
+<!-- wp:paragraph -->
+<p>Belum ada tulisan di sini.</p>
+<!-- /wp:paragraph -->
+<!-- /wp:query-no-results --></div>
+<!-- /wp:query --></div>
+<!-- /wp:group --></main>
 <!-- /wp:group -->
 
 <!-- wp:template-part {"slug":"footer","tagName":"footer"} /-->
