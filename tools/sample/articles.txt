@@ -1,0 +1,17 @@
+# <slug-kategori-wp> <url-artikel-lama> [sticky] [pilihan]
+# Kategori ditetapkan di sini, bukan ditebak dari breadcrumb lama.
+nasional        https://jatman.or.id/perkuat-jejaring-tarekat-global-chairman-inc-ali-masykur-musa-bahas-agenda-strategis-perdamaian-dunia sticky
+nasional        https://jatman.or.id/idarah-aliyyah-jatman-launching-logo-harlah-ke-69
+nasional        https://jatman.or.id/mursyid-idrisiyyah-bahas-integrasi-tasawuf-dan-ketenangan-spiritual pilihan
+daerah          https://jatman.or.id/idarah-aliyyah-jatman-lantik-idarah-wustha-provinsi-riau-masa-khidmat-2025-2030
+daerah          https://jatman.or.id/disambut-idarah-wustha-jatman-kalsel-mursyid-idrisiyyah-gelar-majelis-talqin-dzikir-di-banjarmasin
+internasional   https://jatman.or.id/ali-masykur-musa-terpilih-aklamasi-memimpin-international-naqshabandi-council pilihan
+internasional   https://jatman.or.id/jatman-perkuat-jejaring-naqshabandiyah-dunia-melalui-tiga-mou-di-bukhara
+dawuh           https://jatman.or.id/pesan-kh-kafabihi-di-haul-kh-noer-iskandar-majelis-ilmu-sebagai-jalan-menuju-ampunan
+hikmah          https://jatman.or.id/cahaya-yang-bersembunyi-di-balik-ikhlas pilihan
+hikmah          https://jatman.or.id/rahasia-hidup-aman-dan-diridai-allah-menurut-kh-achmad-chalwani
+tokoh           https://jatman.or.id/teladan-guru-sufi-dari-tambakberas-jombang pilihan
+artikel         https://jatman.or.id/mukasyafah-menuju-peradaban-fitrah
+thariqah        https://jatman.or.id/thariqah-syadziliyyah-ajaran-hingga-perkembangannya
+tanya-jawab     https://jatman.or.id/adakah-batasan-usia-untuk-berthariqah pilihan
+pustaka-tasawuf https://jatman.or.id/kontroversi-tasawuf-ibnu-arabi-dan-pembelaannya
