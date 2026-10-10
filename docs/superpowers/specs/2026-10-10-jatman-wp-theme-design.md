@@ -207,7 +207,7 @@ Ditambahkan selama putaran polish, atas permintaan pengguna:
 - **Halaman Indeks (`/indeks/`):** semua tulisan dari yang terbaru. Artikel teratas tampil besar, sisanya daftar ke bawah, dengan sidebar seperti halaman artikel. Tombol **"Muat lebih banyak"** dibangun di atas pagination biasa (tanpa JS tetap ada halaman 2, 3, …), dan juga berlaku di arsip rubrik. Bagian Terbaru di beranda mengarah ke Indeks lewat "Indeks berita →" dan tombol "Lihat semua berita".
 - **Dawuh:** pita Dawuh menampilkan **judul** artikel Dawuh terbaru sebagai kalimat utama (bukan ringkasan), dengan ornamen knot JATMAN Online berwarna emas.
 - **Ringkasan kartu:** dateline gaya lama ("Jakarta, JATMAN Online –") dibuang dari ringkasan.
-- **Motif latar:** pola *star-and-cross* bersudut delapan dengan strapwork (garis ganda), dipasang sebagai CSS mask berwarna emas yang memudar ke satu sisi. Dipakai di pita Hikmah, pita arsip, dan footer.
+- **Motif latar:** pola girih 8 sudut hasil metode *polygons-in-contact* di tiling oktagon–bujur sangkar (4.8.8), sudut kontak 67,5°, dengan rosette kecil dan strapwork (garis ganda); dipasang sebagai CSS mask emas cokelat lembut yang memudar ke satu sisi. Dipakai di pita Hikmah, pita arsip, dan footer.
 - **Judul bagian:** tanpa garis vertikal di kiri. **Eyebrow** di pita arsip dihapus.
 - **Favicon:** kotak hijau brand dengan knot putih. Lambang di top bar dan footer memakai PNG ringan; SVG penuh hanya di halaman Tentang.
 - **Media sosial:** Instagram `@jatmanonline`; YouTube `@jatman.online` (dikonfirmasi pengguna).
@@ -220,3 +220,6 @@ Ditambahkan selama putaran polish, atas permintaan pengguna:
 - **Semua kartu bergambar selalu punya thumbnail:** daftar kecil Berita (desktop dan tab HP) bergambar, dan artikel tanpa gambar utama mendapat thumbnail cadangan (knot JATMAN di latar krem).
 - **Skala diperkecil** supaya gambar utama terlihat tanpa scroll: judul artikel/arsip maks 2.25rem, hero beranda maks 2rem, artikel pertama Indeks maks 1.75rem; jarak kepala artikel dirapatkan.
 - **Header:** laci menu aktif sampai 1199px; logo di kiri, tombol cari, mode gelap, dan menu berkelompok di kanan; teks menu tidak pernah patah baris.
+- **Hijau tua `#064E2E`** untuk semua permukaan hijau terisi (label rubrik, tab aktif, nomor halaman aktif, pita Terpopuler); `#00712D` tetap untuk logo dan tautan. Di mode gelap logo JATMAN Online putih.
+- **Satu kontrol pemuatan:** dengan JS hanya tombol "Muat lebih banyak"; pagination bernomor hanya cadangan tanpa JS (Indeks dan semua arsip).
+- **Baris geser** (Hikmah & Pustaka, Tokoh di HP) selebar layar dengan kartu pertama sejajar konten; ringkasan hero beranda sampai 4 baris; hamburger tiga garis.

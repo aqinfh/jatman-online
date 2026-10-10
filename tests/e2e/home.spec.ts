@@ -168,3 +168,40 @@ test('desktop: daftar kecil di bagian Berita juga bergambar', async ({ page }) =
   expect(await small.count()).toBeGreaterThan(0);
   expect(await small.locator('.jm-card__media').count()).toBe(await small.count());
 });
+
+test.describe('HP: baris geser selebar layar, jarak awal tetap', () => {
+  test.use({ viewport: { width: 375, height: 800 } });
+  for (const sel of ['.jm-section--cards .jm-cards', '.jm-section--portrait .jm-portraits']) {
+    test(sel, async ({ page }) => {
+      await page.goto('/');
+      const row = await page.locator(sel).boundingBox();
+      expect(Math.round(row!.x)).toBe(0);
+      expect(Math.round(row!.width)).toBe(375);
+      const first = await page.locator(`${sel} > *`).first().boundingBox();
+      expect(Math.round(first!.x)).toBe(16);
+    });
+  }
+});
+
+test('ringkasan hero utama sampai 4 baris', async ({ page }) => {
+  await page.goto('/');
+  expect(await page.locator('.jm-hero__main .jm-card__excerpt').evaluate((e) => getComputedStyle(e).webkitLineClamp)).toBe('4');
+});
+
+test('pita Terpopuler di mode terang memakai hijau tua', async ({ page }) => {
+  await page.goto('/');
+  expect(await page.locator('.jm-section--ranked').evaluate((e) => getComputedStyle(e).backgroundColor)).toBe('rgb(6, 78, 46)');
+});
+
+test('logo JATMAN Online putih di mode gelap', async ({ page }) => {
+  await page.addInitScript(() => localStorage.setItem('jatman-theme', 'dark'));
+  await page.goto('/');
+  for (const sel of ['.jm-brand__mark', '.jm-brand__online', '.jm-brand__jatman']) {
+    expect(await page.locator(sel).evaluate((e) => getComputedStyle(e).color), sel).toBe('rgb(255, 255, 255)');
+  }
+});
+
+test('label rubrik memakai hijau tua di mode terang', async ({ page }) => {
+  await page.goto('/');
+  expect(await page.locator('.jm-hero .jm-label').first().evaluate((e) => getComputedStyle(e).backgroundColor)).toBe('rgb(6, 78, 46)');
+});

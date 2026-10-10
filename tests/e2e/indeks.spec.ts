@@ -85,3 +85,9 @@ test('reload artikel di sesi yang sama tidak mengirim beacon lagi', async ({ pag
   await page.waitForTimeout(500);
   expect(beacons).toHaveLength(1);
 });
+
+test('Indeks hanya menampilkan satu kontrol: Muat lebih banyak (pagination tersembunyi)', async ({ page }) => {
+  await page.goto('/indeks/');
+  await expect(page.getByRole('button', { name: 'Muat lebih banyak' })).toBeVisible();
+  await expect(page.locator('.jm-pagination')).toBeHidden();
+});

@@ -3,7 +3,7 @@
  * Bangun aset brand tema dari sumbernya:
  * - knot.svg (currentColor) + favicon.svg: hasil trace dari logo PNG JATMAN Online
  * - lambang-jatman.svg: SVG Wikimedia yang dioptimasi
- * - pattern.svg & ornament.svg: ubin geometri dan ornamen bintang delapan
+ * - pattern.svg: motif girih 8 sudut (polygons-in-contact); ornament.svg: bintang delapan
  * - lambang-jatman-{48,144}.png: lambang ringan untuk top bar & footer
  * - font woff2: Inter (fontsource), Uthman Taha -ID (repo ../uthman-taha)
  */
@@ -37,22 +37,48 @@ async function traceKnot() {
   return optimize(raw, { multipass: true, plugins: ['preset-default', 'removeDimensions'] }).data;
 }
 
-// Star-and-cross klasik: garis luar bintang {8/2} di tiap ubin; ujung sumbu bertemu tetangga,
-// salib terbentuk di antara empat bintang. Strapwork = garis ganda lewat mask.
-function starCross(T = 120) {
-  const c = T / 2, R = T / 2, r = R * Math.cos(Math.PI / 4) / Math.cos(Math.PI / 8);
-  const star = (cx, cy, R1, r1) => 'M' + Array.from({ length: 16 }, (_, i) => {
-    const a = (i * Math.PI) / 8 - Math.PI / 2, rad = i % 2 ? r1 : R1;
-    return `${(cx + rad * Math.cos(a)).toFixed(2)} ${(cy + rad * Math.sin(a)).toFixed(2)}`;
-  }).join('L') + 'Z';
-  const oct = (cx, cy, rr) => 'M' + Array.from({ length: 8 }, (_, i) => {
-    const a = (i * Math.PI) / 4 + Math.PI / 8;
-    return `${(cx + rr * Math.cos(a)).toFixed(2)} ${(cy + rr * Math.sin(a)).toFixed(2)}`;
-  }).join('L') + 'Z';
-  const paths = `<path d="${star(c, c, R, r)}"/><path d="${star(c, c, R * 0.46, r * 0.46)}"/><path d="${oct(c, c, R * 0.16)}"/>`;
-  return `<svg xmlns="http://www.w3.org/2000/svg" width="${T}" height="${T}" viewBox="0 0 ${T} ${T}"><defs><mask id="m"><rect width="${T}" height="${T}" fill="#fff"/><g fill="none" stroke="#000" stroke-width="1.2">${paths}</g></mask></defs><g fill="none" stroke="#000" stroke-width="3.6" stroke-linejoin="miter" mask="url(#m)">${paths}</g></svg>`;
+// Motif girih 8 sudut: metode polygons-in-contact di tiling oktagon–bujur sangkar (4.8.8),
+// sudut kontak 67,5°, sinar bertemu sisi berjarak dua (k=2), plus rosette kecil di pusat bintang.
+// Polygons-in-contact di tiling 4.8.8: oktagon di tengah ubin, bujur sangkar (belah ketupat) di sudut.
+const rad = (d) => (d * Math.PI) / 180;
+const poly = (cx, cy, n, R, rot) => Array.from({ length: n }, (_, k) => [cx + R * Math.cos(rot + (2 * Math.PI * k) / n), cy + R * Math.sin(rot + (2 * Math.PI * k) / n)]);
+const intersect = ([x1, y1], a1, [x2, y2], a2) => {
+  const d1 = [Math.cos(a1), Math.sin(a1)], d2 = [Math.cos(a2), Math.sin(a2)];
+  const den = d1[0] * d2[1] - d1[1] * d2[0];
+  const t = ((x2 - x1) * d2[1] - (y2 - y1) * d2[0]) / den;
+  return [x1 + t * d1[0], y1 + t * d1[1]];
+};
+function picLines(V, theta, k = 1) {
+  // V berurutan CCW (dalam koordinat layar y ke bawah: urut menurut sudut naik = searah jarum jam visual; normal dalam = kanan)
+  const n = V.length, segs = [];
+  const M = V.map((v, i) => [(v[0] + V[(i + 1) % n][0]) / 2, (v[1] + V[(i + 1) % n][1]) / 2]);
+  const ang = V.map((v, i) => Math.atan2(V[(i + 1) % n][1] - v[1], V[(i + 1) % n][0] - v[0]));
+  for (let i = 0; i < n; i++) {
+    const j = (i + k) % n;
+    const a = ang[i] + theta;               // dari M_i condong ke depan, masuk ke dalam
+    const b = ang[j] + Math.PI - theta;     // dari M_j condong ke belakang, masuk ke dalam
+    const P = intersect(M[i], a, M[j], b);
+    segs.push([M[i], P], [P, M[j]]);
+  }
+  return segs;
 }
-const PATTERN = starCross(120);
+function pattern(T, thetaDeg, { rosette = true, k = 1 } = {}) {
+  const theta = rad(thetaDeg), c = T / 2;
+  const Ro = (T / 2) / Math.cos(rad(22.5));
+  const s = T * Math.tan(rad(22.5));
+  const oct = poly(c, c, 8, Ro, rad(22.5));
+  const segs = [...picLines(oct, theta, k)];
+  for (const [x, y] of [[0, 0], [T, 0], [0, T], [T, T]]) segs.push(...picLines(poly(x, y, 4, s / Math.SQRT2, 0), theta));
+  const d = segs.map(([[a, b], [e, f]]) => `M${a.toFixed(2)} ${b.toFixed(2)}L${e.toFixed(2)} ${f.toFixed(2)}`).join('');
+  let extra = '';
+  if (rosette) {
+    const inner = poly(c, c, 8, Ro * 0.36, rad(22.5));
+    extra = `<path d="${picLines(inner, rad(60)).map(([[a, b], [e, f]]) => `M${a.toFixed(2)} ${b.toFixed(2)}L${e.toFixed(2)} ${f.toFixed(2)}`).join('')}"/><circle cx="${c}" cy="${c}" r="${(Ro * 0.08).toFixed(2)}"/>`;
+  }
+  const paths = `<path d="${d}"/>${extra}`;
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="${T}" height="${T}" viewBox="0 0 ${T} ${T}"><defs><mask id="m"><rect width="${T}" height="${T}" fill="#fff"/><g fill="none" stroke="#000" stroke-width="1.1" stroke-linecap="round">${paths}</g></mask></defs><g fill="none" stroke="#000" stroke-width="3.4" stroke-linejoin="miter" stroke-linecap="square" mask="url(#m)">${paths}</g></svg>`;
+}
+const PATTERN = pattern(160, 67.5, { k: 2, rosette: true });
 
 // Ornamen bintang delapan (dipakai sebagai CSS mask, warnanya dari token emas).
 const ORNAMENT = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40"><path d="M20 2l5.3 7.2 8.4-2.9-2.9 8.4L38 20l-7.2 5.3 2.9 8.4-8.4-2.9L20 38l-5.3-7.2-8.4 2.9 2.9-8.4L2 20l7.2-5.3-2.9-8.4 8.4 2.9z" fill="none" stroke="#000" stroke-width="2.2" stroke-linejoin="round"/><circle cx="20" cy="20" r="4.5"/></svg>`;

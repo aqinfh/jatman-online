@@ -52,7 +52,7 @@ function jatman_card( WP_Post $post, string $variant ): string {
 	$heading  = 'hero-main' === $variant ? 'h2' : 'h3';
 	$cat      = in_array( $variant, [ 'hero-main', 'hero-side', 'list', 'card' ], true ) ? jatman_primary_category( $post ) : null;
 	$excerpt  = in_array( $variant, [ 'hero-main', 'list', 'feature' ], true )
-		? jatman_clean_excerpt( $post, 'hero-main' === $variant ? 32 : 22 )
+		? jatman_clean_excerpt( $post, 'hero-main' === $variant ? 50 : 22 )
 		: '';
 	$eager    = 'hero-main' === $variant;
 

@@ -125,3 +125,28 @@ test('header ≥1200px: semua menu satu baris tanpa patah', async ({ page }) => 
   const heights = await page.locator('.jm-nav .wp-block-navigation__container > li > a').evaluateAll((as) => as.map((a) => a.getBoundingClientRect().height));
   for (const h of heights) expect(h).toBeLessThanOrEqual(44); // satu baris = 40px; patah dua baris ≈ 64px
 });
+
+test.describe('hamburger HP', () => {
+  test.use({ viewport: { width: 375, height: 760 } });
+  test('ikon tiga garis, tepat di tengah tombol', async ({ page }) => {
+    await page.goto('/');
+    const btn = page.locator('.jm-nav .wp-block-navigation__responsive-container-open');
+    await expect(btn.locator('svg path')).toHaveCount(3); // ikon "menu" WordPress: tiga garis
+    const b = await btn.boundingBox();
+    const i = await btn.locator('svg').boundingBox();
+    expect(Math.abs(b!.x + b!.width / 2 - (i!.x + i!.width / 2))).toBeLessThanOrEqual(1);
+    expect(Math.abs(b!.y + b!.height / 2 - (i!.y + i!.height / 2))).toBeLessThanOrEqual(1);
+  });
+  test('chip sub-rubrik Berita berjarak lega', async ({ page }) => {
+    await page.goto('/');
+    await page.locator('.jm-nav .wp-block-navigation__responsive-container-open').click();
+    const boxes = await page.locator('.jm-nav .is-menu-open .wp-block-navigation__submenu-container a').evaluateAll((as) => as.map((a) => a.getBoundingClientRect()).map((r) => ({ x: r.x, y: r.y, b: r.bottom, r: r.right })));
+    const rows = [...new Set(boxes.map((b) => Math.round(b.y)))].sort((a, b) => a - b);
+    if (rows.length > 1) {
+      const firstRowBottom = Math.max(...boxes.filter((b) => Math.round(b.y) === rows[0]).map((b) => b.b));
+      expect(rows[1] - firstRowBottom).toBeGreaterThanOrEqual(8);
+    }
+    const sameRow = boxes.filter((b) => Math.round(b.y) === rows[0]);
+    for (let k = 1; k < sameRow.length; k++) expect(sameRow[k].x - sameRow[k - 1].r).toBeGreaterThanOrEqual(8);
+  });
+});
