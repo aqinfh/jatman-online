@@ -20,9 +20,10 @@ add_action(
 add_action(
 	'wp_enqueue_scripts',
 	static function (): void {
-		$version = wp_get_theme()->get( 'Version' );
-		wp_enqueue_style( 'jatman', get_theme_file_uri( 'assets/css/main.css' ), [], $version );
-		wp_enqueue_script( 'jatman', get_theme_file_uri( 'assets/js/theme.js' ), [], $version, [ 'strategy' => 'defer', 'in_footer' => true ] );
+		// Versi = waktu ubah file: setiap perubahan CSS/JS otomatis memaksa browser & CDN mengambil yang baru.
+		$version = static fn( string $file ): string => (string) filemtime( get_theme_file_path( $file ) );
+		wp_enqueue_style( 'jatman', get_theme_file_uri( 'assets/css/main.css' ), [], $version( 'assets/css/main.css' ) );
+		wp_enqueue_script( 'jatman', get_theme_file_uri( 'assets/js/theme.js' ), [], $version( 'assets/js/theme.js' ), [ 'strategy' => 'defer', 'in_footer' => true ] );
 	}
 );
 
