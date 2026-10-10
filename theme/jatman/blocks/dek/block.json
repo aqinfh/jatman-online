@@ -1,0 +1,10 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "jatman/dek",
+  "title": "Dek (ringkasan) artikel",
+  "category": "theme",
+  "usesContext": ["postId"],
+  "supports": { "html": false },
+  "render": "file:./render.php"
+}

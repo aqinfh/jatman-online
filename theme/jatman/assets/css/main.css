@@ -289,3 +289,64 @@ p.jm-arab { font-size: 1.45em; line-height: 2.1; text-align: right; }
 	border: 1px solid var(--wp--preset--color--line); border-left: 3px solid var(--wp--preset--color--gold);
 }
 .jm-card--qa .jm-card__title { font-size: 1.0625rem; }
+
+/* == 4. Artikel ============================================================= */
+.jm-single { padding-top: clamp(1.5rem, 4vw, 3rem); }
+.jm-article__head, .jm-article__body, .jm-article__foot { width: min(100% - 2 * var(--jm-gutter), 46rem); margin-inline: auto; }
+.jm-article__head { display: grid; gap: 1rem; }
+.jm-breadcrumb ol { list-style: none; display: flex; flex-wrap: wrap; gap: .25rem .5rem; margin: 0; padding: 0; font-size: .8125rem; font-weight: 600; }
+.jm-breadcrumb li + li::before { content: "/"; margin-right: .5rem; color: var(--wp--preset--color--muted); opacity: .5; }
+.jm-breadcrumb a { color: var(--wp--preset--color--muted); text-decoration: none; }
+.jm-breadcrumb a:hover { color: var(--wp--preset--color--brand); }
+.jm-breadcrumb li:last-child a { color: var(--wp--preset--color--brand); }
+.jm-article__title { margin: 0; font-size: clamp(1.875rem, 1.2rem + 2.6vw, 3rem); font-weight: 800; line-height: 1.12; letter-spacing: -.02em; }
+.jm-dek { margin: 0; font-size: clamp(1.0625rem, 1rem + .3vw, 1.25rem); line-height: 1.55; color: var(--wp--preset--color--muted); }
+.jm-byline { display: flex; align-items: center; gap: .75rem; padding-block: 1rem; border-block: 1px solid var(--wp--preset--color--line); }
+.jm-byline__avatar { border-radius: 50%; width: 44px; height: 44px; object-fit: cover; }
+.jm-byline__author { font-weight: 700; color: var(--wp--preset--color--ink); text-decoration: none; }
+.jm-byline__author:hover { color: var(--wp--preset--color--brand); }
+.jm-byline__meta { margin: .15rem 0 0; display: flex; flex-wrap: wrap; gap: .4rem; font-size: .8125rem; color: var(--wp--preset--color--muted); }
+
+.jm-figure { width: min(100% - 2 * var(--jm-gutter), 64rem); margin: clamp(1.5rem, 4vw, 2.5rem) auto; }
+.jm-figure img { width: 100%; display: block; border-radius: var(--jm-radius); }
+.jm-figure figcaption { margin-top: .6rem; font-size: .8125rem; color: var(--wp--preset--color--muted); }
+
+.jm-article__body > * { margin-block: 0 1.25em; }
+.jm-article__body :where(h2, h3, h4) { font-family: var(--wp--preset--font-family--sans); margin-top: 2em; line-height: 1.3; }
+.jm-article__body a { color: var(--wp--preset--color--brand); }
+.jm-article__body .wp-block-quote { border-left: 3px solid var(--wp--preset--color--gold); margin-inline: 0; padding-left: 1.25rem; font-style: italic; }
+.jm-article__body .wp-block-image img { border-radius: var(--jm-radius-sm); }
+.jm-article__body figcaption { font: .8125rem/1.5 var(--wp--preset--font-family--sans); color: var(--wp--preset--color--muted); }
+
+.jm-article__foot { display: grid; gap: 1.5rem; margin-top: 2.5rem; padding-top: 1.5rem; border-top: 1px solid var(--wp--preset--color--line); }
+.jm-tags { display: flex; flex-wrap: wrap; gap: .5rem; align-items: center; font-size: .875rem; }
+.jm-tags .wp-block-post-terms__prefix { font-weight: 700; margin-right: .25rem; }
+.jm-tags a { padding: .3rem .75rem; border-radius: 999px; background: var(--wp--preset--color--cream); color: var(--wp--preset--color--ink); text-decoration: none; }
+.jm-tags a:hover { color: var(--wp--preset--color--brand); }
+.jm-share { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem; }
+.jm-share__label { font-weight: 700; font-size: .875rem; margin-right: .25rem; }
+.jm-share a, .jm-share button {
+	display: inline-flex; align-items: center; gap: .4rem; padding: .5rem .9rem; border-radius: 999px; cursor: pointer;
+	border: 1px solid var(--wp--preset--color--line); background: var(--wp--preset--color--base); color: var(--wp--preset--color--ink);
+	font: 600 .8125rem/1 var(--wp--preset--font-family--sans); text-decoration: none;
+}
+.jm-share a:hover, .jm-share button:hover { border-color: var(--wp--preset--color--brand); color: var(--wp--preset--color--brand); }
+.jm-share__status { font-size: .8125rem; color: var(--wp--preset--color--brand); }
+.jm-authorbox { display: grid; grid-template-columns: auto 1fr; gap: 1rem; padding: 1.25rem; border-radius: var(--jm-radius); background: var(--wp--preset--color--cream); }
+.jm-authorbox .wp-block-post-author__avatar img { border-radius: 50%; display: block; }
+.jm-authorbox .wp-block-post-author__byline { margin: 0; font-size: .75rem; letter-spacing: .08em; text-transform: uppercase; color: var(--wp--preset--color--muted); }
+.jm-authorbox .wp-block-post-author__name { margin: .15rem 0 0; font-weight: 700; }
+.jm-authorbox .wp-block-post-author__name a { color: var(--wp--preset--color--ink); }
+.jm-authorbox .wp-block-post-author__bio { margin: .4rem 0 0; font-size: .9375rem; color: var(--wp--preset--color--muted); }
+.jm-section--related { border-top: 1px solid var(--wp--preset--color--line); margin-top: clamp(2rem, 5vw, 3rem); }
+
+/* Varian teduh: Dawuh, Hikmah, Pustaka Tasawuf */
+.is-teduh .jm-single { background: var(--wp--preset--color--cream); }
+.is-teduh .jm-article__head { text-align: center; justify-items: center; }
+.is-teduh .jm-breadcrumb ol { justify-content: center; }
+.is-teduh .jm-article__title { font-family: var(--wp--preset--font-family--serif); font-weight: 700; letter-spacing: -.01em; }
+.is-teduh .jm-article__head::after {
+	content: "۞"; font-family: var(--wp--preset--font-family--arabic); font-size: 1.75rem; line-height: 1; color: var(--wp--preset--color--gold);
+}
+.is-teduh .jm-byline { justify-content: center; border-color: color-mix(in srgb, var(--wp--preset--color--gold) 35%, transparent); }
+.is-teduh .jm-authorbox, .is-teduh .jm-tags a, .is-teduh .jm-share a, .is-teduh .jm-share button { background: var(--wp--preset--color--base); }
