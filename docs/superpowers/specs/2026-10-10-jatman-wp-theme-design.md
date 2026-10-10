@@ -208,8 +208,10 @@ Ditambahkan selama putaran polish, atas permintaan pengguna:
 - **Media sosial:** Instagram `@jatmanonline`; YouTube `@jatman.online` (dikonfirmasi pengguna).
 - **Beranda tanpa bagian Tanya Jawab** (permintaan pengguna); rubrik Tanya Jawab tetap ada di menu dan arsipnya.
 - **Sample ditambah menjadi 24 artikel** (Tokoh, Hikmah, Pustaka Tasawuf terisi). Rubrik mengikuti web lama. Gambar isi dari domain mati `old.jatman.or.id` dibuang dari isi; tautan teks "Baca juga" ke domain itu dibiarkan dan dialihkan saat migrasi.
-- **Rasio gambar:** semua gambar lanskap 16:9 (hero, daftar, kartu, gambar utama artikel), foto Tokoh 4:5.
+- **Rasio gambar:** gambar besar (hero beranda, artikel pertama di Indeks/arsip, gambar utama artikel) 2:1; gambar lanskap lain 16:9; foto Tokoh 4:5.
 - **HP:** hanya satu headline besar (pendamping hero berupa daftar bergambar kecil); Hikmah & Pustaka Tasawuf dan Tokoh berupa baris geser; bagian Berita menjadi tab Nasional/Daerah/Internasional berisi daftar seragam (desktop tetap tiga kolom). Header muat tanpa meluap, pencarian terbuka sebagai panel selebar header, laci menu rata kiri dengan sub-rubrik Berita sebagai chip.
 - **Tanpa varian teduh** (keputusan pengguna): semua artikel dan semua halaman rubrik tampil sama, karena sebagian rubrik kurang aktif. Fungsi `jatman_is_teduh()` tetap ada di mu-plugin untuk penggolongan tema "islami" di masa depan, tapi tema tidak memakainya.
 - **Arsip rubrik, tag, penulis, dan pencarian** memakai tata letak Indeks: satu artikel besar, daftar ke bawah, sidebar Terpopuler & Pilihan Redaksi, dan "Muat lebih banyak".
 - **Semua kartu bergambar selalu punya thumbnail:** daftar kecil Berita (desktop dan tab HP) bergambar, dan artikel tanpa gambar utama mendapat thumbnail cadangan (knot JATMAN di latar krem).
+- **Skala diperkecil** supaya gambar utama terlihat tanpa scroll: judul artikel/arsip maks 2.25rem, hero beranda maks 2rem, artikel pertama Indeks maks 1.75rem; jarak kepala artikel dirapatkan.
+- **Header:** laci menu aktif sampai 1199px; logo di kiri, tombol cari, mode gelap, dan menu berkelompok di kanan; teks menu tidak pernah patah baris.

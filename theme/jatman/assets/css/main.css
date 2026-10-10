@@ -102,7 +102,7 @@ p.jm-arab { font-size: 1.45em; line-height: 2.1; text-align: right; }
 .jm-brand__online { font-weight: 500; color: var(--wp--preset--color--brand); }
 
 .jm-nav { font-weight: 600; font-size: .9375rem; flex: 1 1 auto; }
-.jm-nav .wp-block-navigation-item__content { padding: .5rem .2rem; color: var(--wp--preset--color--ink); text-decoration: none; }
+.jm-nav .wp-block-navigation-item__content { padding: .5rem .2rem; color: var(--wp--preset--color--ink); text-decoration: none; white-space: nowrap; }
 .jm-nav .wp-block-navigation-item__content:hover,
 .jm-nav .current-menu-item > .wp-block-navigation-item__content { color: var(--wp--preset--color--brand); }
 .jm-nav .wp-block-navigation__submenu-container {
@@ -124,18 +124,21 @@ p.jm-arab { font-size: 1.45em; line-height: 2.1; text-align: right; }
 }
 .jm-nav .is-menu-open .wp-block-navigation__container { gap: .25rem; font-size: 1.25rem; }
 .jm-nav .is-menu-open .wp-block-navigation__submenu-container { border: 0 !important; box-shadow: none; padding: 0 0 0 1rem; background: transparent !important; }
-/* Laci menu bawaan aktif sampai 1099px: delapan rubrik tidak muat di tablet. */
-@media (max-width: 1099px) {
-	.jm-header__inner .jm-nav { order: 3; flex: none; }
+/* Laci menu bawaan aktif sampai 1199px: delapan rubrik tidak muat satu baris di tablet/laptop kecil.
+   Logo di kiri; cari, mode gelap, dan hamburger berkelompok di kanan. */
+@media (max-width: 1199px) {
+	.jm-header__inner.jm-header__inner { gap: .5rem; }
+	.jm-header__inner > .jm-brand { margin-right: auto; }
+	.jm-header__inner > .jm-nav { order: 3; flex: none; }
 }
-@media (min-width: 600px) and (max-width: 1099px) {
+@media (min-width: 600px) and (max-width: 1199px) {
 	.jm-nav .wp-block-navigation__responsive-container-open:not(.always-shown) { display: grid; }
 	.jm-nav .wp-block-navigation__responsive-container:not(.hidden-by-default):not(.is-menu-open) { display: none; }
 }
 
 .jm-header__tools { gap: .5rem; flex: none; align-items: center; }
 .jm-header__tools .wp-block-search, .jm-header__tools .wp-block-search__inside-wrapper { margin: 0; padding: 0; border: 0; display: flex; align-items: center; }
-@media (max-width: 1099px) { .jm-header__tools { margin-left: auto; } }
+
 .jm-header .wp-block-search__button,
 .jm-theme-toggle {
 	width: 40px; height: 40px; padding: 0; display: grid; place-items: center; border-radius: 50%;
@@ -188,7 +191,8 @@ p.jm-arab { font-size: 1.45em; line-height: 2.1; text-align: right; }
 .jm-card { display: grid; gap: .875rem; align-content: start; }
 /* Rasio gambar: 16:9 untuk semua lanskap (satu aturan), 4:5 hanya untuk foto Tokoh. */
 .jm-card__media { display: block; overflow: hidden; border-radius: var(--jm-radius-sm); background: var(--wp--preset--color--cream); aspect-ratio: 16 / 9; }
-.jm-card--hero-main .jm-card__media, .jm-feed > li:first-child .jm-card__media { border-radius: var(--jm-radius); }
+/* Gambar utama besar lebih lebar (2:1) supaya tidak menghabiskan layar. */
+.jm-card--hero-main .jm-card__media, .jm-feed > li:first-child .jm-card__media { border-radius: var(--jm-radius); aspect-ratio: 2 / 1; }
 .jm-card__media img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .5s var(--jm-ease); }
 .jm-card:hover .jm-card__media img { transform: scale(1.03); }
 .jm-card__body { display: grid; gap: .5rem; align-content: start; justify-items: start; }
@@ -222,7 +226,7 @@ p.jm-arab { font-size: 1.45em; line-height: 2.1; text-align: right; }
 .jm-hero { display: grid; gap: 1.5rem; }
 .jm-hero__side { display: grid; gap: 1.5rem; align-content: start; }
 
-.jm-card--hero-main .jm-card__title { font-size: clamp(1.625rem, 1.1rem + 2.2vw, 2.5rem); font-weight: 800; line-height: 1.15; letter-spacing: -.02em; }
+.jm-card--hero-main .jm-card__title { font-size: clamp(1.5rem, 1.15rem + 1.2vw, 2rem); font-weight: 800; line-height: 1.2; letter-spacing: -.02em; }
 .jm-card--hero-main .jm-card__excerpt {
 	font-size: 1.0625rem; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; overflow: hidden;
 }
@@ -321,24 +325,24 @@ p.jm-arab { font-size: 1.45em; line-height: 2.1; text-align: right; }
 .jm-card--qa .jm-card__title { font-size: 1.0625rem; }
 
 /* == 4. Artikel ============================================================= */
-.jm-single { padding-top: clamp(1.5rem, 4vw, 3rem); }
+.jm-single { padding-top: clamp(1.25rem, 3vw, 2rem); }
 .jm-article__head, .jm-article__body, .jm-article__foot { width: min(100% - 2 * var(--jm-gutter), 46rem); margin-inline: auto; }
-.jm-article__head { display: grid; gap: 1rem; }
+.jm-article__head { display: grid; gap: .75rem; }
 .jm-breadcrumb ol { list-style: none; display: flex; flex-wrap: wrap; gap: .25rem .5rem; margin: 0; padding: 0; font-size: .8125rem; font-weight: 600; }
 .jm-breadcrumb li + li::before { content: "/"; margin-right: .5rem; color: var(--wp--preset--color--muted); opacity: .5; }
 .jm-breadcrumb a { color: var(--wp--preset--color--muted); text-decoration: none; }
 .jm-breadcrumb a:hover { color: var(--wp--preset--color--brand); }
 .jm-breadcrumb li:last-child a { color: var(--wp--preset--color--brand); }
-.jm-article__title { margin: 0; font-size: clamp(1.875rem, 1.2rem + 2.6vw, 3rem); font-weight: 800; line-height: 1.12; letter-spacing: -.02em; }
-.jm-dek { margin: 0; font-size: clamp(1.0625rem, 1rem + .3vw, 1.25rem); line-height: 1.55; color: var(--wp--preset--color--muted); }
-.jm-byline { display: flex; align-items: center; gap: .75rem; padding-block: 1rem; border-block: 1px solid var(--wp--preset--color--line); }
+.jm-article__title { margin: 0; font-size: clamp(1.5rem, 1.2rem + 1.2vw, 2.25rem); font-weight: 800; line-height: 1.18; letter-spacing: -.02em; }
+.jm-dek { margin: 0; font-size: 1.0625rem; line-height: 1.5; color: var(--wp--preset--color--muted); }
+.jm-byline { display: flex; align-items: center; gap: .75rem; padding-block: .75rem; border-block: 1px solid var(--wp--preset--color--line); }
 .jm-byline__avatar { border-radius: 50%; width: 44px; height: 44px; object-fit: cover; }
 .jm-byline__author { font-weight: 700; color: var(--wp--preset--color--ink); text-decoration: none; }
 .jm-byline__author:hover { color: var(--wp--preset--color--brand); }
 .jm-byline__meta { margin: .15rem 0 0; display: flex; flex-wrap: wrap; gap: .4rem; font-size: .8125rem; color: var(--wp--preset--color--muted); }
 
-.jm-figure { width: min(100% - 2 * var(--jm-gutter), 64rem); margin: clamp(1.5rem, 4vw, 2.5rem) auto; }
-.jm-figure img { width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; display: block; border-radius: var(--jm-radius); }
+.jm-figure { width: min(100% - 2 * var(--jm-gutter), 64rem); margin: clamp(1rem, 2.5vw, 1.5rem) auto clamp(1.25rem, 3vw, 2rem); }
+.jm-figure img { width: 100%; height: auto; aspect-ratio: 2 / 1; object-fit: cover; display: block; border-radius: var(--jm-radius); }
 .jm-figure figcaption { margin-top: .6rem; font-size: .8125rem; color: var(--wp--preset--color--muted); }
 
 .jm-article__body > * { margin-block: 0 1.25em; }
@@ -374,12 +378,12 @@ p.jm-arab { font-size: 1.45em; line-height: 2.1; text-align: right; }
 
 /* == 5. Arsip, pencarian, halaman ========================================== */
 .jm-archive-head {
-	position: relative; isolation: isolate; padding-block: clamp(2rem, 6vw, 3.5rem);
+	position: relative; isolation: isolate; padding-block: clamp(1.5rem, 4vw, 2.25rem);
 	background: var(--wp--preset--color--night); color: var(--wp--preset--color--on-night);
 }
 .jm-archive-head::before { opacity: .2; }
 .jm-archive-head__inner { width: min(100% - 2 * var(--jm-gutter), var(--jm-wide)); margin-inline: auto; display: grid; gap: .75rem; justify-items: start; }
-.jm-archive-head h1 { margin: 0; font-size: clamp(1.875rem, 1.2rem + 2.6vw, 3rem); font-weight: 800; letter-spacing: -.02em; color: inherit; overflow-wrap: anywhere; }
+.jm-archive-head h1 { margin: 0; font-size: clamp(1.5rem, 1.2rem + 1.2vw, 2.25rem); font-weight: 800; letter-spacing: -.02em; color: inherit; overflow-wrap: anywhere; }
 .jm-archive-head__desc { max-width: 40rem; opacity: .88; }
 .jm-archive-head__desc p { margin: 0; }
 .jm-archive-head__avatar { border-radius: 50%; box-shadow: 0 0 0 3px var(--wp--preset--color--gold); }
@@ -393,7 +397,7 @@ p.jm-arab { font-size: 1.45em; line-height: 2.1; text-align: right; }
 .jm-tabs a:hover { border-color: currentColor; }
 .jm-tabs a[aria-current="page"] { background: var(--wp--preset--color--on-night); color: var(--wp--preset--color--night); border-color: transparent; }
 
-.jm-archive__body { width: min(100% - 2 * var(--jm-gutter), var(--jm-wide)); margin: clamp(2rem, 5vw, 3rem) auto 0; }
+.jm-archive__body { width: min(100% - 2 * var(--jm-gutter), var(--jm-wide)); margin: clamp(1.25rem, 3vw, 2rem) auto 0; }
 .jm-grid > li, .jm-cards > *, .jm-portraits > * { margin: 0; }
 .jm-grid { list-style: none; margin: 0; padding: 0; display: grid; gap: 2rem 1.5rem; grid-template-columns: repeat(auto-fill, minmax(min(100%, 17rem), 1fr)); }
 @media (min-width: 1000px) {
@@ -417,7 +421,7 @@ p.jm-arab { font-size: 1.45em; line-height: 2.1; text-align: right; }
 }
 
 .jm-page { width: min(100% - 2 * var(--jm-gutter), 46rem); margin: clamp(2rem, 6vw, 4rem) auto 0; }
-.jm-page h1 { font-size: clamp(1.875rem, 1.2rem + 2.6vw, 3rem); font-weight: 800; letter-spacing: -.02em; margin: 0 0 1.5rem; }
+.jm-page h1 { font-size: clamp(1.5rem, 1.2rem + 1.2vw, 2.25rem); font-weight: 800; letter-spacing: -.02em; margin: 0 0 1.5rem; }
 .jm-page .jm-article__body { width: auto; }
 .jm-page__lambang { display: grid; justify-items: center; gap: .75rem; margin: 0 0 2rem; text-align: center; font-size: .875rem; color: var(--wp--preset--color--muted); }
 .jm-page__lambang img { width: min(60vw, 220px); height: auto; }
@@ -469,7 +473,7 @@ p.jm-arab { font-size: 1.45em; line-height: 2.1; text-align: right; }
 .jm-feed > li { margin: 0; }
 .jm-feed > li:first-child .jm-card--list { grid-template-columns: 1fr; gap: 1.25rem; padding-bottom: 2rem; }
 
-.jm-feed > li:first-child .jm-card__title { font-size: clamp(1.625rem, 1.1rem + 1.8vw, 2.25rem); font-weight: 800; line-height: 1.15; letter-spacing: -.02em; }
+.jm-feed > li:first-child .jm-card__title { font-size: clamp(1.375rem, 1.1rem + 1vw, 1.75rem); font-weight: 800; line-height: 1.2; letter-spacing: -.02em; }
 .jm-feed > li:first-child .jm-card__excerpt { display: block; font-size: 1.0625rem; }
 
 .jm-loadmore { display: grid; justify-items: center; gap: .75rem; margin-top: 3rem; }
@@ -495,7 +499,7 @@ p.jm-arab { font-size: 1.45em; line-height: 2.1; text-align: right; }
 	.jm-nav .wp-block-navigation__responsive-container-open { width: 38px; height: 38px; }
 }
 /* Pencarian di HP/tablet: terbuka sebagai panel selebar header, bukan melebar di dalam baris. */
-@media (max-width: 1099px) {
+@media (max-width: 1199px) {
 	.jm-header .wp-block-search:not(.wp-block-search__searchfield-hidden) .wp-block-search__input {
 		position: absolute; left: 0; right: 0; top: calc(100% + .5rem); z-index: 60;
 		width: auto !important; height: 3rem; padding: 0 1.1rem; margin: 0;

@@ -47,11 +47,9 @@ function jatman_card( WP_Post $post, string $variant ): string {
 	// Semua varian bergambar selalu punya wadah gambar; tanpa gambar utama dipakai thumbnail cadangan (knot).
 	$with_img = in_array( $variant, [ 'hero-main', 'hero-side', 'list', 'feature', 'title', 'card', 'portrait' ], true );
 	$size     = [ 'hero-main' => 'jatman-hero', 'portrait' => 'jatman-portrait' ][ $variant ] ?? 'jatman-card';
-	$heading  = match ( $variant ) {
-		'hero-main'        => 'h2',
-		'feature', 'title' => 'h4',
-		default            => 'h3',
-	};
+	// Kartu di bawah judul bagian (h2) memakai h3; di tab HP judul kolom wilayah disembunyikan,
+	// jadi h4 akan melompati level.
+	$heading  = 'hero-main' === $variant ? 'h2' : 'h3';
 	$cat      = in_array( $variant, [ 'hero-main', 'hero-side', 'list', 'card' ], true ) ? jatman_primary_category( $post ) : null;
 	$excerpt  = in_array( $variant, [ 'hero-main', 'list', 'feature' ], true )
 		? jatman_clean_excerpt( $post, 'hero-main' === $variant ? 32 : 22 )

@@ -69,17 +69,33 @@ test('pita-pita beranda bersambung tanpa celah putih', async ({ page }) => {
 
 const ratio = (r: string) => { const [a, b] = r.split('/').map((x) => parseFloat(x)); return b ? a / b : NaN; };
 
-test('rasio gambar seragam: 16:9 untuk lanskap, 4:5 untuk Tokoh', async ({ page }) => {
+test('rasio gambar: 2:1 untuk gambar utama besar, 16:9 lanskap lain, 4:5 Tokoh', async ({ page }) => {
   for (const width of [375, 1280]) {
     await page.setViewportSize({ width, height: 900 });
     await page.goto('/');
     const ratios = await page.locator('.jm-card__media').evaluateAll((els) =>
-      els.filter((e) => (e as HTMLElement).offsetParent).map((e) => ({ portrait: !!e.closest('.jm-card--portrait'), r: getComputedStyle(e).aspectRatio })));
-    for (const { portrait, r } of ratios) expect(ratio(r), `${width}px ${r}`).toBeCloseTo(portrait ? 4 / 5 : 16 / 9, 2);
+      els.filter((e) => (e as HTMLElement).offsetParent).map((e) => ({
+        kind: e.closest('.jm-card--portrait') ? 'portrait' : e.closest('.jm-card--hero-main') ? 'wide' : 'landscape',
+        r: getComputedStyle(e).aspectRatio,
+      })));
+    for (const { kind, r } of ratios) expect(ratio(r), `${width}px ${kind} ${r}`).toBeCloseTo({ portrait: 4 / 5, wide: 2, landscape: 16 / 9 }[kind]!, 2);
   }
   await page.goto('/idarah-aliyyah-jatman-launching-logo-harlah-ke-69/');
-  expect(ratio(await page.locator('.jm-figure img').evaluate((e) => getComputedStyle(e).aspectRatio))).toBeCloseTo(16 / 9, 2);
+  expect(ratio(await page.locator('.jm-figure img').evaluate((e) => getComputedStyle(e).aspectRatio))).toBeCloseTo(2, 2);
+  await page.goto('/indeks/');
+  expect(ratio(await page.locator('.jm-feed > li:first-child .jm-card__media').evaluate((e) => getComputedStyle(e).aspectRatio))).toBeCloseTo(2, 2);
 });
+
+for (const [w, h] of [[1280, 800], [375, 740]]) {
+  test(`gambar besar sudah terlihat tanpa scroll (${w}×${h})`, async ({ page }) => {
+    await page.setViewportSize({ width: w, height: h });
+    for (const [url, sel] of [['/idarah-aliyyah-jatman-launching-logo-harlah-ke-69/', '.jm-figure img'], ['/berita/', '.jm-feed > li:first-child .jm-card__media'], ['/', '.jm-hero__main .jm-card__media']]) {
+      await page.goto(url);
+      const b = await page.locator(sel).boundingBox();
+      expect(b!.y + b!.height / 2, `${url} separuh gambar terlihat`).toBeLessThanOrEqual(h);
+    }
+  });
+}
 
 test('HP: hanya satu headline besar, pendamping hero berupa daftar dengan thumbnail kecil', async ({ page }) => {
   await page.setViewportSize({ width: 375, height: 800 });

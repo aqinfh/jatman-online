@@ -106,3 +106,22 @@ test.describe('header HP 375px', () => {
     expect(await chip.evaluate((a) => getComputedStyle(a).borderTopStyle)).toBe('solid');
   });
 });
+
+for (const width of [600, 768, 1024, 1150]) {
+  test(`header ${width}px: cari, mode gelap, dan menu berkelompok di kanan`, async ({ page }) => {
+    await page.setViewportSize({ width, height: 800 });
+    await page.goto('/');
+    const toggle = await page.locator('.jm-theme-toggle').boundingBox();
+    const burger = await page.locator('.jm-nav .wp-block-navigation__responsive-container-open').boundingBox();
+    expect(burger, 'hamburger tampil').not.toBeNull();
+    expect(burger!.x - (toggle!.x + toggle!.width)).toBeLessThanOrEqual(12);
+    expect(width - (burger!.x + burger!.width)).toBeLessThanOrEqual(40);
+  });
+}
+
+test('header ≥1200px: semua menu satu baris tanpa patah', async ({ page }) => {
+  await page.setViewportSize({ width: 1200, height: 800 });
+  await page.goto('/');
+  const heights = await page.locator('.jm-nav .wp-block-navigation__container > li > a').evaluateAll((as) => as.map((a) => a.getBoundingClientRect().height));
+  for (const h of heights) expect(h).toBeLessThanOrEqual(44); // satu baris = 40px; patah dua baris ≈ 64px
+});
