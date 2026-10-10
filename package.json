@@ -1,0 +1,39 @@
+{
+  "name": "jatman-online",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "env:start": "wp-env start && npm run setup",
+    "env:stop": "wp-env stop && wp-env stop --config=.wp-env.test.json",
+    "setup": "wp-env run cli wp eval-file tools/setup.php",
+    "wp": "wp-env run cli wp",
+    "brand:build": "node tools/brand/build.mjs",
+    "sample:fetch": "node tools/sample/fetch.mjs",
+    "sample:import": "wp-env run cli wp eval-file tools/sample/import.php",
+    "sample:reset": "wp-env run cli wp eval-file tools/sample/reset.php && npm run sample:import",
+    "test:unit": "node --test \"tests/unit/**/*.test.mjs\"",
+    "test:php": "wp-env start --config=.wp-env.test.json && wp-env run --config=.wp-env.test.json cli wp eval-file tools/setup.php && wp-env run --config=.wp-env.test.json cli wp eval-file tests/php/run.php",
+    "test:e2e": "playwright test --project=e2e",
+    "test": "npm run test:unit && npm run test:php && npm run test:e2e",
+    "screens": "playwright test --project=screens",
+    "lighthouse": "node tests/lighthouse.mjs",
+    "lint:php": "wp-env run cli bash tools/lint-php.sh",
+    "lint:theme-json": "node tests/validate-theme-json.mjs"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "^4.13.0",
+    "@fontsource-variable/plus-jakarta-sans": "^5.3.0",
+    "@fontsource-variable/source-serif-4": "^5.3.0",
+    "@playwright/test": "^1.64.0",
+    "@wordpress/env": "^11.17.0",
+    "ajv": "^8.20.0",
+    "ajv-formats": "^3.0.1",
+    "cheerio": "^1.2.0",
+    "chrome-launcher": "^1.2.2",
+    "lighthouse": "^13.5.0",
+    "potrace": "^2.1.8",
+    "sharp": "^0.35.5",
+    "svgo": "^4.1.0",
+    "wawoff2": "^2.0.1"
+  }
+}
