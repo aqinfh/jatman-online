@@ -1,0 +1,4 @@
+node_modules/
+tools/sample/data/
+tests/output/
+.DS_Store
