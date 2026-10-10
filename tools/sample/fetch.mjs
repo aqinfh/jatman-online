@@ -9,7 +9,7 @@ import { fileURLToPath } from 'node:url';
 import { parseArticlesList } from './lib/articles-list.mjs';
 import { parseArticle } from './lib/parse-article.mjs';
 import { parseProfile } from './lib/parse-profile.mjs';
-import { htmlToBlocks } from './lib/to-blocks.mjs';
+import { dropImageBlocks, htmlToBlocks } from './lib/to-blocks.mjs';
 import { mediaName } from './lib/media-name.mjs';
 
 const ROOT = path.dirname(fileURLToPath(import.meta.url));
@@ -61,9 +61,10 @@ async function main() {
 
       const { markup, images } = htmlToBlocks(art.contentHtml);
       const inlineImages = [];
+      const failedImages = [];
       for (const src of images) {
         try { inlineImages.push({ url: src, file: await download(src) }); }
-        catch (e) { console.warn(`! ${item.slug}: gambar isi gagal (${src}): ${e.message}`); }
+        catch (e) { failedImages.push(src); console.warn(`! ${item.slug}: gambar isi gagal, dibuang dari isi (${src}): ${e.message}`); }
       }
 
       let image = null;
@@ -88,7 +89,7 @@ async function main() {
 
       posts.push({
         slug: art.slug, title: art.title, excerpt: art.excerpt, date: art.date, category: item.category,
-        tags: art.tags, author: art.author.slug, content: markup, inline_images: inlineImages, image,
+        tags: art.tags, author: art.author.slug, content: dropImageBlocks(markup, failedImages), inline_images: inlineImages, image,
         flags: item.flags, source_url: item.url,
       });
       console.log(`✓ ${item.slug}`);

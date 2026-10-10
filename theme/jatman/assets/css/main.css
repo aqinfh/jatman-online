@@ -490,3 +490,38 @@ p.jm-arab { font-size: 1.45em; line-height: 2.1; text-align: right; }
 .jm-loadmore__button:disabled { opacity: .6; cursor: progress; }
 .jm-loadmore__status { margin: 0; font-size: .8125rem; color: var(--wp--preset--color--muted); }
 .jm-loadmore__status:empty { display: none; }
+
+/* == 7. Header & laci menu di HP ============================================ */
+.jm-header__inner { position: relative; }
+@media (max-width: 599px) {
+	.jm-header__inner { gap: .5rem; min-height: 60px; }
+	.jm-brand { gap: .45rem; min-width: 0; }
+	.jm-brand__mark { height: 32px; }
+	.jm-brand__word { font-size: .9375rem; letter-spacing: .04em; }
+	.jm-header__tools { gap: .375rem; }
+	.jm-header .wp-block-search__button, .jm-theme-toggle,
+	.jm-nav .wp-block-navigation__responsive-container-open { width: 38px; height: 38px; }
+}
+/* Pencarian di HP/tablet: terbuka sebagai panel selebar header, bukan melebar di dalam baris. */
+@media (max-width: 1099px) {
+	.jm-header .wp-block-search:not(.wp-block-search__searchfield-hidden) .wp-block-search__input {
+		position: absolute; left: 0; right: 0; top: calc(100% + .5rem); z-index: 60;
+		width: auto !important; height: 3rem; padding: 0 1.1rem; margin: 0;
+		background: var(--wp--preset--color--base); box-shadow: var(--jm-shadow);
+	}
+	.jm-header .wp-block-search__input:focus-visible { outline: 2px solid var(--wp--preset--color--brand); outline-offset: 0; }
+}
+/* Laci menu: rata kiri, berstruktur; sub-rubrik Berita sebagai chip. */
+.jm-nav .wp-block-navigation__responsive-container.is-menu-open .wp-block-navigation__responsive-container-content { align-items: stretch !important; padding-top: 3.5rem; }
+.jm-nav .is-menu-open .wp-block-navigation__container { align-items: stretch !important; gap: 0; font-size: 1.125rem; width: 100%; }
+.jm-nav .is-menu-open .wp-block-navigation__container > .wp-block-navigation-item { border-bottom: 1px solid var(--wp--preset--color--line); padding-block: .25rem; align-items: flex-start !important; }
+.jm-nav .is-menu-open .wp-block-navigation__container > .wp-block-navigation-item > .wp-block-navigation-item__content { padding: .75rem 0; font-weight: 700; }
+.jm-nav .is-menu-open .wp-block-navigation__submenu-container {
+	display: flex !important; flex-direction: row !important; flex-wrap: wrap; gap: .5rem;
+	padding: 0 0 .875rem !important; background: transparent !important; border: 0 !important; box-shadow: none !important;
+}
+.jm-nav .is-menu-open .wp-block-navigation__submenu-container .wp-block-navigation-item__content {
+	padding: .45rem .95rem !important; border: 1px solid var(--wp--preset--color--line); border-radius: 999px;
+	font-size: .875rem; font-weight: 600;
+}
+.jm-nav .is-menu-open .wp-block-navigation__submenu-icon { display: none; }

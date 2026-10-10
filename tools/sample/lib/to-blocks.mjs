@@ -141,3 +141,12 @@ function pushHtml($, el, out) {
   const html = $.html(el).trim();
   if (html) out.blocks.push(`<!-- wp:html -->\n${html}\n<!-- /wp:html -->`);
 }
+
+/** Buang block image yang sumbernya gagal diunduh (mis. domain lama yang sudah mati) supaya tidak tampil rusak. */
+export function dropImageBlocks(markup, failedUrls) {
+  if (!failedUrls.length) return markup;
+  return markup
+    .split('\n\n')
+    .filter((block) => !(block.startsWith('<!-- wp:image') && failedUrls.some((u) => block.includes(`src="${escAttr(u)}"`))))
+    .join('\n\n');
+}

@@ -70,3 +70,39 @@ test('footer: dua identitas, tautan halaman, media sosial', async ({ page }) => 
     await expect(footer.locator(`a[href*="${url}"]`)).toHaveCount(1);
   }
 });
+
+test.describe('header HP 375px', () => {
+  test.use({ viewport: { width: 375, height: 760 } });
+
+  test('logo, cari, mode gelap, dan menu muat tanpa meluap', async ({ page }) => {
+    await page.goto('/');
+    expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(375);
+    for (const sel of ['.jm-header .wp-block-search__button', '.jm-theme-toggle', '.jm-nav .wp-block-navigation__responsive-container-open']) {
+      const box = await page.locator(sel).boundingBox();
+      expect(box!.x + box!.width, sel).toBeLessThanOrEqual(375 - 8);
+    }
+  });
+
+  test('pencarian terbuka di bawah header selebar layar tanpa menggeser halaman', async ({ page }) => {
+    await page.goto('/');
+    await page.locator('.jm-header .wp-block-search__button').click();
+    const input = page.locator('.jm-header .wp-block-search__input');
+    await expect(input).toBeVisible();
+    const box = await input.boundingBox();
+    expect(box!.width).toBeGreaterThanOrEqual(300);
+    expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(375);
+    await input.fill('tasawuf');
+    await input.press('Enter');
+    await expect(page).toHaveURL(/\?s=tasawuf/);
+  });
+
+  test('laci menu rata kiri dengan sub-rubrik Berita sebagai chip', async ({ page }) => {
+    await page.goto('/');
+    await page.locator('.jm-nav .wp-block-navigation__responsive-container-open').click();
+    const drawer = page.locator('.jm-nav .is-menu-open');
+    const align = await drawer.getByRole('link', { name: 'Hikmah', exact: true }).evaluate((a) => getComputedStyle(a.closest('li')!.parentElement!).alignItems);
+    expect(['flex-start', 'stretch', 'start']).toContain(align);
+    const chip = drawer.getByRole('link', { name: 'Nasional', exact: true });
+    expect(await chip.evaluate((a) => getComputedStyle(a).borderTopStyle)).toBe('solid');
+  });
+});
