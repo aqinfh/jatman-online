@@ -186,7 +186,9 @@ p.jm-arab { font-size: 1.45em; line-height: 2.1; text-align: right; }
 .jm-meta time::before { content: "·"; margin-right: .5rem; }
 
 .jm-card { display: grid; gap: .875rem; align-content: start; }
-.jm-card__media { display: block; overflow: hidden; border-radius: var(--jm-radius-sm); background: var(--wp--preset--color--cream); aspect-ratio: 3 / 2; }
+/* Rasio gambar: 16:9 untuk semua lanskap (satu aturan), 4:5 hanya untuk foto Tokoh. */
+.jm-card__media { display: block; overflow: hidden; border-radius: var(--jm-radius-sm); background: var(--wp--preset--color--cream); aspect-ratio: 16 / 9; }
+.jm-card--hero-main .jm-card__media, .jm-feed > li:first-child .jm-card__media { border-radius: var(--jm-radius); }
 .jm-card__media img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .5s var(--jm-ease); }
 .jm-card:hover .jm-card__media img { transform: scale(1.03); }
 .jm-card__body { display: grid; gap: .5rem; align-content: start; justify-items: start; }
@@ -219,12 +221,12 @@ p.jm-arab { font-size: 1.45em; line-height: 2.1; text-align: right; }
 .jm-section--hero { padding-top: clamp(1.25rem, 3vw, 2rem); }
 .jm-hero { display: grid; gap: 1.5rem; }
 .jm-hero__side { display: grid; gap: 1.5rem; align-content: start; }
-.jm-card--hero-main .jm-card__media { aspect-ratio: 16 / 10; border-radius: var(--jm-radius); }
+
 .jm-card--hero-main .jm-card__title { font-size: clamp(1.625rem, 1.1rem + 2.2vw, 2.5rem); font-weight: 800; line-height: 1.15; letter-spacing: -.02em; }
 .jm-card--hero-main .jm-card__excerpt {
 	font-size: 1.0625rem; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; overflow: hidden;
 }
-.jm-card--hero-side .jm-card__media { aspect-ratio: 16 / 10; }
+
 @media (min-width: 700px) {
 	.jm-hero { grid-template-columns: 1fr 1fr; }
 	.jm-hero__main { grid-column: 1 / -1; }
@@ -247,10 +249,9 @@ p.jm-arab { font-size: 1.45em; line-height: 2.1; text-align: right; }
 .jm-card--list { grid-template-columns: 112px 1fr; gap: 1rem; padding-block: 1.25rem; border-bottom: 1px solid var(--wp--preset--color--line); }
 .jm-card--list:first-child { padding-top: 0; }
 .jm-card--list:not(:has(.jm-card__media)) { grid-template-columns: 1fr; }
-.jm-card--list .jm-card__media { aspect-ratio: 1; }
+
 @media (min-width: 640px) {
 	.jm-card--list { grid-template-columns: 200px 1fr; gap: 1.5rem; }
-	.jm-card--list .jm-card__media { aspect-ratio: 3 / 2; }
 	.jm-card--list .jm-card__title { font-size: 1.1875rem; }
 }
 @media (max-width: 639px) { .jm-card--list .jm-card__excerpt { display: none; } }
@@ -298,7 +299,7 @@ p.jm-arab { font-size: 1.45em; line-height: 2.1; text-align: right; }
 .jm-dawuh__cite { display: flex; gap: .5rem; font-size: .875rem; color: var(--wp--preset--color--muted); }
 
 .jm-cards { display: grid; gap: 1.5rem; grid-template-columns: repeat(auto-fill, minmax(min(100%, 15rem), 1fr)); }
-.jm-card--card .jm-card__media { aspect-ratio: 4 / 3; }
+
 .jm-portraits { display: grid; gap: 1rem; grid-template-columns: repeat(2, minmax(0, 1fr)); }
 @media (min-width: 900px) { .jm-portraits { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1.5rem; } }
 .jm-card--portrait { position: relative; border-radius: var(--jm-radius); overflow: hidden; gap: 0; }
@@ -333,7 +334,7 @@ p.jm-arab { font-size: 1.45em; line-height: 2.1; text-align: right; }
 .jm-byline__meta { margin: .15rem 0 0; display: flex; flex-wrap: wrap; gap: .4rem; font-size: .8125rem; color: var(--wp--preset--color--muted); }
 
 .jm-figure { width: min(100% - 2 * var(--jm-gutter), 64rem); margin: clamp(1.5rem, 4vw, 2.5rem) auto; }
-.jm-figure img { width: 100%; display: block; border-radius: var(--jm-radius); }
+.jm-figure img { width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; display: block; border-radius: var(--jm-radius); }
 .jm-figure figcaption { margin-top: .6rem; font-size: .8125rem; color: var(--wp--preset--color--muted); }
 
 .jm-article__body > * { margin-block: 0 1.25em; }
@@ -404,7 +405,6 @@ p.jm-arab { font-size: 1.45em; line-height: 2.1; text-align: right; }
 .jm-grid { list-style: none; margin: 0; padding: 0; display: grid; gap: 2rem 1.5rem; grid-template-columns: repeat(auto-fill, minmax(min(100%, 17rem), 1fr)); }
 @media (min-width: 1000px) {
 	body:not(.paged) .jm-grid > li:first-child { grid-column: span 2; grid-row: span 2; }
-	body:not(.paged) .jm-grid > li:first-child .jm-card__media { aspect-ratio: 16 / 10; }
 	body:not(.paged) .jm-grid > li:first-child .jm-card__title { font-size: 1.75rem; font-weight: 800; line-height: 1.2; }
 }
 .jm-pagination { margin-top: 3rem; gap: .5rem; font-weight: 600; }
@@ -476,7 +476,7 @@ p.jm-arab { font-size: 1.45em; line-height: 2.1; text-align: right; }
 .jm-feed { list-style: none; margin: 0; padding: 0; display: grid; }
 .jm-feed > li { margin: 0; }
 .jm-feed > li:first-child .jm-card--list { grid-template-columns: 1fr; gap: 1.25rem; padding-bottom: 2rem; }
-.jm-feed > li:first-child .jm-card__media { aspect-ratio: 16 / 9; border-radius: var(--jm-radius); }
+
 .jm-feed > li:first-child .jm-card__title { font-size: clamp(1.625rem, 1.1rem + 1.8vw, 2.25rem); font-weight: 800; line-height: 1.15; letter-spacing: -.02em; }
 .jm-feed > li:first-child .jm-card__excerpt { display: block; font-size: 1.0625rem; }
 
@@ -525,3 +525,45 @@ p.jm-arab { font-size: 1.45em; line-height: 2.1; text-align: right; }
 	font-size: .875rem; font-weight: 600;
 }
 .jm-nav .is-menu-open .wp-block-navigation__submenu-icon { display: none; }
+
+/* == 8. HP: headline tunggal, baris geser Hikmah, tab Berita ================= */
+@media (max-width: 699px) {
+	.jm-hero { gap: 0; }
+	.jm-hero__main { padding-bottom: 1.25rem; }
+	.jm-hero__side { gap: 0; }
+	.jm-card--hero-side { grid-template-columns: 112px 1fr; gap: .875rem; align-items: start; padding-block: 1rem; border-top: 1px solid var(--wp--preset--color--line); }
+	.jm-card--hero-side .jm-card__title { font-size: 1rem; }
+	.jm-card--hero-side .jm-label { display: none; }
+}
+.jm-section--cards .jm-cards {
+	grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: min(78%, 17rem);
+	overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x mandatory; scroll-padding-inline: 0;
+	padding-bottom: .75rem; scrollbar-width: thin; scrollbar-color: color-mix(in srgb, var(--wp--preset--color--on-night) 35%, transparent) transparent;
+}
+.jm-section--cards .jm-cards > * { scroll-snap-align: start; }
+@media (min-width: 1000px) { .jm-section--cards .jm-cards { grid-auto-columns: calc((100% - 4.5rem) / 4); } }
+
+.jm-regions__tabs { display: flex; gap: .5rem; overflow-x: auto; scrollbar-width: none; margin-bottom: .5rem; }
+.jm-regions__tabs[hidden] { display: none; }
+.jm-regions__tabs button {
+	flex: none; padding: .5rem 1rem; border-radius: 999px; cursor: pointer;
+	border: 1px solid var(--wp--preset--color--line); background: transparent; color: var(--wp--preset--color--ink);
+	font: 600 .875rem/1 var(--wp--preset--font-family--sans);
+}
+.jm-regions__tabs button[aria-selected="true"] { background: var(--wp--preset--color--brand); border-color: transparent; color: var(--wp--preset--color--on-brand); }
+.jm-regions.is-tabbed .jm-region__title,
+.jm-regions.is-tabbed .jm-card--feature .jm-card__media,
+.jm-regions.is-tabbed .jm-card--feature .jm-card__excerpt,
+.jm-regions.is-tabbed .jm-card--feature .jm-meta { display: none; }
+.jm-regions.is-tabbed .jm-card--feature { padding-block: .875rem; }
+.jm-regions.is-tabbed .jm-card--feature .jm-card__title { font-size: 1rem; font-weight: 600; }
+.jm-regions.is-tabbed .jm-region__list { margin-top: 0; }
+/* Tokoh di HP: baris geser dengan kartu lebar; judul maksimal 3 baris. */
+@media (max-width: 899px) {
+	.jm-portraits {
+		grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: min(68%, 16rem);
+		overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x mandatory; padding-bottom: .75rem; scrollbar-width: thin;
+	}
+	.jm-portraits > * { scroll-snap-align: start; }
+}
+.jm-card--portrait .jm-card__title { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; overflow: hidden; }

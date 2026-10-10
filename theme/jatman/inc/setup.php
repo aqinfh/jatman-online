@@ -10,9 +10,9 @@ add_action(
 	static function (): void {
 		add_theme_support( 'editor-styles' );
 		add_editor_style( 'assets/css/main.css' );
-		add_image_size( 'jatman-hero', 1240, 700, true );
-		add_image_size( 'jatman-hero-sm', 640, 361, true ); // rasio sama dengan jatman-hero → masuk srcset di HP
-		add_image_size( 'jatman-card', 640, 400, true );
+		add_image_size( 'jatman-hero', 1240, 698, true ); // semua gambar lanskap 16:9
+		add_image_size( 'jatman-hero-sm', 640, 360, true ); // rasio sama dengan jatman-hero → masuk srcset di HP
+		add_image_size( 'jatman-card', 640, 360, true );
 		add_image_size( 'jatman-portrait', 480, 600, true );
 	}
 );

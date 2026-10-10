@@ -207,3 +207,6 @@ Ditambahkan selama putaran polish, atas permintaan pengguna:
 - **Favicon:** kotak hijau brand dengan knot putih. Lambang di top bar dan footer memakai PNG ringan; SVG penuh hanya di halaman Tentang.
 - **Media sosial:** Instagram `@jatmanonline`; YouTube `@jatman.online` (dikonfirmasi pengguna).
 - **Beranda tanpa bagian Tanya Jawab** (permintaan pengguna); rubrik Tanya Jawab tetap ada di menu dan arsipnya.
+- **Sample ditambah menjadi 24 artikel** (Tokoh, Hikmah, Pustaka Tasawuf terisi). Rubrik mengikuti web lama. Gambar isi dari domain mati `old.jatman.or.id` dibuang dari isi; tautan teks "Baca juga" ke domain itu dibiarkan dan dialihkan saat migrasi.
+- **Rasio gambar:** semua gambar lanskap 16:9 (hero, daftar, kartu, gambar utama artikel), foto Tokoh 4:5.
+- **HP:** hanya satu headline besar (pendamping hero berupa daftar bergambar kecil); Hikmah & Pustaka Tasawuf dan Tokoh berupa baris geser; bagian Berita menjadi tab Nasional/Daerah/Internasional berisi daftar seragam (desktop tetap tiga kolom). Header muat tanpa meluap, pencarian terbuka sebagai panel selebar header, laci menu rata kiri dengan sub-rubrik Berita sebagai chip.

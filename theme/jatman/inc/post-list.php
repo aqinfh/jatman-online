@@ -159,6 +159,7 @@ function jatman_layout_hero( array $a ): array {
 /** Satu kolom per kategori (Nasional/Daerah/Internasional); kolom kosong dilewati. */
 function jatman_layout_regions( array $a ): array {
 	$columns = '';
+	$tabs    = '';
 	$all     = [];
 	foreach ( array_filter( array_map( 'trim', explode( ',', $a['category'] ) ) ) as $slug ) {
 		$term  = get_term_by( 'slug', $slug, 'category' );
@@ -168,15 +169,27 @@ function jatman_layout_regions( array $a ): array {
 		}
 		$all     = array_merge( $all, $posts );
 		$titles  = implode( '', array_map( static fn( WP_Post $p ): string => '<li>' . jatman_card( $p, 'title' ) . '</li>', array_slice( $posts, 1 ) ) );
+		$first    = '' === $tabs;
+		// Tombol tab hanya aktif di HP (theme.js); tanpa JS semua kolom tetap tampil.
+		$tabs    .= sprintf(
+			'<button type="button" id="jm-tab-%1$s" aria-controls="jm-panel-%1$s" aria-selected="%2$s">%3$s</button>',
+			esc_attr( $slug ),
+			$first ? 'true' : 'false',
+			esc_html( $term->name )
+		);
 		$columns .= sprintf(
-			'<div class="jm-region"><h3 class="jm-region__title"><a href="%s">%s</a></h3>%s%s</div>',
+			'<div class="jm-region" id="jm-panel-%s"><h3 class="jm-region__title"><a href="%s">%s</a></h3>%s%s</div>',
+			esc_attr( $slug ),
 			esc_url( get_term_link( $term ) ),
 			esc_html( $term->name ),
 			jatman_card( $posts[0], 'feature' ),
 			$titles ? '<ul class="jm-region__list">' . $titles . '</ul>' : ''
 		);
 	}
-	return [ $columns ? '<div class="jm-regions">' . $columns . '</div>' : '', $all ];
+	if ( ! $columns ) {
+		return [ '', [] ];
+	}
+	return [ '<div class="jm-regions" data-jm-tabs><div class="jm-regions__tabs" aria-label="Wilayah berita" hidden>' . $tabs . '</div>' . $columns . '</div>', $all ];
 }
 
 /** Artikel terkait: rubrik yang sama dengan artikel yang sedang dibuka, kecuali dirinya. */

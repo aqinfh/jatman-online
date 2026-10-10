@@ -88,6 +88,56 @@
 		} );
 	} );
 
+	// Tab wilayah Berita di HP (<900px). Di layar lebar semua kolom tampil dan peran ARIA tab dilepas.
+	document.querySelectorAll( '[data-jm-tabs]' ).forEach( ( box ) => {
+		const tablist = box.querySelector( '.jm-regions__tabs' );
+		const tabs = [ ...tablist.querySelectorAll( 'button' ) ];
+		const panels = tabs.map( ( t ) => box.querySelector( '#' + t.getAttribute( 'aria-controls' ) ) );
+		const mq = window.matchMedia( '(max-width: 899px)' );
+		const select = ( index, focus ) => {
+			tabs.forEach( ( tab, j ) => {
+				const on = j === index;
+				tab.setAttribute( 'aria-selected', String( on ) );
+				tab.tabIndex = on ? 0 : -1;
+				panels[ j ].hidden = ! on;
+			} );
+			if ( focus ) tabs[ index ].focus();
+		};
+		const apply = () => {
+			box.classList.toggle( 'is-tabbed', mq.matches );
+			tablist.hidden = ! mq.matches;
+			if ( mq.matches ) {
+				tablist.setAttribute( 'role', 'tablist' );
+				tabs.forEach( ( tab, j ) => {
+					tab.setAttribute( 'role', 'tab' );
+					panels[ j ].setAttribute( 'role', 'tabpanel' );
+					panels[ j ].setAttribute( 'aria-labelledby', tab.id );
+				} );
+				select( Math.max( 0, tabs.findIndex( ( t ) => t.getAttribute( 'aria-selected' ) === 'true' ) ), false );
+			} else {
+				tablist.removeAttribute( 'role' );
+				tabs.forEach( ( tab, j ) => {
+					tab.removeAttribute( 'role' );
+					panels[ j ].removeAttribute( 'role' );
+					panels[ j ].removeAttribute( 'aria-labelledby' );
+					panels[ j ].hidden = false;
+				} );
+			}
+		};
+		tabs.forEach( ( tab, i ) => {
+			tab.addEventListener( 'click', () => select( i, false ) );
+			tab.addEventListener( 'keydown', ( e ) => {
+				const step = { ArrowRight: 1, ArrowLeft: -1 }[ e.key ];
+				if ( step ) {
+					e.preventDefault();
+					select( ( i + step + tabs.length ) % tabs.length, true );
+				}
+			} );
+		} );
+		mq.addEventListener( 'change', apply );
+		apply();
+	} );
+
 	// Header mengecil setelah halaman di-scroll.
 	const header = document.querySelector( '.jm-header' );
 	if ( header ) {

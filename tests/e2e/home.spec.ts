@@ -66,3 +66,77 @@ test('pita-pita beranda bersambung tanpa celah putih', async ({ page }) => {
   });
   expect(gap).toBe(0);
 });
+
+const ratio = (r: string) => { const [a, b] = r.split('/').map((x) => parseFloat(x)); return b ? a / b : NaN; };
+
+test('rasio gambar seragam: 16:9 untuk lanskap, 4:5 untuk Tokoh', async ({ page }) => {
+  for (const width of [375, 1280]) {
+    await page.setViewportSize({ width, height: 900 });
+    await page.goto('/');
+    const ratios = await page.locator('.jm-card__media').evaluateAll((els) =>
+      els.filter((e) => (e as HTMLElement).offsetParent).map((e) => ({ portrait: !!e.closest('.jm-card--portrait'), r: getComputedStyle(e).aspectRatio })));
+    for (const { portrait, r } of ratios) expect(ratio(r), `${width}px ${r}`).toBeCloseTo(portrait ? 4 / 5 : 16 / 9, 2);
+  }
+  await page.goto('/idarah-aliyyah-jatman-launching-logo-harlah-ke-69/');
+  expect(ratio(await page.locator('.jm-figure img').evaluate((e) => getComputedStyle(e).aspectRatio))).toBeCloseTo(16 / 9, 2);
+});
+
+test('HP: hanya satu headline besar, pendamping hero berupa daftar dengan thumbnail kecil', async ({ page }) => {
+  await page.setViewportSize({ width: 375, height: 800 });
+  await page.goto('/');
+  const main = await page.locator('.jm-hero__main .jm-card__media').boundingBox();
+  expect(main!.width).toBeGreaterThan(300);
+  for (const box of await page.locator('.jm-hero__side .jm-card__media').evaluateAll((els) => els.map((e) => e.getBoundingClientRect().width))) {
+    expect(box).toBeLessThanOrEqual(130);
+  }
+});
+
+test('Hikmah & Pustaka Tasawuf bisa digeser menyamping', async ({ page }) => {
+  await page.setViewportSize({ width: 375, height: 800 });
+  await page.goto('/');
+  const row = page.locator('.jm-section--cards .jm-cards');
+  expect(await row.locator('.jm-card').count()).toBeGreaterThanOrEqual(4);
+  const s = await row.evaluate((e) => ({ sw: e.scrollWidth, cw: e.clientWidth, ox: getComputedStyle(e).overflowX, snap: getComputedStyle(e).scrollSnapType }));
+  expect(s.sw).toBeGreaterThan(s.cw);
+  expect(s.ox).toBe('auto');
+  expect(s.snap).toContain('x');
+});
+
+test('Tokoh terisi minimal 4', async ({ page }) => {
+  await page.goto('/');
+  expect(await page.locator('.jm-section--portrait .jm-card').count()).toBeGreaterThanOrEqual(4);
+});
+
+test.describe('Berita di HP sebagai tab', () => {
+  test.use({ viewport: { width: 375, height: 800 } });
+  test('tab Nasional/Daerah/Internasional, satu panel tampil, daftar seragam', async ({ page }) => {
+    await page.goto('/');
+    const tabs = page.locator('.jm-section--regions [role="tab"]');
+    await expect(tabs).toHaveText(['Nasional', 'Daerah', 'Internasional']);
+    await expect(tabs.first()).toHaveAttribute('aria-selected', 'true');
+    const visiblePanels = () => page.locator('.jm-section--regions [role="tabpanel"]:visible');
+    await expect(visiblePanels()).toHaveCount(1);
+    await expect(page.locator('.jm-section--regions [role="tabpanel"]:visible .jm-card__media:visible')).toHaveCount(0);
+    await tabs.nth(1).click();
+    await expect(tabs.nth(1)).toHaveAttribute('aria-selected', 'true');
+    await expect(visiblePanels()).toHaveCount(1);
+    await expect(visiblePanels()).toContainText('Disambut Idarah Wustha JATMAN Kalsel');
+  });
+});
+
+test('Berita di desktop tetap tiga kolom tanpa tab', async ({ page }) => {
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await page.goto('/');
+  await expect(page.locator('.jm-section--regions .jm-regions__tabs')).toBeHidden();
+  await expect(page.locator('.jm-section--regions .jm-region:visible')).toHaveCount(3);
+});
+
+test('HP: kartu Tokoh cukup lebar dan judul tidak menutupi seluruh foto', async ({ page }) => {
+  await page.setViewportSize({ width: 375, height: 800 });
+  await page.goto('/');
+  const card = page.locator('.jm-section--portrait .jm-card').first();
+  const cardBox = await card.boundingBox();
+  expect(cardBox!.width).toBeGreaterThanOrEqual(220);
+  const bodyBox = await card.locator('.jm-card__body').boundingBox();
+  expect(bodyBox!.height / cardBox!.height).toBeLessThan(0.6);
+});
