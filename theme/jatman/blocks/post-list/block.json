@@ -1,0 +1,20 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "jatman/post-list",
+  "title": "Daftar post JATMAN",
+  "category": "theme",
+  "description": "Bagian daftar post: hero, terbaru, pilihan redaksi, wilayah, dawuh, kartu, tokoh, tanya jawab, terkait.",
+  "attributes": {
+    "layout": { "type": "string", "default": "list", "enum": ["hero", "list", "compact", "regions", "quote", "cards", "portrait", "qa", "related"] },
+    "category": { "type": "string", "default": "" },
+    "count": { "type": "integer", "default": 6 },
+    "pilihan": { "type": "boolean", "default": false },
+    "title": { "type": "string", "default": "" },
+    "moreLabel": { "type": "string", "default": "Lihat semua" },
+    "band": { "type": "string", "default": "", "enum": ["", "cream", "night"] },
+    "dedupe": { "type": "boolean", "default": false }
+  },
+  "supports": { "html": false },
+  "render": "file:./render.php"
+}
