@@ -10,7 +10,7 @@ test('hero menampilkan post sticky sebagai berita utama', async ({ page }) => {
 test('semua bagian beranda tampil berurutan', async ({ page }) => {
   await page.goto('/');
   await expect(page.locator('.jm-section__title')).toHaveText([
-    'Terpopuler', 'Terbaru', 'Pilihan Redaksi', 'Berita', 'Dawuh', 'Hikmah & Pustaka Tasawuf', 'Tokoh', 'Tanya Jawab',
+    'Terpopuler', 'Terbaru', 'Pilihan Redaksi', 'Berita', 'Dawuh', 'Hikmah & Pustaka Tasawuf', 'Tokoh',
   ]);
   await expect(page.locator('h1')).toHaveCount(1);
 });

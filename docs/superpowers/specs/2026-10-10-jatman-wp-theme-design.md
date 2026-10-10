@@ -205,4 +205,5 @@ Ditambahkan selama putaran polish, atas permintaan pengguna:
 - **Motif latar:** pola *star-and-cross* bersudut delapan dengan strapwork (garis ganda), dipasang sebagai CSS mask berwarna emas yang memudar ke satu sisi. Dipakai di pita Hikmah, pita arsip, dan footer.
 - **Judul bagian:** tanpa garis vertikal di kiri. **Eyebrow** di pita arsip dihapus.
 - **Favicon:** kotak hijau brand dengan knot putih. Lambang di top bar dan footer memakai PNG ringan; SVG penuh hanya di halaman Tentang.
-- **Media sosial:** Instagram `@jatmanonline`; YouTube `@jatmanonline` (dari footer web lama, perlu dikonfirmasi redaksi).
+- **Media sosial:** Instagram `@jatmanonline`; YouTube `@jatman.online` (dikonfirmasi pengguna).
+- **Beranda tanpa bagian Tanya Jawab** (permintaan pengguna); rubrik Tanya Jawab tetap ada di menu dan arsipnya.

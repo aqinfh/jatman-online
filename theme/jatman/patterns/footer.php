@@ -45,7 +45,7 @@ $jatman_img = static fn( string $file ): string => esc_url( get_theme_file_uri( 
 
 <!-- wp:social-link {"url":"https://www.tiktok.com/@jatman.online","service":"tiktok","label":"TikTok JATMAN Online"} /-->
 
-<!-- wp:social-link {"url":"https://www.youtube.com/@jatmanonline","service":"youtube","label":"YouTube JATMAN Online"} /--></ul>
+<!-- wp:social-link {"url":"https://www.youtube.com/@jatman.online","service":"youtube","label":"YouTube JATMAN Online"} /--></ul>
 <!-- /wp:social-links --></div>
 <!-- /wp:group -->
 
