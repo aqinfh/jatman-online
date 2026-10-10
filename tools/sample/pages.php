@@ -8,6 +8,11 @@
 $jatman_placeholder = static fn( string $what ): string =>
 	"<!-- wp:paragraph -->\n<p>Isi halaman $what akan dipindahkan dari web lama saat migrasi.</p>\n<!-- /wp:paragraph -->";
 
+// Isi Kontak, Kirim Tulisan, dan Syarat & Ketentuan diambil dari web lama oleh fetch.mjs (data/pages.json).
+$jatman_old_file  = __DIR__ . '/data/pages.json';
+$jatman_old_pages = is_readable( $jatman_old_file ) ? json_decode( (string) file_get_contents( $jatman_old_file ), true ) : [];
+$jatman_old       = static fn( string $slug, string $label ): string => $jatman_old_pages[ $slug ]['content'] ?? $jatman_placeholder( $label );
+
 return [
 	[
 		'slug'    => 'tentang',
@@ -29,7 +34,7 @@ return [
 		'excerpt' => 'Semua tulisan JATMAN Online, dari yang terbaru.',
 		'content' => '',
 	],
-	[ 'slug' => 'redaksi', 'title' => 'Redaksi', 'content' => $jatman_placeholder( 'Redaksi' ) ],
-	[ 'slug' => 'kontak', 'title' => 'Kontak', 'content' => $jatman_placeholder( 'Kontak' ) ],
-	[ 'slug' => 'kirim-tulisan', 'title' => 'Kirim Tulisan', 'content' => $jatman_placeholder( 'Kirim Tulisan' ) ],
+	[ 'slug' => 'kontak', 'title' => 'Kontak', 'content' => $jatman_old( 'kontak', 'Kontak' ) ],
+	[ 'slug' => 'kirim-tulisan', 'title' => 'Kirim Tulisan JATMAN Online', 'content' => $jatman_old( 'kirim-tulisan', 'Kirim Tulisan' ) ],
+	[ 'slug' => 'terms-conditions', 'title' => 'Syarat & Ketentuan', 'content' => $jatman_old( 'terms-conditions', 'Syarat & Ketentuan' ) ],
 ];

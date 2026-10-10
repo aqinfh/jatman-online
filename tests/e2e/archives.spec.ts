@@ -82,3 +82,28 @@ test('hasil pencarian hanya artikel, berupa daftar seragam', async ({ page }) =>
   const media = await page.locator('.jm-feed > li .jm-card__media').evaluateAll((els) => els.slice(0, 2).map((e) => Math.round(e.getBoundingClientRect().width)));
   expect(media[0]).toBe(media[1]);
 });
+
+test('halaman Kirim Tulisan, Syarat & Ketentuan, dan Kontak berisi konten web lama', async ({ page }) => {
+  await page.goto('/kirim-tulisan/');
+  await expect(page.locator('main h1')).toHaveText('Kirim Tulisan JATMAN Online');
+  await expect(page.locator('main')).toContainText('750-900 kata');
+  await page.goto('/terms-conditions/');
+  await expect(page.locator('main h1')).toHaveText('Syarat & Ketentuan');
+  await expect(page.locator('main strong', { hasText: 'Kekayaan Intelektual' })).toBeVisible();
+  await page.goto('/kontak/');
+  await expect(page.locator('main a[href="mailto:redaksi@jatman.or.id"]')).toBeVisible();
+  for (const label of ['Nama', 'Email', 'Pesan']) await expect(page.getByLabel(label, { exact: true })).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Kirim pesan' })).toBeVisible();
+});
+
+for (const width of [375, 1280]) {
+  test(`formulir Kontak: kolom isian tidak melewati kotak formulir (${width}px)`, async ({ page }) => {
+    await page.setViewportSize({ width, height: 900 });
+    await page.goto('/kontak/');
+    const form = await page.locator('.jm-form').boundingBox();
+    for (const sel of ['#jm-kontak-nama', '#jm-kontak-email', '#jm-kontak-pesan']) {
+      const b = await page.locator(sel).boundingBox();
+      expect(b!.x + b!.width, sel).toBeLessThanOrEqual(form!.x + form!.width - 8);
+    }
+  });
+}

@@ -593,3 +593,24 @@ p.jm-arab { font-size: 1.45em; line-height: 2.1; text-align: right; }
 	.jm-portraits { margin-inline: calc(-1 * var(--jm-bleed)); padding-inline: var(--jm-bleed); scroll-padding-inline: var(--jm-bleed); }
 }
 @media (min-width: 1000px) { .jm-section--cards .jm-cards { grid-auto-columns: calc((100% - 2 * var(--jm-bleed) - 4.5rem) / 4); } }
+
+/* == 9. Formulir Kontak ===================================================== */
+.jm-form { display: grid; gap: 1rem; margin: 1.5rem 0 2.5rem; padding: clamp(1.25rem, 3vw, 2rem); border: 1px solid var(--wp--preset--color--line); border-radius: var(--jm-radius); font-family: var(--wp--preset--font-family--sans); font-size: 1rem; }
+.jm-form > * { margin: 0; }
+.jm-form__title { font-size: 1.25rem; margin: 0; }
+.jm-form__field { display: grid; gap: .4rem; }
+.jm-form__field label { font-weight: 600; font-size: .9375rem; }
+.jm-form input[type="text"], .jm-form input[type="email"], .jm-form textarea {
+	box-sizing: border-box; width: 100%; padding: .75rem 1rem; border: 1px solid var(--wp--preset--color--line); border-radius: var(--jm-radius-sm);
+	background: var(--wp--preset--color--base); color: var(--wp--preset--color--ink); font: inherit;
+}
+.jm-form input:focus-visible, .jm-form textarea:focus-visible { outline: none; border-color: var(--wp--preset--color--brand); box-shadow: 0 0 0 3px color-mix(in srgb, var(--wp--preset--color--brand) 25%, transparent); }
+.jm-form__check { display: flex; gap: .6rem; align-items: flex-start; font-size: .9375rem; }
+.jm-form__check input { margin-top: .2rem; accent-color: var(--wp--preset--color--brand); }
+.jm-form__hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+.jm-form__notice { padding: .75rem 1rem; border-radius: var(--jm-radius-sm); font-size: .9375rem; }
+.jm-form__notice--ok { background: color-mix(in srgb, var(--jm-green-deep) 12%, transparent); color: var(--wp--preset--color--ink); }
+.jm-form__notice--error { background: var(--wp--preset--color--cream); color: var(--wp--preset--color--ink); border: 1px solid var(--wp--preset--color--gold); }
+.jm-button--solid { background: var(--jm-green-deep); border-color: transparent; color: #FFFFFF; cursor: pointer; font-family: inherit; }
+.jm-button--solid:hover { background: var(--wp--preset--color--brand); color: #FFFFFF; }
+[data-theme="dark"] .jm-button--solid { background: var(--wp--preset--color--brand); color: var(--wp--preset--color--on-brand); }

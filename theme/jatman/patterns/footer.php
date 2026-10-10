@@ -32,16 +32,16 @@ $jatman_img = static fn( string $file ): string => esc_url( get_theme_file_uri( 
 <div class="wp-block-group jm-footer__row"><!-- wp:html -->
 <nav aria-label="Tautan footer"><ul class="jm-footer__links">
 	<li><a href="<?php echo esc_url( home_url( '/tentang/' ) ); ?>">Tentang</a></li>
-	<li><a href="<?php echo esc_url( home_url( '/redaksi/' ) ); ?>">Redaksi</a></li>
 	<li><a href="<?php echo esc_url( home_url( '/kontak/' ) ); ?>">Kontak</a></li>
 	<li><a href="<?php echo esc_url( home_url( '/kirim-tulisan/' ) ); ?>">Kirim Tulisan</a></li>
+	<li><a href="<?php echo esc_url( home_url( '/terms-conditions/' ) ); ?>">Syarat &amp; Ketentuan</a></li>
 </ul></nav>
 <!-- /wp:html -->
 
-<!-- wp:social-links {"className":"jm-social is-style-logos-only"} -->
+<!-- wp:social-links {"openInNewTab":true,"className":"jm-social is-style-logos-only"} -->
 <ul class="wp-block-social-links jm-social is-style-logos-only"><!-- wp:social-link {"url":"https://facebook.com/JATMAN.Online","service":"facebook","label":"Facebook JATMAN Online"} /-->
 
-<!-- wp:social-link {"url":"https://instagram.com/jatmanonline","service":"instagram","label":"Instagram JATMAN Online"} /-->
+<!-- wp:social-link {"url":"https://www.instagram.com/jatmanonline/","service":"instagram","label":"Instagram JATMAN Online"} /-->
 
 <!-- wp:social-link {"url":"https://www.tiktok.com/@jatman.online","service":"tiktok","label":"TikTok JATMAN Online"} /-->
 

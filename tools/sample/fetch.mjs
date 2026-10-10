@@ -11,6 +11,7 @@ import { parseArticle } from './lib/parse-article.mjs';
 import { parseProfile } from './lib/parse-profile.mjs';
 import { dropImageBlocks, htmlToBlocks } from './lib/to-blocks.mjs';
 import { mediaName } from './lib/media-name.mjs';
+import { parsePage } from './lib/parse-page.mjs';
 
 const ROOT = path.dirname(fileURLToPath(import.meta.url));
 const DATA = path.join(ROOT, 'data');
@@ -100,6 +101,19 @@ async function main() {
   }
 
   await writeFile(path.join(DATA, 'posts.json'), JSON.stringify({ generated_at: new Date().toISOString(), authors, posts }, null, 2));
+
+  // Halaman statis dari footer web lama.
+  const pages = {};
+  for (const slug of ['kontak', 'kirim-tulisan', 'terms-conditions']) {
+    try {
+      pages[slug] = parsePage(await cachedHtml(`https://jatman.or.id/${slug}`, `page-${slug}`), slug);
+      console.log(`✓ halaman ${slug}`);
+    } catch (e) {
+      failures.push({ slug: `halaman ${slug}`, reason: e.message });
+      console.error(`✗ halaman ${slug}: ${e.message}`);
+    }
+  }
+  await writeFile(path.join(DATA, 'pages.json'), JSON.stringify(pages, null, 2));
   console.log(`\n${posts.length} ok, ${failures.length} gagal`);
   for (const f of failures) console.log(`  - ${f.slug}: ${f.reason}`);
   if (!posts.length) process.exitCode = 1;
