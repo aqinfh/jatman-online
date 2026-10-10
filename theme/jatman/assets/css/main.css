@@ -171,7 +171,7 @@ p.jm-arab { font-size: 1.45em; line-height: 2.1; text-align: right; }
 .jm-footer__id { display: flex; gap: 1rem; align-items: flex-start; }
 .jm-footer__name { font-size: 1.0625rem; font-weight: 700; margin: 0 0 .35rem; color: inherit; letter-spacing: 0; }
 .jm-footer__id p { margin: 0; opacity: .8; font-size: .9375rem; line-height: 1.6; }
-.jm-footer__knot { width: 72px; height: auto; color: var(--wp--preset--color--gold-soft); flex: none; }
+.jm-footer__knot { width: 72px; height: auto; color: #FFFFFF; flex: none; }
 .jm-footer__row { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem; padding-block: 1.5rem; }
 .jm-footer__links { display: flex; flex-wrap: wrap; gap: .25rem 1.25rem; list-style: none; margin: 0; padding: 0; font-weight: 600; font-size: .9375rem; }
 .jm-footer__links a { text-decoration: none; }
@@ -341,7 +341,10 @@ p.jm-arab { font-size: 1.45em; line-height: 2.1; text-align: right; }
 .jm-breadcrumb li:last-child a { color: var(--wp--preset--color--brand); }
 .jm-article__title { margin: 0; font-size: clamp(1.5rem, 1.2rem + 1.2vw, 2.25rem); font-weight: 800; line-height: 1.18; letter-spacing: -.02em; }
 .jm-dek { margin: 0; font-size: 1.0625rem; line-height: 1.5; color: var(--wp--preset--color--muted); }
-.jm-byline { display: flex; align-items: center; gap: .75rem; padding-block: .75rem; border-block: 1px solid var(--wp--preset--color--line); }
+/* Baris byline + tombol bagikan: satu baris di layar lebar, tombol turun ke bawah byline di HP. */
+.jm-article__meta { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .75rem 1.5rem; padding-block: .75rem; border-block: 1px solid var(--wp--preset--color--line); }
+.jm-article__meta > * { margin-block: 0; }
+.jm-byline { display: flex; align-items: center; gap: .75rem; }
 .jm-byline__avatar { border-radius: 50%; width: 44px; height: 44px; object-fit: cover; }
 .jm-byline__author { font-weight: 700; color: var(--wp--preset--color--ink); text-decoration: none; }
 .jm-byline__author:hover { color: var(--wp--preset--color--brand); }
@@ -365,14 +368,18 @@ p.jm-arab { font-size: 1.45em; line-height: 2.1; text-align: right; }
 .jm-tags a { padding: .3rem .75rem; border-radius: 999px; background: var(--wp--preset--color--cream); color: var(--wp--preset--color--ink); text-decoration: none; }
 .jm-tags a:hover { color: var(--wp--preset--color--brand); }
 .jm-share { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem; }
-.jm-share__label { font-weight: 700; font-size: .875rem; margin-right: .25rem; }
-.jm-share a, .jm-share button {
-	display: inline-flex; align-items: center; gap: .4rem; padding: .5rem .9rem; border-radius: 999px; cursor: pointer;
+.jm-share__btn {
+	display: inline-grid; place-items: center; width: 40px; height: 40px; padding: 0; border-radius: 50%; cursor: pointer;
 	border: 1px solid var(--wp--preset--color--line); background: var(--wp--preset--color--base); color: var(--wp--preset--color--ink);
-	font: 600 .8125rem/1 var(--wp--preset--font-family--sans); text-decoration: none;
+	transition: background-color .15s var(--jm-ease), border-color .15s var(--jm-ease), color .15s var(--jm-ease);
 }
-.jm-share a:hover, .jm-share button:hover { border-color: var(--wp--preset--color--brand); color: var(--wp--preset--color--brand); }
-.jm-share__status { font-size: .8125rem; color: var(--wp--preset--color--brand); }
+.jm-share__btn svg { width: 20px; height: 20px; fill: currentColor; }
+/* Ikon Telegram & tautan bawaan WP punya ruang kosong lebih besar di viewBox-nya: diperbesar agar sama berat. */
+.jm-share__btn--telegram svg, .jm-share__btn--chain svg { width: 26px; height: 26px; }
+.jm-share__btn:hover, .jm-share__btn:focus-visible { background: var(--jm-green-deep); border-color: var(--jm-green-deep); color: #FFFFFF; }
+:root[data-theme="dark"] .jm-share__btn:hover, :root[data-theme="dark"] .jm-share__btn:focus-visible { background: var(--wp--preset--color--gold); border-color: var(--wp--preset--color--gold); color: #111111; }
+.jm-share__status { font-size: .8125rem; font-weight: 600; color: var(--wp--preset--color--brand); }
+.jm-share__status:empty { display: none; }
 .jm-authorbox { display: grid; grid-template-columns: auto 1fr; gap: 1rem; padding: 1.25rem; border-radius: var(--jm-radius); background: var(--wp--preset--color--cream); }
 .jm-authorbox .wp-block-post-author__avatar img { border-radius: 50%; display: block; }
 .jm-authorbox .wp-block-post-author__byline { margin: 0; font-size: .75rem; letter-spacing: .08em; text-transform: uppercase; color: var(--wp--preset--color--muted); }

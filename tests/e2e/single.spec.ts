@@ -55,3 +55,30 @@ test('tautan panjang di isi artikel tidak membuat halaman bergeser ke samping di
   await expect(page.locator('.jm-article__body a[href*="drive.google.com"]')).toHaveCount(1);
   expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(375);
 });
+
+test('tombol bagikan ada di atas (sebelum gambar utama), berupa ikon yang jelas', async ({ page }) => {
+  for (const width of [375, 1280]) {
+    await page.setViewportSize({ width, height: 900 });
+    await page.goto(`/${NEWS}/`);
+    const share = page.locator('.jm-article__head .jm-share');
+    await expect(share).toBeVisible();
+    await expect(page.locator('.jm-article__foot .jm-share')).toHaveCount(0);
+    const shareBox = (await share.boundingBox())!;
+    const figBox = (await page.locator('.jm-figure').boundingBox())!;
+    expect(shareBox.y + shareBox.height, `${width}: di atas gambar utama`).toBeLessThanOrEqual(figBox.y);
+    expect(shareBox.y + shareBox.height, `${width}: terlihat tanpa scroll`).toBeLessThanOrEqual(900);
+    const controls = share.locator('a, button');
+    await expect(controls).toHaveCount(5);
+    for (const box of await controls.evaluateAll((els) => els.map((e) => {
+      const r = e.getBoundingClientRect();
+      return { w: r.width, h: r.height, svg: !!e.querySelector('svg'), text: (e.textContent || '').trim(), sr: (e.querySelector('.screen-reader-text')?.textContent || '').trim() };
+    }))) {
+      expect(box.svg, 'setiap tombol punya ikon').toBe(true);
+      expect(box.w).toBeGreaterThanOrEqual(40);
+      expect(box.h).toBeGreaterThanOrEqual(40);
+      expect(Math.abs(box.w - box.h), 'bulat/persegi, bukan label pil').toBeLessThanOrEqual(2);
+      expect(box.text, 'tanpa teks yang terlihat').toBe(box.sr);
+    }
+  }
+  await expect(page.getByRole('button', { name: 'Salin tautan' })).toBeVisible();
+});

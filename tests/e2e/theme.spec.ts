@@ -27,7 +27,12 @@ test('default terang dengan latar putih', async ({ page }) => {
 
 test.describe('perangkat mode gelap', () => {
   test.use({ colorScheme: 'dark' });
-  test('mengikuti setelan perangkat bila belum memilih', async ({ page }) => {
+  test('tetap terang walau perangkat memakai mode gelap, selama belum ada pilihan tersimpan', async ({ page }) => {
+    await page.goto('/');
+    await expect(page.locator('html')).toHaveAttribute('data-theme', 'light');
+  });
+  test('pilihan tersimpan "dark" dipakai lagi saat kunjungan berikutnya', async ({ page }) => {
+    await page.addInitScript(() => localStorage.setItem('jatman-theme', 'dark'));
     await page.goto('/');
     await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
   });
@@ -134,3 +139,11 @@ test('tidak ada warna kuning/emas terang tersisa di CSS tema', async ({ request 
     expect(css.toUpperCase(), old).not.toContain(old);
   }
 });
+
+for (const mode of ['light', 'dark'] as const) {
+  test(`logo JATMAN Online di footer berwarna putih (${mode})`, async ({ page }) => {
+    await page.addInitScript((m) => localStorage.setItem('jatman-theme', m), mode);
+    await page.goto('/');
+    expect(await page.locator('.jm-footer__knot').evaluate((el) => getComputedStyle(el).color)).toBe('rgb(255, 255, 255)');
+  });
+}

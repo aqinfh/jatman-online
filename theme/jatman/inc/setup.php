@@ -26,13 +26,16 @@ add_action(
 	}
 );
 
-/** Pasang data-theme sebelum body dirender. localStorage bisa diblokir, jadi dibungkus try/catch. */
+/**
+ * Pasang data-theme sebelum body dirender. Default selalu terang; mode gelap hanya bila pengunjung
+ * pernah memilihnya (tersimpan di localStorage). localStorage bisa diblokir, jadi dibungkus try/catch.
+ */
 add_action(
 	'wp_head',
 	static function (): void {
 		wp_print_inline_script_tag(
 			"(function(){var s=null;try{s=localStorage.getItem('jatman-theme');}catch(e){}" .
-			"var d=s==='dark'||(s!=='light'&&!!window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches);" .
+			"var d=s==='dark';" .
 			"document.documentElement.setAttribute('data-theme',d?'dark':'light');})();"
 		);
 	},

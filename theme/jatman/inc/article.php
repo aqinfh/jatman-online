@@ -72,18 +72,35 @@ function jatman_share_links( int $post_id ): array {
 	];
 }
 
+/** Ikon logo layanan dari block Social Icons bawaan WordPress (tanpa aset tambahan). */
+function jatman_share_icon( string $service ): string {
+	if ( ! function_exists( 'block_core_social_link_get_icon' ) ) {
+		return '';
+	}
+	$p = new WP_HTML_Tag_Processor( block_core_social_link_get_icon( $service ) );
+	if ( ! $p->next_tag( 'svg' ) ) {
+		return '';
+	}
+	$p->set_attribute( 'aria-hidden', 'true' );
+	$p->set_attribute( 'focusable', 'false' );
+	return $p->get_updated_html();
+}
+
 function jatman_render_share( int $post_id ): string {
 	$links = '';
 	foreach ( jatman_share_links( $post_id ) as $name => $href ) {
 		$links .= sprintf(
-			'<a href="%s" target="_blank" rel="noopener noreferrer"><span class="screen-reader-text">Bagikan ke </span>%s</a>',
+			'<a class="jm-share__btn jm-share__btn--%4$s" href="%1$s" target="_blank" rel="noopener noreferrer" title="Bagikan ke %2$s">%3$s<span class="screen-reader-text">Bagikan ke %2$s</span></a>',
 			esc_url( $href ),
-			esc_html( $name )
+			esc_attr( $name ),
+			jatman_share_icon( strtolower( $name ) ),
+			esc_attr( strtolower( $name ) )
 		);
 	}
 	return sprintf(
-		'<div class="jm-share"><span class="jm-share__label">Bagikan</span>%s<button type="button" data-jm-copy="%s">Salin tautan</button><span class="jm-share__status" role="status" aria-live="polite"></span></div>',
+		'<div class="jm-share" role="group" aria-label="Bagikan artikel">%s<button type="button" class="jm-share__btn jm-share__btn--chain" data-jm-copy="%s" title="Salin tautan">%s<span class="screen-reader-text">Salin tautan</span></button><span class="jm-share__status" role="status" aria-live="polite"></span></div>',
 		$links,
-		esc_attr( get_permalink( $post_id ) )
+		esc_attr( get_permalink( $post_id ) ),
+		jatman_share_icon( 'chain' )
 	);
 }

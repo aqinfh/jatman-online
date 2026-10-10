@@ -98,7 +98,7 @@ Emas tidak dipakai untuk teks isi. Setiap pasangan teks/latar harus lolos WCAG A
 - Skala fluid (`clamp`). Lebar baris isi ±68ch. Font utama di-preload, `font-display: swap`.
 
 ### Dark mode
-- Atribut `data-theme="light|dark"` pada `<html>`. Urutan prioritas: pilihan tersimpan di `localStorage`, lalu `prefers-color-scheme`, lalu default terang.
+- Atribut `data-theme="light|dark"` pada `<html>`. Default selalu terang (tidak mengikuti setelan perangkat); mode gelap hanya bila pengunjung pernah memilihnya (tersimpan di `localStorage`).
 - Skrip inline kecil di `<head>` (lewat `wp_head` prioritas 0) memasang atribut sebelum halaman tampil, jadi tidak ada kedipan. Akses `localStorage` dibungkus `try/catch`.
 - Tombol toggle (`aria-pressed`, label "Mode gelap") di header.
 - Gambar tidak diubah. Logo knot punya varian terang. Lambang JATMAN diberi piringan krem di mode gelap.
@@ -226,3 +226,4 @@ Ditambahkan selama putaran polish, atas permintaan pengguna:
 - **Halaman footer dari web lama:** Kontak, Kirim Tulisan JATMAN Online, dan Syarat & Ketentuan (`/terms-conditions/`) diisi dari web lama (fetch.mjs → data/pages.json). Footer: Tentang, Kontak, Kirim Tulisan, Syarat & Ketentuan (Redaksi dihapus karena tidak ada di web lama). Ikon media sosial dibuka di tab baru.
 - **Formulir Kontak** (`[jatman_kontak]`, mu-plugin): nama, email, pesan, persetujuan Syarat & Ketentuan; dikirim lewat `wp_mail` ke redaksi@jatman.or.id dengan Reply-To pengirim. Anti-spam: nonce, honeypot, 1 pesan/menit/IP. Tanpa reCAPTCHA (tanpa skrip pihak ketiga) dan tanpa peta Google. Butuh pengiriman email (SMTP) aktif di hosting produksi.
 - **Pengerasan keamanan:** versi WP disembunyikan, XML-RPC mati, REST users hanya untuk yang login, guard ABSPATH di semua file PHP tema, username login penulis impor acak (bukan slug publik), Pilihan Redaksi khusus editor/admin, jumlah post per bagian maks. 20, header Reply-To kontak disaring. Daftar pengaturan server ada di README.
+- **Finishing artikel & footer:** tombol bagikan dipindah ke atas (sebaris byline, sebelum gambar utama) berupa ikon bulat 40px: WhatsApp, Facebook, X, Telegram, dan salin tautan (ikon dari block Social Icons bawaan WP). Logo knot di footer putih. Mode default terang, tidak mengikuti perangkat.
