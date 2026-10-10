@@ -65,26 +65,25 @@ test('font self-hosted termuat', async ({ page }) => {
     await document.fonts.ready;
     return [...document.fonts].filter((f) => f.status === 'loaded').map((f) => f.family.replace(/"/g, ''));
   });
-  expect(loaded).toContain('Heebo');
+  expect(loaded).toContain('Inter');
 });
 
-test('huruf transliterasi (ḥ ṣ ṭ ʿ) di judul tidak jatuh ke font sistem', async ({ page }) => {
+test('huruf transliterasi (ḥ ṣ ṭ ʿ) di judul memakai Inter, bukan font sistem', async ({ page }) => {
   await page.goto('/');
   const ok = await page.evaluate(async () => {
     const h = document.createElement('h2');
     h.textContent = 'Ḥikam ṣalāt ṭarīqah ʿilm';
     document.body.append(h);
-    const family = getComputedStyle(h).fontFamily;
-    await document.fonts.load(`800 32px ${family}`, h.textContent);
-    return document.fonts.check(`800 32px Heebo`, 'ḥṣṭʿ') && [...document.fonts].some((f) => f.family.replace(/"/g, '') === 'Heebo' && f.unicodeRange.includes('1E24') && f.status === 'loaded');
+    await document.fonts.load(`800 32px ${getComputedStyle(h).fontFamily}`, h.textContent);
+    return [...document.fonts].some((f) => f.family.replace(/"/g, '') === 'Inter' && f.unicodeRange.includes('1E00') && f.status === 'loaded');
   });
   expect(ok).toBe(true);
 });
 
-test('isi artikel memakai font sans (Heebo), tanpa serif', async ({ page }) => {
+test('isi artikel memakai font sans (Inter), tanpa serif', async ({ page }) => {
   await page.goto('/idarah-aliyyah-jatman-launching-logo-harlah-ke-69/');
   const family = await page.locator('.jm-article__body p').first().evaluate((el) => getComputedStyle(el).fontFamily);
-  expect(family).toMatch(/^"?Heebo/);
+  expect(family).toMatch(/^"?Inter/);
   const serifFaces = await page.evaluate(() => [...document.fonts].filter((f) => /Serif/.test(f.family)).length);
   expect(serifFaces).toBe(0);
 });

@@ -41,7 +41,7 @@ $jatman_img = static fn( string $file ): string => esc_url( get_theme_file_uri( 
 <!-- wp:social-links {"className":"jm-social is-style-logos-only"} -->
 <ul class="wp-block-social-links jm-social is-style-logos-only"><!-- wp:social-link {"url":"https://facebook.com/JATMAN.Online","service":"facebook","label":"Facebook JATMAN Online"} /-->
 
-<!-- wp:social-link {"url":"https://instagram.com/jatman.online","service":"instagram","label":"Instagram JATMAN Online"} /-->
+<!-- wp:social-link {"url":"https://instagram.com/jatmanonline","service":"instagram","label":"Instagram JATMAN Online"} /-->
 
 <!-- wp:social-link {"url":"https://www.tiktok.com/@jatman.online","service":"tiktok","label":"TikTok JATMAN Online"} /-->
 

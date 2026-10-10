@@ -134,6 +134,9 @@ class Jatman_Importer {
 		$flags = $p['flags'] ?? [];
 		in_array( 'pilihan', $flags, true ) ? update_post_meta( $id, 'jatman_pilihan', true ) : delete_post_meta( $id, 'jatman_pilihan' );
 		in_array( 'sticky', $flags, true ) ? stick_post( $id ) : unstick_post( $id );
+		if ( isset( $p['views'] ) ) {
+			update_post_meta( $id, 'jatman_views', max( 0, (int) $p['views'] ) );
+		}
 		return (int) $id;
 	}
 
@@ -180,6 +183,7 @@ class Jatman_Importer {
 			'post_name'    => $page['slug'],
 			'post_title'   => $page['title'],
 			'post_content' => $page['content'],
+			'post_excerpt' => $page['excerpt'] ?? '',
 		];
 		if ( $existing ) {
 			$args['ID'] = $existing->ID;

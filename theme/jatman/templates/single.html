@@ -2,7 +2,8 @@
 <!-- wp:template-part {"slug":"header","tagName":"div","className":"jm-header-part"} /-->
 
 <!-- wp:group {"tagName":"main","className":"jm-single","layout":{"type":"default"}} -->
-<main class="wp-block-group jm-single"><!-- wp:group {"tagName":"article","className":"jm-article","layout":{"type":"default"}} -->
+<main class="wp-block-group jm-single"><!-- wp:group {"className":"jm-single__layout","layout":{"type":"default"}} -->
+<div class="wp-block-group jm-single__layout"><!-- wp:group {"tagName":"article","className":"jm-article","layout":{"type":"default"}} -->
 <article class="wp-block-group jm-article"><!-- wp:group {"tagName":"header","className":"jm-article__head","layout":{"type":"default"}} -->
 <header class="wp-block-group jm-article__head"><!-- wp:jatman/breadcrumb /-->
 
@@ -24,6 +25,13 @@
 
 <!-- wp:post-author {"avatarSize":48,"showBio":true,"isLink":true,"byline":"Ditulis oleh","className":"jm-authorbox"} /--></footer>
 <!-- /wp:group --></article>
+<!-- /wp:group -->
+
+<!-- wp:group {"tagName":"aside","className":"jm-aside","layout":{"type":"default"}} -->
+<aside class="wp-block-group jm-aside"><!-- wp:jatman/post-list {"layout":"compact","popular":true,"count":5,"title":"Terpopuler"} /-->
+
+<!-- wp:jatman/post-list {"layout":"compact","pilihan":true,"count":5,"title":"Pilihan Redaksi"} /--></aside>
+<!-- /wp:group --></div>
 <!-- /wp:group -->
 
 <!-- wp:jatman/post-list {"layout":"related","count":3,"title":"Artikel terkait"} /--></main>

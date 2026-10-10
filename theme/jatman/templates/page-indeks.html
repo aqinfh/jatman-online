@@ -1,0 +1,34 @@
+<!-- wp:template-part {"slug":"topbar","tagName":"div"} /-->
+<!-- wp:template-part {"slug":"header","tagName":"div","className":"jm-header-part"} /-->
+
+<!-- wp:group {"tagName":"main","className":"jm-archive jm-index","layout":{"type":"default"}} -->
+<main class="wp-block-group jm-archive jm-index"><!-- wp:jatman/archive-header /-->
+
+<!-- wp:group {"className":"jm-archive__body jm-single__layout","layout":{"type":"default"}} -->
+<div class="wp-block-group jm-archive__body jm-single__layout"><!-- wp:query {"queryId":2,"query":{"perPage":12,"postType":"post","order":"desc","orderBy":"date","inherit":false,"sticky":""},"layout":{"type":"default"}} -->
+<div class="wp-block-query"><!-- wp:post-template {"className":"jm-feed"} -->
+<!-- wp:jatman/card {"variant":"list"} /-->
+<!-- /wp:post-template -->
+
+<!-- wp:query-pagination {"className":"jm-pagination","layout":{"type":"flex","justifyContent":"center"}} -->
+<!-- wp:query-pagination-previous {"label":"Sebelumnya"} /-->
+<!-- wp:query-pagination-numbers /-->
+<!-- wp:query-pagination-next {"label":"Berikutnya"} /-->
+<!-- /wp:query-pagination -->
+
+<!-- wp:query-no-results -->
+<!-- wp:paragraph -->
+<p>Belum ada tulisan.</p>
+<!-- /wp:paragraph -->
+<!-- /wp:query-no-results --></div>
+<!-- /wp:query -->
+
+<!-- wp:group {"tagName":"aside","className":"jm-aside","layout":{"type":"default"}} -->
+<aside class="wp-block-group jm-aside"><!-- wp:jatman/post-list {"layout":"compact","popular":true,"count":5,"title":"Terpopuler"} /-->
+
+<!-- wp:jatman/post-list {"layout":"compact","pilihan":true,"count":5,"title":"Pilihan Redaksi"} /--></aside>
+<!-- /wp:group --></div>
+<!-- /wp:group --></main>
+<!-- /wp:group -->
+
+<!-- wp:template-part {"slug":"footer","tagName":"footer"} /-->

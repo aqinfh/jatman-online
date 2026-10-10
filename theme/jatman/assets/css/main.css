@@ -31,7 +31,8 @@
 	--jm-shadow: 0 1px 2px rgb(0 0 0 / .4), 0 12px 32px -16px rgb(0 0 0 / .6);
 }
 
-html { scroll-padding-top: 6rem; }
+html { scroll-padding-top: 6rem; accent-color: var(--wp--preset--color--brand); caret-color: var(--wp--preset--color--brand); scrollbar-color: color-mix(in srgb, var(--wp--preset--color--muted) 55%, transparent) transparent; }
+::selection { background: color-mix(in srgb, var(--wp--preset--color--brand) 22%, transparent); color: inherit; }
 body { -webkit-font-smoothing: antialiased; }
 .wp-site-blocks { padding: 0; }
 .wp-site-blocks > * { margin-block: 0; }
@@ -57,6 +58,17 @@ p.jm-arab { font-size: 1.45em; line-height: 2.1; text-align: right; }
 	*, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; scroll-behavior: auto !important; }
 }
 
+/* Motif star-and-cross: pola sebagai mask berwarna emas, memudar ke satu sisi supaya terasa seperti gambar, bukan wallpaper. */
+.jm-footer::before, .jm-band--night::before, .jm-archive-head::before {
+	content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+	background: var(--wp--preset--color--gold);
+	--jm-fade: linear-gradient(to left, #000 10%, transparent 75%);
+	-webkit-mask: url(../img/pattern.svg) 0 0 / 120px repeat, var(--jm-fade);
+	-webkit-mask-composite: source-in;
+	mask: url(../img/pattern.svg) 0 0 / 120px repeat, var(--jm-fade);
+	mask-composite: intersect;
+}
+
 /* == 2. Top bar, header, navigasi, footer =================================== */
 .jm-topbar { background: var(--wp--preset--color--night); color: var(--wp--preset--color--on-night); font-size: .8125rem; }
 .jm-topbar__inner {
@@ -79,13 +91,12 @@ p.jm-arab { font-size: 1.45em; line-height: 2.1; text-align: right; }
 .jm-header.is-condensed { box-shadow: var(--jm-shadow); }
 .jm-header__inner {
 	width: min(100% - 2 * var(--jm-gutter), var(--jm-wide)); margin-inline: auto;
-	min-height: 72px; gap: 1.25rem; transition: min-height .25s var(--jm-ease);
+	min-height: 72px; gap: 1.25rem;
 }
-.jm-header.is-condensed .jm-header__inner { min-height: 56px; }
 
 .jm-brand { display: inline-flex; align-items: center; gap: .6rem; color: var(--wp--preset--color--ink); text-decoration: none; flex: none; }
-.jm-brand__mark { height: 40px; width: auto; color: var(--wp--preset--color--brand); transition: height .25s var(--jm-ease); }
-.is-condensed .jm-brand__mark { height: 32px; }
+.jm-brand__mark { height: 40px; width: auto; color: var(--wp--preset--color--brand); transform-origin: left center; transition: transform .25s var(--jm-ease); }
+.is-condensed .jm-brand__mark { transform: scale(.85); }
 .jm-brand__word { font-size: 1.0625rem; letter-spacing: .06em; text-transform: uppercase; line-height: 1; white-space: nowrap; }
 .jm-brand__jatman { font-weight: 800; }
 .jm-brand__online { font-weight: 500; color: var(--wp--preset--color--brand); }
@@ -105,6 +116,8 @@ p.jm-arab { font-size: 1.45em; line-height: 2.1; text-align: right; }
 .jm-nav .wp-block-navigation__responsive-container-close {
 	width: 40px; height: 40px; place-items: center; border-radius: 50%; color: var(--wp--preset--color--ink);
 }
+.jm-nav .wp-block-navigation__responsive-container-open { border: 1px solid var(--wp--preset--color--line); }
+.jm-nav .wp-block-navigation__responsive-container-open svg { width: 20px; height: 20px; }
 .jm-nav .wp-block-navigation__responsive-container.is-menu-open {
 	background: var(--wp--preset--color--base) !important; color: var(--wp--preset--color--ink) !important;
 	padding: 1.25rem var(--jm-gutter);
@@ -120,7 +133,9 @@ p.jm-arab { font-size: 1.45em; line-height: 2.1; text-align: right; }
 	.jm-nav .wp-block-navigation__responsive-container:not(.hidden-by-default):not(.is-menu-open) { display: none; }
 }
 
-.jm-header__tools { gap: .5rem; flex: none; }
+.jm-header__tools { gap: .5rem; flex: none; align-items: center; }
+.jm-header__tools .wp-block-search, .jm-header__tools .wp-block-search__inside-wrapper { margin: 0; padding: 0; border: 0; display: flex; align-items: center; }
+@media (max-width: 1099px) { .jm-header__tools { margin-left: auto; } }
 .jm-header .wp-block-search__button,
 .jm-theme-toggle {
 	width: 40px; height: 40px; padding: 0; display: grid; place-items: center; border-radius: 50%;
@@ -138,7 +153,7 @@ p.jm-arab { font-size: 1.45em; line-height: 2.1; text-align: right; }
 	background: var(--wp--preset--color--night); color: var(--wp--preset--color--on-night);
 	padding-block: clamp(2.5rem, 6vw, 4rem) 1.5rem; margin-top: clamp(3rem, 8vw, 5rem);
 }
-.jm-footer::before { content: ""; position: absolute; inset: 0; z-index: -1; background: url(../img/pattern.svg) repeat; background-size: 80px; opacity: .06; }
+.jm-footer::before { opacity: .1; --jm-fade: linear-gradient(to bottom, #000, transparent 70%); }
 .jm-footer > * { width: min(100% - 2 * var(--jm-gutter), var(--jm-wide)); margin-inline: auto; }
 .jm-footer a { color: inherit; }
 .jm-footer__ids {
@@ -156,7 +171,7 @@ p.jm-arab { font-size: 1.45em; line-height: 2.1; text-align: right; }
 .jm-social.wp-block-social-links { gap: .5rem; margin: 0; }
 .jm-social .wp-social-link { color: var(--wp--preset--color--on-night) !important; border: 1px solid rgb(247 243 234 / .3); border-radius: 50%; }
 .jm-social .wp-social-link a { padding: .55rem; }
-.jm-footer__copy { font-size: .8125rem; opacity: .75; margin: 0; }
+.jm-footer__copy { font-size: .8125rem; opacity: .75; margin-block: 0; }
 
 /* == 3. Kartu, bagian beranda, pita ========================================= */
 .jm-label {
@@ -184,13 +199,20 @@ p.jm-arab { font-size: 1.45em; line-height: 2.1; text-align: right; }
 .jm-card__excerpt { margin: 0; color: var(--wp--preset--color--muted); font-size: .9375rem; line-height: 1.6; }
 
 .jm-section { padding-block: clamp(2rem, 5vw, 3.5rem); }
+.jm-home > *, .jm-split > * { margin-block: 0; }
+.jm-section__foot { margin: 2rem 0 0; display: flex; justify-content: center; }
+.jm-button {
+	display: inline-flex; align-items: center; padding: .85rem 1.75rem; border-radius: 999px;
+	border: 1px solid var(--wp--preset--color--brand); color: var(--wp--preset--color--brand);
+	font-weight: 700; font-size: .9375rem; text-decoration: none; transition: background-color .2s var(--jm-ease), color .2s var(--jm-ease);
+}
+.jm-button:hover { background: var(--wp--preset--color--brand); color: var(--wp--preset--color--on-brand); }
 .jm-section__inner { width: min(100% - 2 * var(--jm-gutter), var(--jm-wide)); margin-inline: auto; }
 .jm-section__head {
-	display: flex; align-items: baseline; justify-content: space-between; gap: 1rem;
+	display: flex; align-items: center; justify-content: space-between; gap: 1rem;
 	margin-bottom: 1.5rem; padding-bottom: .75rem; border-bottom: 1px solid var(--wp--preset--color--line);
 }
-.jm-section__title { margin: 0; font-size: clamp(1.25rem, 1rem + 1vw, 1.625rem); font-weight: 800; display: flex; align-items: center; gap: .6rem; }
-.jm-section__title::before { content: ""; width: 4px; height: 1em; border-radius: 2px; background: var(--wp--preset--color--brand); }
+.jm-section__title { margin: 0; font-size: clamp(1.25rem, 1rem + 1vw, 1.625rem); font-weight: 800; letter-spacing: -.02em; }
 .jm-section__more { font-size: .875rem; font-weight: 600; color: var(--wp--preset--color--brand); text-decoration: none; white-space: nowrap; }
 .jm-section__more:hover { text-decoration: underline; }
 
@@ -199,7 +221,9 @@ p.jm-arab { font-size: 1.45em; line-height: 2.1; text-align: right; }
 .jm-hero__side { display: grid; gap: 1.5rem; align-content: start; }
 .jm-card--hero-main .jm-card__media { aspect-ratio: 16 / 10; border-radius: var(--jm-radius); }
 .jm-card--hero-main .jm-card__title { font-size: clamp(1.625rem, 1.1rem + 2.2vw, 2.5rem); font-weight: 800; line-height: 1.15; letter-spacing: -.02em; }
-.jm-card--hero-main .jm-card__excerpt { font-size: 1.0625rem; }
+.jm-card--hero-main .jm-card__excerpt {
+	font-size: 1.0625rem; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; overflow: hidden;
+}
 .jm-card--hero-side .jm-card__media { aspect-ratio: 16 / 10; }
 @media (min-width: 700px) {
 	.jm-hero { grid-template-columns: 1fr 1fr; }
@@ -251,29 +275,27 @@ p.jm-arab { font-size: 1.45em; line-height: 2.1; text-align: right; }
 .jm-band { position: relative; isolation: isolate; }
 .jm-band--cream { background: var(--wp--preset--color--cream); }
 .jm-band--night { background: var(--wp--preset--color--night); color: var(--wp--preset--color--on-night); }
-.jm-band--night::before { content: ""; position: absolute; inset: 0; z-index: -1; background: url(../img/pattern.svg) repeat; background-size: 80px; opacity: .07; }
+.jm-band--night::before { opacity: .16; }
 .jm-band--night .jm-section__head { border-color: rgb(247 243 234 / .18); }
 .jm-band--night .jm-section__title,
 .jm-band--night .jm-card__title a,
 .jm-band--night .jm-meta__author,
 .jm-band--night .jm-section__more { color: var(--wp--preset--color--on-night); }
-.jm-band--night .jm-section__title::before { background: var(--wp--preset--color--gold); }
 .jm-band--night .jm-meta, .jm-band--night .jm-card__excerpt { color: rgb(247 243 234 / .78); }
 .jm-band--night .jm-label { background: transparent; color: var(--wp--preset--color--on-night); box-shadow: inset 0 0 0 1px var(--wp--preset--color--gold); }
 
-.jm-dawuh { margin: 0 auto; max-width: 46rem; text-align: center; }
-.jm-ornament, .jm-dawuh::before, .is-teduh .jm-article__head::after {
-	content: ""; display: block; width: 2.25rem; height: 2.25rem; margin-inline: auto;
+/* Ornamen: knot JATMAN Online sebagai mask, warnanya dari token emas. */
+.jm-ornament, .is-teduh .jm-article__head::after {
+	content: ""; display: block; width: 3rem; aspect-ratio: 904 / 733; margin-inline: auto;
 	background: var(--wp--preset--color--gold);
-	-webkit-mask: url(../img/ornament.svg) center / contain no-repeat; mask: url(../img/ornament.svg) center / contain no-repeat;
+	-webkit-mask: url(../img/knot.svg) center / contain no-repeat; mask: url(../img/knot.svg) center / contain no-repeat;
 }
-.jm-dawuh::before { margin-bottom: 1.25rem; }
+.jm-dawuh { margin: 0 auto; max-width: 44rem; text-align: center; display: grid; gap: 1.25rem; justify-items: center; }
 .jm-dawuh__text { margin: 0; padding: 0; border: 0; }
-.jm-dawuh__text p { margin: 0; font-size: clamp(1.25rem, 1rem + 1.2vw, 1.75rem); font-weight: 500; line-height: 1.5; letter-spacing: -.01em; color: var(--wp--preset--color--ink); }
-.jm-dawuh__cite { margin-top: 1.25rem; display: grid; gap: .25rem; font-size: .9375rem; }
-.jm-dawuh__cite a { font-weight: 700; color: var(--wp--preset--color--brand); text-decoration: none; }
-.jm-dawuh__cite a:hover { text-decoration: underline; }
-.jm-dawuh__cite span { color: var(--wp--preset--color--muted); }
+.jm-dawuh__text p { margin: 0; font-size: clamp(1.5rem, 1.1rem + 1.6vw, 2.25rem); font-weight: 700; line-height: 1.25; letter-spacing: -.02em; text-wrap: balance; }
+.jm-dawuh__text a { color: var(--wp--preset--color--ink); text-decoration: none; }
+.jm-dawuh__text a:hover { color: var(--wp--preset--color--brand); }
+.jm-dawuh__cite { display: flex; gap: .5rem; font-size: .875rem; color: var(--wp--preset--color--muted); }
 
 .jm-cards { display: grid; gap: 1.5rem; grid-template-columns: repeat(auto-fill, minmax(min(100%, 15rem), 1fr)); }
 .jm-card--card .jm-card__media { aspect-ratio: 4 / 3; }
@@ -288,8 +310,9 @@ p.jm-arab { font-size: 1.45em; line-height: 2.1; text-align: right; }
 @media (min-width: 900px) { .jm-qa { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 .jm-qa > li {
 	padding: 1.25rem; border-radius: var(--jm-radius-sm); background: var(--wp--preset--color--base);
-	border: 1px solid var(--wp--preset--color--line); border-left: 3px solid var(--wp--preset--color--gold);
+	border: 1px solid var(--wp--preset--color--line); transition: border-color .2s var(--jm-ease);
 }
+.jm-qa > li:hover { border-color: var(--wp--preset--color--brand); }
 .jm-card--qa .jm-card__title { font-size: 1.0625rem; }
 
 /* == 4. Artikel ============================================================= */
@@ -316,7 +339,9 @@ p.jm-arab { font-size: 1.45em; line-height: 2.1; text-align: right; }
 .jm-article__body > * { margin-block: 0 1.25em; }
 .jm-article__body :where(h2, h3, h4) { margin-top: 2em; line-height: 1.3; }
 .jm-article__body a { color: var(--wp--preset--color--brand); }
-.jm-article__body .wp-block-quote { border-left: 3px solid var(--wp--preset--color--gold); margin-inline: 0; padding-left: 1.25rem; font-style: italic; }
+.jm-article__body .wp-block-quote { margin-inline: 0; padding: 1.25rem 1.5rem; border: 0; border-radius: var(--jm-radius-sm); background: var(--wp--preset--color--cream); font-style: italic; }
+.jm-article__body .wp-block-quote > :last-child { margin-bottom: 0; }
+.is-teduh .jm-article__body .wp-block-quote { background: var(--wp--preset--color--base); }
 .jm-article__body .wp-block-image img { border-radius: var(--jm-radius-sm); }
 .jm-article__body figcaption { font-size: .8125rem; line-height: 1.5; color: var(--wp--preset--color--muted); }
 
@@ -347,7 +372,7 @@ p.jm-arab { font-size: 1.45em; line-height: 2.1; text-align: right; }
 .is-teduh .jm-article__head { text-align: center; justify-items: center; }
 .is-teduh .jm-breadcrumb ol { justify-content: center; }
 .is-teduh .jm-article__title { font-weight: 700; letter-spacing: -.015em; }
-.is-teduh .jm-article__head::after { width: 1.75rem; height: 1.75rem; }
+.is-teduh .jm-article__head::after { width: 2.25rem; }
 .is-teduh .jm-byline { justify-content: center; border-color: color-mix(in srgb, var(--wp--preset--color--gold) 35%, transparent); }
 .is-teduh .jm-authorbox, .is-teduh .jm-tags a, .is-teduh .jm-share a, .is-teduh .jm-share button { background: var(--wp--preset--color--base); }
 
@@ -356,9 +381,8 @@ p.jm-arab { font-size: 1.45em; line-height: 2.1; text-align: right; }
 	position: relative; isolation: isolate; padding-block: clamp(2rem, 6vw, 3.5rem);
 	background: var(--wp--preset--color--night); color: var(--wp--preset--color--on-night);
 }
-.jm-archive-head::before { content: ""; position: absolute; inset: 0; z-index: -1; background: url(../img/pattern.svg) repeat; background-size: 80px; opacity: .08; }
+.jm-archive-head::before { opacity: .2; }
 .jm-archive-head__inner { width: min(100% - 2 * var(--jm-gutter), var(--jm-wide)); margin-inline: auto; display: grid; gap: .75rem; justify-items: start; }
-.jm-archive-head__eyebrow { margin: 0; font-size: .75rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; opacity: .85; }
 .jm-archive-head h1 { margin: 0; font-size: clamp(1.875rem, 1.2rem + 2.6vw, 3rem); font-weight: 800; letter-spacing: -.02em; color: inherit; overflow-wrap: anywhere; }
 .jm-archive-head__desc { max-width: 40rem; opacity: .88; }
 .jm-archive-head__desc p { margin: 0; }
@@ -373,9 +397,10 @@ p.jm-arab { font-size: 1.45em; line-height: 2.1; text-align: right; }
 .jm-tabs a:hover { border-color: currentColor; }
 .jm-tabs a[aria-current="page"] { background: var(--wp--preset--color--on-night); color: var(--wp--preset--color--night); border-color: transparent; }
 .is-teduh .jm-archive-head { background: var(--wp--preset--color--cream); color: var(--wp--preset--color--ink); }
-.is-teduh .jm-archive-head::before { filter: invert(1); opacity: .05; }
+.is-teduh .jm-archive-head::before { opacity: .35; }
 
 .jm-archive__body { width: min(100% - 2 * var(--jm-gutter), var(--jm-wide)); margin: clamp(2rem, 5vw, 3rem) auto 0; }
+.jm-grid > li, .jm-cards > *, .jm-portraits > * { margin: 0; }
 .jm-grid { list-style: none; margin: 0; padding: 0; display: grid; gap: 2rem 1.5rem; grid-template-columns: repeat(auto-fill, minmax(min(100%, 17rem), 1fr)); }
 @media (min-width: 1000px) {
 	body:not(.paged) .jm-grid > li:first-child { grid-column: span 2; grid-row: span 2; }
@@ -405,3 +430,63 @@ p.jm-arab { font-size: 1.45em; line-height: 2.1; text-align: right; }
 .jm-page__lambang img { width: min(60vw, 220px); height: auto; }
 [data-theme="dark"] .jm-page__lambang img { background: #F7F3EA; border-radius: 50%; padding: 10px; }
 .jm-404 .jm-page { margin-bottom: 1rem; }
+
+/* == 6. Terpopuler, sidebar artikel, indeks ================================= */
+/* Pita brand: hijau brand di mode terang; di mode gelap hijau tua (hijau terang terlalu menyala di antara permukaan gelap). */
+.jm-band--brand { --jm-band-bg: var(--wp--preset--color--brand); --jm-band-fg: var(--wp--preset--color--on-brand); background: var(--jm-band-bg); color: var(--jm-band-fg); }
+[data-theme="dark"] .jm-band--brand { --jm-band-bg: #0F4A2E; --jm-band-fg: #E6ECE8; }
+.jm-band--brand .jm-section__head { border-color: color-mix(in srgb, var(--jm-band-fg) 25%, transparent); }
+.jm-band--brand .jm-section__title,
+.jm-band--brand .jm-card__title a,
+.jm-band--brand .jm-meta__author { color: var(--jm-band-fg); }
+.jm-band--brand .jm-meta { color: color-mix(in srgb, var(--jm-band-fg) 80%, transparent); }
+.jm-section--ranked { padding-block: clamp(1.75rem, 4vw, 2.5rem); }
+.jm-section--ranked .jm-section__head { margin-bottom: 1.25rem; }
+/* Terpopuler: grid 3×2 bernomor tanpa gambar (pola NU Online, gaya JATMAN). */
+.jm-ranked { list-style: none; margin: 0; padding: 0; counter-reset: jm; display: grid; gap: 1.75rem 2.5rem; }
+@media (min-width: 640px) { .jm-ranked { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 1000px) { .jm-ranked { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.jm-ranked > li { counter-increment: jm; display: grid; grid-template-columns: 2.75rem 1fr; gap: .75rem; align-items: start; }
+.jm-ranked > li::before {
+	content: counter(jm); font: 800 2.75rem/.85 var(--wp--preset--font-family--sans); letter-spacing: -.05em;
+	color: #E8C76E; font-variant-numeric: tabular-nums; /* emas terang: kontras ≥3:1 di atas hijau brand untuk angka besar */
+}
+.jm-ranked .jm-card__title { font-size: 1.0625rem; line-height: 1.4; }
+[data-theme="dark"] .jm-ranked > li::before { color: var(--wp--preset--color--gold); }
+
+.jm-single__layout { width: min(100% - 2 * var(--jm-gutter), var(--jm-wide)); margin-inline: auto; display: grid; gap: 3rem; }
+.jm-single__layout .jm-article__head,
+.jm-single__layout .jm-article__body,
+.jm-single__layout .jm-article__foot { width: 100%; max-width: 46rem; }
+.jm-single__layout .jm-figure { width: 100%; }
+.jm-aside .jm-section { padding-block: 0 2.5rem; }
+.jm-aside .jm-section__inner { width: 100%; }
+.jm-aside .jm-section__title { font-size: 1.125rem; }
+@media (min-width: 1100px) {
+	.jm-single__layout { grid-template-columns: minmax(0, 1fr) 19rem; gap: 4rem; }
+	/* Dengan sidebar, kolom teks rata kiri supaya sejajar dengan gambar utama & caption. */
+	.jm-single__layout .jm-article__head,
+	.jm-single__layout .jm-article__body,
+	.jm-single__layout .jm-article__foot { margin-inline: 0; }
+	.jm-aside { position: sticky; top: 5.5rem; align-self: start; }
+}
+.is-teduh .jm-aside .jm-qa > li, .is-teduh .jm-aside .jm-compact > li { background: transparent; }
+
+/* Indeks: artikel teratas besar, sisanya daftar, sidebar seperti halaman artikel. */
+.jm-feed { list-style: none; margin: 0; padding: 0; display: grid; }
+.jm-feed > li { margin: 0; }
+.jm-feed > li:first-child .jm-card--list { grid-template-columns: 1fr; gap: 1.25rem; padding-bottom: 2rem; }
+.jm-feed > li:first-child .jm-card__media { aspect-ratio: 16 / 9; border-radius: var(--jm-radius); }
+.jm-feed > li:first-child .jm-card__title { font-size: clamp(1.625rem, 1.1rem + 1.8vw, 2.25rem); font-weight: 800; line-height: 1.15; letter-spacing: -.02em; }
+.jm-feed > li:first-child .jm-card__excerpt { display: block; font-size: 1.0625rem; }
+
+.jm-loadmore { display: grid; justify-items: center; gap: .75rem; margin-top: 3rem; }
+.jm-loadmore__button {
+	padding: .85rem 1.75rem; border-radius: 999px; cursor: pointer;
+	border: 1px solid var(--wp--preset--color--brand); background: transparent; color: var(--wp--preset--color--brand);
+	font: 700 .9375rem/1 var(--wp--preset--font-family--sans); transition: background-color .2s var(--jm-ease), color .2s var(--jm-ease);
+}
+.jm-loadmore__button:hover { background: var(--wp--preset--color--brand); color: var(--wp--preset--color--on-brand); }
+.jm-loadmore__button:disabled { opacity: .6; cursor: progress; }
+.jm-loadmore__status { margin: 0; font-size: .8125rem; color: var(--wp--preset--color--muted); }
+.jm-loadmore__status:empty { display: none; }

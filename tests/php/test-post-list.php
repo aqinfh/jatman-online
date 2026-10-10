@@ -46,12 +46,19 @@ try {
 	jt_assert( ! str_contains( $cards, 'jm-card__media' ), 'post tanpa gambar utama tidak merender wadah gambar' );
 
 	$quote = jatman_render_post_list( [ 'layout' => 'quote', 'category' => 'dawuh', 'count' => 1, 'title' => 'Dawuh', 'band' => 'cream' ] );
-	jt_assert( str_contains( $quote, 'Ilmu itu cahaya.' ) && str_contains( $quote, 'jm-band--cream' ), 'kutipan Dawuh dari ringkasan, di pita krem' );
+	jt_assert( str_contains( $quote, '>Dawuh Kiai</a>' ) && str_contains( $quote, 'jm-band--cream' ), 'pita Dawuh menampilkan judul artikel, di pita krem' );
+	jt_assert( ! str_contains( $quote, 'Ilmu itu cahaya.' ), 'pita Dawuh tidak memakai ringkasan' );
 	jt_assert( str_contains( $quote, 'Lihat semua<span class="screen-reader-text"> Dawuh</span>' ), 'tautan Lihat semua punya nama yang jelas' );
 
 	$regions = jatman_render_post_list( [ 'layout' => 'regions', 'category' => 'nasional,daerah,internasional', 'count' => 4, 'title' => 'Berita' ] );
 	jt_assert( str_contains( $regions, '>Nasional<' ) && str_contains( $regions, '>Daerah<' ), 'kolom wilayah berisi tampil' );
 	jt_assert( ! str_contains( $regions, '>Internasional<' ), 'kolom wilayah kosong tidak dirender' );
+
+	$e = $jt_make( 'Dateline', [ 'artikel' ], '2025-01-01 08:00:00', 'Jakarta, JATMAN Online – Isi ringkasan sebenarnya.' );
+	jt_same( 'Isi ringkasan sebenarnya.', jatman_clean_excerpt( get_post( $e ), 30 ), 'dateline "Kota, JATMAN Online –" dibuang dari ringkasan' );
+	wp_update_post( [ 'ID' => $e, 'post_excerpt' => 'Jakarta, JATMAN Online Dalam rangka acara.' ] );
+	jt_same( 'Dalam rangka acara.', jatman_clean_excerpt( get_post( $e ), 30 ), 'dateline tanpa tanda pisah juga dibuang' );
+	jt_same( 'satu dua tiga…', jatman_clean_excerpt( get_post( wp_update_post( [ 'ID' => $e, 'post_excerpt' => 'satu dua tiga empat lima' ] ) ), 3 ), 'dipotong sesuai jumlah kata' );
 
 	jt_same( 'nasional', jatman_primary_category( get_post( $a ) )->slug, 'kategori utama = anak terdalam' );
 	jt_same( 1, jatman_reading_time( get_post( $a ) ), 'waktu baca minimal 1 menit' );

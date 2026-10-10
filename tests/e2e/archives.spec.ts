@@ -26,6 +26,7 @@ test('halaman penulis: foto, nama, jumlah tulisan, daftar tulisan', async ({ pag
   await expect(page.locator('.jm-archive-head h1')).toHaveText('Syahril Mubarok');
   await expect(page.locator('.jm-archive-head__count')).toHaveText(/^\d+ tulisan$/);
   await expect(page.locator('.jm-archive-head__avatar')).toBeVisible();
+  await expect(page.locator('.jm-archive-head__eyebrow')).toHaveCount(0);
   expect(await page.locator('.jm-grid .jm-card').count()).toBeGreaterThan(0);
 });
 
@@ -60,4 +61,11 @@ test('halaman Tentang menampilkan lambang JATMAN', async ({ page }) => {
   await page.goto('/tentang/');
   await expect(page.locator('main').getByRole('img', { name: 'Lambang JATMAN' })).toBeVisible();
   await expect(page.locator('main h1')).toHaveText('Tentang JATMAN');
+});
+
+test('kartu sebaris di grid arsip rata atas', async ({ page }) => {
+  await page.setViewportSize({ width: 768, height: 900 });
+  await page.goto('/profile/syahril-mubarok/');
+  const tops = await page.locator('.jm-grid > li').evaluateAll((lis) => lis.slice(0, 2).map((li) => Math.round(li.getBoundingClientRect().top)));
+  expect(tops[0]).toBe(tops[1]);
 });

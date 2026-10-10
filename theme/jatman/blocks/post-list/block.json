@@ -4,17 +4,69 @@
   "name": "jatman/post-list",
   "title": "Daftar post JATMAN",
   "category": "theme",
-  "description": "Bagian daftar post: hero, terbaru, pilihan redaksi, wilayah, dawuh, kartu, tokoh, tanya jawab, terkait.",
+  "description": "Bagian daftar post: hero, terpopuler, terbaru, pilihan redaksi, wilayah, dawuh, kartu, tokoh, tanya jawab, terkait.",
   "attributes": {
-    "layout": { "type": "string", "default": "list", "enum": ["hero", "list", "compact", "regions", "quote", "cards", "portrait", "qa", "related"] },
-    "category": { "type": "string", "default": "" },
-    "count": { "type": "integer", "default": 6 },
-    "pilihan": { "type": "boolean", "default": false },
-    "title": { "type": "string", "default": "" },
-    "moreLabel": { "type": "string", "default": "Lihat semua" },
-    "band": { "type": "string", "default": "", "enum": ["", "cream", "night"] },
-    "dedupe": { "type": "boolean", "default": false }
+    "layout": {
+      "type": "string",
+      "default": "list",
+      "enum": [
+        "hero",
+        "list",
+        "compact",
+        "regions",
+        "quote",
+        "cards",
+        "portrait",
+        "qa",
+        "related",
+        "ranked"
+      ]
+    },
+    "category": {
+      "type": "string",
+      "default": ""
+    },
+    "count": {
+      "type": "integer",
+      "default": 6
+    },
+    "pilihan": {
+      "type": "boolean",
+      "default": false
+    },
+    "title": {
+      "type": "string",
+      "default": ""
+    },
+    "moreLabel": {
+      "type": "string",
+      "default": "Lihat semua"
+    },
+    "band": {
+      "type": "string",
+      "default": "",
+      "enum": [
+        "",
+        "cream",
+        "night",
+        "brand"
+      ]
+    },
+    "dedupe": {
+      "type": "boolean",
+      "default": false
+    },
+    "popular": {
+      "type": "boolean",
+      "default": false
+    },
+    "moreUrl": {
+      "type": "string",
+      "default": ""
+    }
   },
-  "supports": { "html": false },
+  "supports": {
+    "html": false
+  },
   "render": "file:./render.php"
 }

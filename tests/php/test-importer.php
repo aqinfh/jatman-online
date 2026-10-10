@@ -29,6 +29,7 @@ try {
 	jt_same( 'Alt utama', get_post_meta( $thumb, '_wp_attachment_image_alt', true ), 'alt gambar utama' );
 	jt_assert( is_sticky( $post->ID ), 'flag sticky' );
 	jt_same( '1', get_post_meta( $post->ID, 'jatman_pilihan', true ), 'flag pilihan' );
+	jt_same( 120, jatman_views( $post->ID ), 'jumlah pembaca dari sumber ikut diimpor' );
 
 	$author = get_user_by( 'slug', 'jt-penulis-a' );
 	jt_same( 'Penulis A', $author->display_name, 'nama penulis' );

@@ -66,7 +66,7 @@ test('footer: dua identitas, tautan halaman, media sosial', async ({ page }) => 
   for (const label of ['Tentang', 'Redaksi', 'Kontak', 'Kirim Tulisan']) {
     await expect(footer.getByRole('link', { name: label, exact: true })).toBeVisible();
   }
-  for (const url of ['facebook.com/JATMAN.Online', 'instagram.com/jatman.online', 'tiktok.com/@jatman.online', 'youtube.com/@jatmanonline']) {
+  for (const url of ['facebook.com/JATMAN.Online', 'instagram.com/jatmanonline', 'tiktok.com/@jatman.online', 'youtube.com/@jatmanonline']) {
     await expect(footer.locator(`a[href*="${url}"]`)).toHaveCount(1);
   }
 });

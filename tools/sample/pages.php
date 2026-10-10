@@ -23,6 +23,12 @@ return [
 			]
 		),
 	],
+	[
+		'slug'    => 'indeks',
+		'title'   => 'Indeks Berita',
+		'excerpt' => 'Semua tulisan JATMAN Online, dari yang terbaru.',
+		'content' => '',
+	],
 	[ 'slug' => 'redaksi', 'title' => 'Redaksi', 'content' => $jatman_placeholder( 'Redaksi' ) ],
 	[ 'slug' => 'kontak', 'title' => 'Kontak', 'content' => $jatman_placeholder( 'Kontak' ) ],
 	[ 'slug' => 'kirim-tulisan', 'title' => 'Kirim Tulisan', 'content' => $jatman_placeholder( 'Kirim Tulisan' ) ],

@@ -35,12 +35,13 @@ function jatman_render_byline( int $post_id ): string {
 	}
 	$author = (int) $post->post_author;
 	return sprintf(
-		'<div class="jm-byline">%s<div class="jm-byline__text"><a class="jm-byline__author" href="%s">%s</a><p class="jm-byline__meta"><time datetime="%s">%s</time><span aria-hidden="true">·</span><span>%d menit baca</span></p></div></div>',
+		'<div class="jm-byline" data-jm-view="%s">%s<div class="jm-byline__text"><a class="jm-byline__author" href="%s">%s</a><p class="jm-byline__meta"><time datetime="%s">%s</time><span aria-hidden="true">·</span><span>%d menit baca</span></p></div></div>',
+		esc_url( rest_url( 'jatman/v1/views/' . $post->ID ) ),
 		get_avatar( $author, 44, '', '', [ 'class' => 'jm-byline__avatar' ] ),
 		esc_url( get_author_posts_url( $author ) ),
 		esc_html( get_the_author_meta( 'display_name', $author ) ),
 		esc_attr( get_the_date( 'c', $post ) ),
-		esc_html( get_the_date( 'l, j F Y · H:i T', $post ) ),
+		esc_html( get_the_date( 'j M Y · H:i T', $post ) ),
 		jatman_reading_time( $post )
 	);
 }

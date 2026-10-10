@@ -23,6 +23,16 @@ function jatman_reading_time( WP_Post $post ): int {
 	return max( 1, (int) ceil( count( $words ) / 200 ) );
 }
 
+/**
+ * Ringkasan untuk kartu: dateline gaya web lama ("Jakarta, JATMAN Online –") dibuang supaya
+ * kalimat pertama yang tampil adalah isi, lalu dipotong ke jumlah kata tertentu.
+ */
+function jatman_clean_excerpt( WP_Post $post, int $words ): string {
+	$text = wp_strip_all_tags( has_excerpt( $post ) ? $post->post_excerpt : get_the_excerpt( $post ) );
+	$text = preg_replace( '/^\s*[\p{Lu}][\p{L} .\'’-]{1,40},\s*JATMAN Online\s*[–—-]?\s*/u', '', $text );
+	return wp_trim_words( trim( (string) $text ), $words, '…' );
+}
+
 function jatman_card_meta( WP_Post $post ): string {
 	return sprintf(
 		'<p class="jm-meta"><span class="jm-meta__author">%s</span><time datetime="%s">%s</time></p>',
@@ -43,7 +53,7 @@ function jatman_card( WP_Post $post, string $variant ): string {
 	};
 	$cat      = in_array( $variant, [ 'hero-main', 'hero-side', 'list', 'card' ], true ) ? jatman_primary_category( $post ) : null;
 	$excerpt  = in_array( $variant, [ 'hero-main', 'list', 'feature' ], true )
-		? wp_trim_words( get_the_excerpt( $post ), 'hero-main' === $variant ? 40 : 22 )
+		? jatman_clean_excerpt( $post, 'hero-main' === $variant ? 32 : 22 )
 		: '';
 	$eager    = 'hero-main' === $variant;
 

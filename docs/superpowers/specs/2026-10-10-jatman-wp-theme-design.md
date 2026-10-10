@@ -87,8 +87,8 @@ Pembagian tanggung jawab: **tema** hanya mengurus tampilan. **mu-plugin** mengur
 Emas tidak dipakai untuk teks isi. Setiap pasangan teks/latar harus lolos WCAG AA (≥ 4.5:1 untuk teks normal) di kedua mode. Nilai di atas boleh digeser sedikit kalau ada pasangan yang gagal.
 
 ### Tipografi (self-hosted `woff2` lewat `fontFace` di theme.json, lisensi OFL)
-- **Heebo** (variable 100–900): judul, navigasi, UI. Dipilih pengguna (2026-10-10) menggantikan Plus Jakarta Sans karena lebih netral dan tahan zaman. Heebo tidak punya huruf transliterasi bertitik (ḥ ṣ ṭ ẓ ḍ ʿ ʾ), jadi huruf-huruf itu diisi **Source Sans 3** lewat face tambahan dengan `unicode-range` sempit (hanya diunduh kalau huruf itu muncul).
-- Isi artikel juga **Heebo** (sans), atas permintaan pengguna (2026-10-10): pembaca web lama sudah terbiasa sans. Source Serif 4 tidak dipakai.
+- **Inter** (variable 100–900) untuk semua teks Latin: judul, navigasi, UI, dan isi artikel. Dipilih pengguna (2026-10-10) setelah mencoba Plus Jakarta Sans dan Heebo. Subset latin-ext Inter sudah mencakup huruf transliterasi Arab (ā ḥ ṣ ṭ ẓ ḍ ʿ ʾ).
+- Isi artikel memakai sans (Inter), atas permintaan pengguna: pembaca web lama sudah terbiasa sans. Tidak ada font serif.
 - **Uthman Taha (versi -ID)**: teks Arab. Sumbernya `UthmanTN1-ID Ver10.ttf` (400) dan `UthmanTN1B-ID Ver10.ttf` (700) dari repo lokal `../uthman-taha` (KFGQPC Uthman Taha Naskh yang sudah ditambal dengan tanda Quran), lalu dikonversi ke woff2. `unicode-range` dibatasi ke huruf Arab dan font ini diletakkan paling depan di setiap font stack, jadi huruf Arab di mana pun otomatis memakai Uthman Taha, sedangkan Latin jatuh ke font berikutnya. Paragraf yang sebagian besar berisi teks Arab diberi `lang="ar" dir="rtl"` dan ukuran ~1.4× teks sekitarnya, dengan line-height lega.
 - Skala fluid (`clamp`). Lebar baris isi ±68ch. Font utama di-preload, `font-display: swap`.
 
@@ -191,3 +191,18 @@ Format baris: `<slug-kategori-wp> <url>`. Kategori ditetapkan di file ini (bukan
 - **Status "Pustaka Tasawuf"** belum pasti kategori atau bukan (lihat §4). Diselesaikan di spec migrasi.
 - **Lisensi font Arab:** KFGQPC Uthman Taha Naskh bukan OFL, dan versi -ID adalah turunan yang dimodifikasi. Izin untuk menyematkan versi modifikasi ini di web publik perlu dipastikan sebelum produksi. Untuk review lokal, aman.
 - **Hak gambar:** gambar sample diambil dari jatman.or.id sendiri dan hanya untuk review lokal (`data/` di-gitignore).
+
+
+## 10. Perubahan setelah review pengguna (2026-10-10)
+
+Ditambahkan selama putaran polish, atas permintaan pengguna:
+
+- **Terpopuler:** hitungan pembaca disimpan di meta `jatman_views` dan ditambah lewat `POST /jatman/v1/views/<id>` (sendBeacon dari halaman artikel; satu IP sekali per 30 menit per artikel). Importer menerima field `views`, sehingga pageviews Varient bisa dibawa saat migrasi. Di beranda ada **pita selingan Terpopuler** di antara hero dan Terbaru: grid 3×2 bernomor tanpa gambar (pola NU Online), latar hijau brand (hijau tua di mode gelap).
+- **Sidebar artikel:** Terpopuler dan Pilihan Redaksi, menempel saat di-scroll di layar ≥1100px. Artikel yang sedang dibuka tidak pernah muncul di daftar mana pun pada halamannya.
+- **Halaman Indeks (`/indeks/`):** semua tulisan dari yang terbaru. Artikel teratas tampil besar, sisanya daftar ke bawah, dengan sidebar seperti halaman artikel. Tombol **"Muat lebih banyak"** dibangun di atas pagination biasa (tanpa JS tetap ada halaman 2, 3, …), dan juga berlaku di arsip rubrik. Bagian Terbaru di beranda mengarah ke Indeks lewat "Indeks berita →" dan tombol "Lihat semua berita".
+- **Dawuh:** pita Dawuh menampilkan **judul** artikel Dawuh terbaru sebagai kalimat utama (bukan ringkasan), dengan ornamen knot JATMAN Online berwarna emas.
+- **Ringkasan kartu:** dateline gaya lama ("Jakarta, JATMAN Online –") dibuang dari ringkasan.
+- **Motif latar:** pola *star-and-cross* bersudut delapan dengan strapwork (garis ganda), dipasang sebagai CSS mask berwarna emas yang memudar ke satu sisi. Dipakai di pita Hikmah, pita arsip, dan footer.
+- **Judul bagian:** tanpa garis vertikal di kiri. **Eyebrow** di pita arsip dihapus.
+- **Favicon:** kotak hijau brand dengan knot putih. Lambang di top bar dan footer memakai PNG ringan; SVG penuh hanya di halaman Tentang.
+- **Media sosial:** Instagram `@jatmanonline`; YouTube `@jatmanonline` (dari footer web lama, perlu dikonfirmasi redaksi).

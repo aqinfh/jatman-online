@@ -42,8 +42,8 @@ add_action(
 add_action(
 	'wp_head',
 	static function (): void {
-		// Hanya Heebo latin yang di-preload; subset lain dimuat saat dibutuhkan (unicode-range).
-		foreach ( [ 'heebo-latin-wght-normal.woff2' ] as $font ) {
+		// Hanya Inter latin yang di-preload; subset lain dimuat saat dibutuhkan (unicode-range).
+		foreach ( [ 'inter-latin-wght-normal.woff2' ] as $font ) {
 			printf( '<link rel="preload" href="%s" as="font" type="font/woff2" crossorigin>' . "\n", esc_url( get_theme_file_uri( 'assets/fonts/' . $font ) ) );
 		}
 		if ( ! has_site_icon() ) {

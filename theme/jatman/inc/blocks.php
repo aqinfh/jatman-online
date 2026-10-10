@@ -33,3 +33,15 @@ add_action(
 		wp_enqueue_script( 'jatman-editor-blocks' );
 	}
 );
+
+/**
+ * Query Loop tema (indeks, arsip) mengabaikan post sticky: sticky hanya untuk hero beranda.
+ * Tanpa ini, post sticky ditempel ulang di atas setiap halaman pagination (duplikat di "Muat lebih banyak").
+ */
+add_filter(
+	'query_loop_block_query_vars',
+	static function ( array $query ): array {
+		$query['ignore_sticky_posts'] = true;
+		return $query;
+	}
+);
