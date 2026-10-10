@@ -67,13 +67,40 @@ foreach ( [ 'created_category', 'edited_category', 'delete_category' ] as $jatma
 	add_action( $jatman_hook, 'jatman_invalidate_rewrites' );
 }
 
+/** Apakah slug post/halaman ini sama dengan slug kategori (sehingga memengaruhi rule tanpa base). */
+function jatman_slug_clashes( ?WP_Post $post ): bool {
+	return $post && in_array( $post->post_type, [ 'post', 'page' ], true ) && $post->post_name
+		&& term_exists( preg_replace( '/__trashed$/', '', $post->post_name ), 'category' );
+}
+
+// Bentrok baru muncul (post disimpan dengan slug kategori) atau selesai (diganti nama, dibuang, dihapus).
 add_action(
 	'wp_insert_post',
 	static function ( int $post_id, WP_Post $post ): void {
-		if ( in_array( $post->post_type, [ 'post', 'page' ], true ) && $post->post_name && term_exists( $post->post_name, 'category' ) ) {
+		if ( jatman_slug_clashes( $post ) ) {
 			jatman_invalidate_rewrites();
 		}
 	},
 	10,
 	2
 );
+add_action(
+	'post_updated',
+	static function ( int $post_id, WP_Post $after, WP_Post $before ): void {
+		if ( $before->post_name !== $after->post_name && jatman_slug_clashes( $before ) ) {
+			jatman_invalidate_rewrites();
+		}
+	},
+	10,
+	3
+);
+foreach ( [ 'wp_trash_post', 'before_delete_post' ] as $jatman_hook ) {
+	add_action(
+		$jatman_hook,
+		static function ( int $post_id ): void {
+			if ( jatman_slug_clashes( get_post( $post_id ) ) ) {
+				jatman_invalidate_rewrites();
+			}
+		}
+	);
+}

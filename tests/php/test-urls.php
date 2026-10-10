@@ -23,3 +23,20 @@ try {
 }
 jt_assert( isset( apply_filters( 'category_rewrite_rules', [] )['artikel/?$'] ), 'rule kategori artikel kembali setelah post dihapus' );
 flush_rewrite_rules( false );
+
+// Bentrok selesai (post diganti nama / dibuang / dihapus) → rule kategori harus dibangun ulang.
+foreach ( [ 'rename', 'trash', 'delete' ] as $jt_how ) {
+	$clash2 = wp_insert_post( [ 'post_title' => 'Tokoh', 'post_name' => 'tokoh', 'post_status' => 'publish' ] );
+	flush_rewrite_rules( false );
+	jt_assert( (bool) get_option( 'rewrite_rules' ), "rules terisi sebelum $jt_how" );
+	if ( 'rename' === $jt_how ) {
+		wp_update_post( [ 'ID' => $clash2, 'post_name' => 'tokoh-baru' ] );
+	} elseif ( 'trash' === $jt_how ) {
+		wp_trash_post( $clash2 );
+	} else {
+		wp_delete_post( $clash2, true );
+	}
+	jt_assert( ! get_option( 'rewrite_rules' ), "rewrite rules diinvalidasi setelah post bentrok di-$jt_how" );
+	wp_delete_post( $clash2, true );
+}
+flush_rewrite_rules( false );

@@ -98,3 +98,15 @@ test('beranda tidak mengunduh aset berat yang tidak perlu (lambang SVG penuh, fo
   const ornament = await page.locator('.jm-dawuh').evaluate((el) => getComputedStyle(el, '::before').content);
   expect(ornament).not.toContain('۞');
 });
+
+test('localStorage diblokir: toggle tetap berfungsi tanpa error', async ({ page }) => {
+  const errors: string[] = [];
+  page.on('pageerror', (e) => errors.push(e.message));
+  await page.addInitScript(() => {
+    Object.defineProperty(window, 'localStorage', { get() { throw new Error('blocked'); } });
+  });
+  await page.goto('/');
+  await page.getByRole('button', { name: 'Mode gelap' }).click();
+  await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
+  expect(errors).toEqual([]);
+});

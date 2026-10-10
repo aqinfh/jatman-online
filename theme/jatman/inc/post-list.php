@@ -45,16 +45,30 @@ function jatman_query_posts( array $a, array $exclude = [] ): array {
 		$args['meta_query'] = [ [ 'key' => 'jatman_pilihan', 'value' => '1' ] ];
 	}
 	if ( $a['popular'] ) {
-		// Post tanpa hitungan tetap ikut (dianggap 0); seri dipecah dengan tanggal terbaru.
-		$args['meta_query'] = [
-			'relation' => 'OR',
-			'views'    => [ 'key' => 'jatman_views', 'type' => 'NUMERIC', 'compare' => 'EXISTS' ],
-			[ 'key' => 'jatman_views', 'compare' => 'NOT EXISTS' ],
-		];
-		$args['orderby']    = [ 'views' => 'DESC', 'date' => 'DESC' ];
+		$args['jatman_popular']   = true; // diurutkan oleh filter posts_clauses di bawah
+		$args['suppress_filters'] = false;
 	}
 	return get_posts( $args );
 }
+
+/**
+ * Urutan Terpopuler: LEFT JOIN khusus meta jatman_views sehingga post tanpa hitungan bernilai 0
+ * (meta_query OR EXISTS/NOT EXISTS bawaan WP mengurutkan memakai baris meta sembarang).
+ */
+add_filter(
+	'posts_clauses',
+	static function ( array $clauses, WP_Query $query ): array {
+		if ( ! $query->get( 'jatman_popular' ) ) {
+			return $clauses;
+		}
+		global $wpdb;
+		$clauses['join']   .= " LEFT JOIN {$wpdb->postmeta} AS jm_views ON ( jm_views.post_id = {$wpdb->posts}.ID AND jm_views.meta_key = 'jatman_views' )";
+		$clauses['orderby'] = "CAST( COALESCE( jm_views.meta_value, '0' ) AS UNSIGNED ) DESC, {$wpdb->posts}.post_date DESC";
+		return $clauses;
+	},
+	10,
+	2
+);
 
 function jatman_render_post_list( array $attributes ): string {
 	$a = wp_parse_args( $attributes, jatman_post_list_defaults() );

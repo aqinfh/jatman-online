@@ -67,3 +67,21 @@ test('Indeks & artikel: konten tidak menempel tepi, caption sejajar teks', async
   const body = await page.locator('.jm-article__body').boundingBox();
   expect(Math.round(cap!.x)).toBe(Math.round(body!.x));
 });
+
+test('toggle mode gelap tidak menggandakan tombol Muat lebih banyak', async ({ page }) => {
+  await page.goto('/indeks/');
+  const toggle = page.getByRole('button', { name: 'Mode gelap' });
+  await toggle.click();
+  await toggle.click();
+  await expect(page.getByRole('button', { name: 'Muat lebih banyak' })).toHaveCount(1);
+});
+
+test('reload artikel di sesi yang sama tidak mengirim beacon lagi', async ({ page }) => {
+  const beacons: string[] = [];
+  page.on('request', (r) => { if (r.url().includes('/jatman/v1/views/')) beacons.push(r.url()); });
+  await page.goto(`/${NEWS}/`);
+  await page.waitForTimeout(500);
+  await page.reload();
+  await page.waitForTimeout(500);
+  expect(beacons).toHaveLength(1);
+});

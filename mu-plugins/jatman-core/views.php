@@ -11,6 +11,21 @@ function jatman_views( int $post_id ): int {
 	return (int) get_post_meta( $post_id, 'jatman_views', true );
 }
 
+/**
+ * IP pembaca. Di balik CDN/proxy, definisikan JATMAN_CLIENT_IP_HEADER di wp-config.php
+ * (mis. 'HTTP_CF_CONNECTING_IP' untuk Cloudflare) supaya tiap pembaca tidak terlihat sebagai IP proxy.
+ * Header hanya dipercaya bila konstanta itu diset, dan nilainya harus IP yang valid.
+ */
+function jatman_client_ip(): string {
+	if ( defined( 'JATMAN_CLIENT_IP_HEADER' ) && ! empty( $_SERVER[ JATMAN_CLIENT_IP_HEADER ] ) ) {
+		$candidate = trim( explode( ',', (string) wp_unslash( $_SERVER[ JATMAN_CLIENT_IP_HEADER ] ) )[0] ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput
+		if ( filter_var( $candidate, FILTER_VALIDATE_IP ) ) {
+			return $candidate;
+		}
+	}
+	return (string) ( $_SERVER['REMOTE_ADDR'] ?? '' ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput
+}
+
 add_action(
 	'init',
 	static function (): void {
@@ -41,8 +56,7 @@ add_action(
 					if ( ! $post || 'post' !== $post->post_type || 'publish' !== $post->post_status ) {
 						return new WP_Error( 'jatman_not_found', 'Artikel tidak ditemukan.', [ 'status' => 404 ] );
 					}
-					$ip  = (string) ( $_SERVER['REMOTE_ADDR'] ?? '' ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput
-					$key = 'jatman_view_' . md5( $ip . '|' . $post->ID );
+					$key = 'jatman_view_' . md5( jatman_client_ip() . '|' . $post->ID );
 					if ( ! get_transient( $key ) ) {
 						set_transient( $key, 1, 30 * MINUTE_IN_SECONDS );
 						update_post_meta( $post->ID, 'jatman_views', jatman_views( $post->ID ) + 1 );

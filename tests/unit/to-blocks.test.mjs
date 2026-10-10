@@ -75,3 +75,43 @@ test('tabel/iframe jadi block HTML tanpa style/class', () => {
   const { markup } = htmlToBlocks('<table style="width:100%" class="t"><tr><td>1</td></tr></table>');
   assert.equal(markup, '<!-- wp:html -->\n<table><tbody><tr><td>1</td></tr></tbody></table>\n<!-- /wp:html -->');
 });
+
+const words = (html) => html.replace(/<[^>]*>/g, ' ').replace(/&[a-z]+;/g, ' ').split(/\s+/).filter((w) => /[\p{L}\p{N}]/u.test(w));
+
+test('gambar di dalam tautan/span di luar paragraf tidak hilang', () => {
+  const { markup, images } = htmlToBlocks('<a href="https://jatman.or.id/foto"><img src="https://jatman.or.id/a.jpg"></a><div><span><img src="https://jatman.or.id/b.jpg"></span></div>');
+  assert.deepEqual(images, ['https://jatman.or.id/a.jpg', 'https://jatman.or.id/b.jpg']);
+  assert.equal((markup.match(/<!-- wp:image /g) ?? []).length, 2);
+});
+
+test('gambar di dalam heading tidak hilang', () => {
+  const { markup, images } = htmlToBlocks('<h2>Judul <img src="https://jatman.or.id/h.jpg"></h2>');
+  assert.deepEqual(images, ['https://jatman.or.id/h.jpg']);
+  assert.match(markup, /<h2 class="wp-block-heading">Judul<\/h2>/);
+  assert.match(markup, /wp:image/);
+});
+
+test('kutipan mempertahankan teks lepas dan daftar di dalamnya', () => {
+  const { markup } = htmlToBlocks('<blockquote>Pengantar<p>Isi kutipan</p><ul><li>butir satu</li></ul></blockquote>');
+  assert.match(markup, /^<!-- wp:quote -->/);
+  for (const w of ['Pengantar', 'Isi kutipan', 'butir satu']) assert.ok(markup.includes(w), w);
+  assert.match(markup, /<!-- wp:list -->/);
+});
+
+test('gambar di dalam blok HTML (tabel) ikut dicatat untuk diunduh', () => {
+  const { images } = htmlToBlocks('<table><tr><td><img src="https://jatman.or.id/t.jpg"></td></tr></table>');
+  assert.deepEqual(images, ['https://jatman.or.id/t.jpg']);
+});
+
+test('tautan internal relatif dipertahankan', () => {
+  assert.equal(htmlToBlocks('<p><a href="/slug-lama">baca</a></p>').markup, P('<a href="/slug-lama">baca</a>'));
+});
+
+test('invarian: semua kata dan gambar dari markup kacau muncul di hasil', () => {
+  const input = `<div><p>Pembuka <b>tebal</b><div><span>teks lepas</span><a href="/x"><img src="https://jatman.or.id/1.jpg"></a></div>
+    <h3>Sub <img src="https://jatman.or.id/2.jpg"></h3><blockquote>Kata kiai<ul><li>satu</li><li>dua</li></ul></blockquote>
+    <table><tr><td>sel <img src="https://jatman.or.id/3.jpg"></td></tr></table><font><i>miring</i></font></div>`;
+  const { markup, images } = htmlToBlocks(input);
+  for (const w of words(input)) assert.ok(markup.includes(w), `kata hilang: ${w}`);
+  assert.deepEqual(images.sort(), ['https://jatman.or.id/1.jpg', 'https://jatman.or.id/2.jpg', 'https://jatman.or.id/3.jpg']);
+});

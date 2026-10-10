@@ -22,7 +22,11 @@ export function htmlToBlocks(html) {
 function walk($, nodes, out) {
   let loose = [];
   const flush = () => {
-    if (loose.length) pushParagraph(inlineHtml(loose), out);
+    if (loose.length) {
+      pushParagraph(inlineHtml(loose), out);
+      // Gambar di dalam pembungkus inline (<a>, <span>, <font>…) dikeluarkan jadi block image.
+      for (const n of loose) if (n.type === 'tag') $(n).find('img').each((_, img) => pushImage($(img), '', out));
+    }
     loose = [];
   };
   for (const node of nodes) {
@@ -40,6 +44,7 @@ function walk($, nodes, out) {
         break;
       case 'h1': case 'h2': case 'h3': case 'h4': case 'h5': case 'h6':
         pushHeading(Math.max(2, Number(tag[1])), inlineHtml(node.children ?? []), out);
+        el.find('img').each((_, img) => pushImage($(img), '', out));
         break;
       case 'blockquote': pushQuote($, el, out); break;
       case 'ul': case 'ol': pushList($, el, tag === 'ol', out); break;
@@ -77,7 +82,7 @@ function cleanInline(node) {
   const inner = (node.children ?? []).map(cleanInline).join('');
   if (tag === 'a') {
     const href = node.attribs?.href ?? '';
-    return /^(https?:|mailto:)/i.test(href) ? `<a href="${escAttr(href)}">${inner}</a>` : inner;
+    return /^(https?:|mailto:|\/(?!\/)|#)/i.test(href) ? `<a href="${escAttr(href)}">${inner}</a>` : inner;
   }
   if (KEEP.has(tag)) return stripTags(inner).trim() ? `<${tag}>${inner}</${tag}>` : inner;
   return inner;
@@ -101,13 +106,11 @@ function pushHeading(level, html, out) {
 }
 
 function pushQuote($, el, out) {
-  const paras = el.find('p').toArray();
-  const parts = (paras.length ? paras : [el.get(0)])
-    .map((p) => inlineHtml(p.children ?? []))
-    .filter((h) => stripTags(h).trim());
-  if (!parts.length) return;
-  const inner = parts.map((h) => `<!-- wp:paragraph -->\n<p>${h}</p>\n<!-- /wp:paragraph -->`).join('\n\n');
-  out.blocks.push(`<!-- wp:quote -->\n<blockquote class="wp-block-quote">${inner}</blockquote>\n<!-- /wp:quote -->`);
+  // Isi kutipan diproses seperti isi biasa (teks lepas, paragraf, daftar, gambar) lalu dibungkus core/quote.
+  const inner = { blocks: [], images: out.images };
+  walk($, el.get(0).children ?? [], inner);
+  if (!inner.blocks.length) return;
+  out.blocks.push(`<!-- wp:quote -->\n<blockquote class="wp-block-quote">${inner.blocks.join('\n\n')}</blockquote>\n<!-- /wp:quote -->`);
 }
 
 function pushList($, el, ordered, out) {
@@ -130,6 +133,10 @@ function pushImage(img, caption, out) {
 }
 
 function pushHtml($, el, out) {
+  el.find('img').each((_, img) => {
+    const src = $(img).attr('data-src') || $(img).attr('src') || '';
+    if (/^https?:\/\//.test(src)) { $(img).attr('src', src).removeAttr('data-src'); out.images.push(src); }
+  });
   el.find('*').addBack().removeAttr('style').removeAttr('class');
   const html = $.html(el).trim();
   if (html) out.blocks.push(`<!-- wp:html -->\n${html}\n<!-- /wp:html -->`);
