@@ -14,6 +14,9 @@ update_option( 'show_on_front', 'posts' );
 update_option( 'posts_per_page', 12 );
 update_option( 'show_avatars', 1 );
 
+// Playground web otomatis login sebagai admin; sembunyikan toolbar di tampilan depan supaya demo terlihat seperti pengunjung biasa.
+update_user_meta( 1, 'show_admin_bar_front', 'false' );
+
 global $wp_rewrite;
 $wp_rewrite->set_permalink_structure( '/%postname%/' );
 

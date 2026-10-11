@@ -30,7 +30,7 @@ Link demo, tanpa server (WordPress berjalan di browser pengunjung, isi kembali s
 
 https://playground.wordpress.net/?blueprint-url=https://raw.githubusercontent.com/aqinfh/jatman-online/main/playground/blueprint.json
 
-Blueprint mengambil tema, mu-plugin, dan importer dari branch `main`, jadi setiap push langsung terlihat di demo. Login admin: `/wp-admin/` dengan `admin` / `password`. Form kontak tidak mengirim email di demo. Kalau sample di-fetch ulang, perbarui snapshotnya: salin `tools/sample/data/{posts.json,pages.json,media/}` ke `playground/sample-data/`.
+Blueprint mengambil tema, mu-plugin, dan importer dari branch `main`, jadi setiap push langsung terlihat di demo. Pengunjung otomatis login sebagai admin (toolbar disembunyikan di tampilan depan), jadi `/wp-admin/` bisa langsung dibuka. Form kontak tidak mengirim email di demo. Kalau sample di-fetch ulang, perbarui snapshotnya: salin `tools/sample/data/{posts.json,pages.json,media/}` ke `playground/sample-data/`.
 
 ## Tes
 
