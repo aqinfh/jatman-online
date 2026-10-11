@@ -1,0 +1,43 @@
+{
+	"$schema": "https://playground.wordpress.net/blueprint-schema.json",
+	"meta": {
+		"title": "JATMAN Online — demo tema",
+		"description": "Tema block JATMAN Online dengan artikel sampel dari jatman.or.id.",
+		"author": "aqinfh"
+	},
+	"landingPage": "/",
+	"preferredVersions": { "php": "8.3", "wp": "latest" },
+	"features": { "networking": true },
+	"steps": [
+		{ "step": "setSiteLanguage", "language": "id_ID" },
+		{
+			"step": "installTheme",
+			"themeData": { "resource": "git:directory", "url": "https://github.com/aqinfh/jatman-online", "ref": "main", "refType": "branch", "path": "theme/jatman" },
+			"options": { "activate": true }
+		},
+		{
+			"step": "writeFiles",
+			"writeToPath": "/wordpress/wp-content/mu-plugins",
+			"filesTree": { "resource": "git:directory", "url": "https://github.com/aqinfh/jatman-online", "ref": "main", "refType": "branch", "path": "mu-plugins" }
+		},
+		{
+			"step": "writeFiles",
+			"writeToPath": "/wordpress/tools",
+			"filesTree": { "resource": "git:directory", "url": "https://github.com/aqinfh/jatman-online", "ref": "main", "refType": "branch", "path": "tools" }
+		},
+		{
+			"step": "writeFiles",
+			"writeToPath": "/wordpress/tools/sample/data",
+			"filesTree": { "resource": "git:directory", "url": "https://github.com/aqinfh/jatman-online", "ref": "main", "refType": "branch", "path": "playground/sample-data" }
+		},
+		{
+			"step": "writeFiles",
+			"writeToPath": "/wordpress/playground",
+			"filesTree": { "resource": "git:directory", "url": "https://github.com/aqinfh/jatman-online", "ref": "main", "refType": "branch", "path": "playground" }
+		},
+		{
+			"step": "runPHP",
+			"code": "<?php require_once '/wordpress/wp-load.php'; require '/wordpress/playground/setup.php';"
+		}
+	]
+}

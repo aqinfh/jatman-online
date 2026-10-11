@@ -22,6 +22,15 @@ npm run sample:import    # masukkan ke WordPress
 - `tools/importer/`: importer sumber-agnostik (dipakai sample, nanti migrasi Varient)
 - `tools/sample/`: scraper sample dari web lama
 - `tools/brand/`: build logo SVG dan font
+- `playground/`: demo WordPress Playground (blueprint, skrip setup, snapshot data sample)
+
+## Demo online (WordPress Playground)
+
+Link demo, tanpa server (WordPress berjalan di browser pengunjung, isi kembali seperti semula tiap dibuka):
+
+https://playground.wordpress.net/?blueprint-url=https://raw.githubusercontent.com/aqinfh/jatman-online/main/playground/blueprint.json
+
+Blueprint mengambil tema, mu-plugin, dan importer dari branch `main`, jadi setiap push langsung terlihat di demo. Login admin: `/wp-admin/` dengan `admin` / `password`. Form kontak tidak mengirim email di demo. Kalau sample di-fetch ulang, perbarui snapshotnya: salin `tools/sample/data/{posts.json,pages.json,media/}` ke `playground/sample-data/`.
 
 ## Tes
 
